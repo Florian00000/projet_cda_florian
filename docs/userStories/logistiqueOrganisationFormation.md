@@ -36,7 +36,7 @@ En tant que responsable logistique d'IT-Training, je souhaite gérer efficacemen
     - Critères d'acceptation:
         - Les formulaires d’évaluation en ligne sont créés de manière nominative pour chaque stagiaire.
         - Les résultats sont centralisés et utilisés pour évaluer la performance des formateurs pour les sessions futures.
-6. Mofification et Suppression des forrmations:
+6. Mofification et Suppression des formations:
     - User Story:  
     *En tant que responsable logistique, je veux pouvoir modifier ou supprimé les formations qui ne sont pas encore lancé*
     - Critères d'acceptation:

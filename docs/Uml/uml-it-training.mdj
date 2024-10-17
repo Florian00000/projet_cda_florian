@@ -57805,7 +57805,7 @@
 											"top": 1366,
 											"width": 390.35888671875,
 											"height": 13,
-											"text": "+addTheme(Theme thme): theme",
+											"text": "+addTheme(Theme theme): theme",
 											"horizontalAlignment": 0
 										},
 										{
@@ -62301,8 +62301,7 @@
 									"_parent": {
 										"$ref": "AAAAAAGSe8PstDKGxR8="
 									},
-									"name": "Theme thme",
-									"type": ""
+									"name": "Theme theme"
 								},
 								{
 									"_type": "UMLParameter",

@@ -1,5 +1,6 @@
 package com.example.it_training_back.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +20,7 @@ public class Theme {
     @Column(name = "id_theme")
     private int id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String title;
     @Column(name = "image_path")
     private String imagePath;
@@ -30,5 +31,6 @@ public class Theme {
             joinColumns = @JoinColumn(name = "id_theme"),
             inverseJoinColumns = @JoinColumn(name = "id_subtheme")
     )
+    @JsonIgnore
     private List<SubTheme> subThemes;
 }

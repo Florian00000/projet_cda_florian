@@ -2,6 +2,7 @@ package com.example.it_training_back;
 
 import com.example.it_training_back.dto.theme.ThemeDtoGet;
 import com.example.it_training_back.dto.theme.ThemeDtoPost;
+import com.example.it_training_back.entity.Theme;
 import com.example.it_training_back.repository.SubThemeRepository;
 import com.example.it_training_back.repository.ThemeRepository;
 import com.example.it_training_back.service.TrainingService;
@@ -10,6 +11,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 public class TrainingServiceTest {
@@ -23,21 +28,16 @@ public class TrainingServiceTest {
         trainingService = new TrainingService(themeRepository, subThemeRepository);
     }
 
-    @Test public void testAddTheme(){
+    @Test public void GivenNewTest_ThenNewTestIsSaved() {
         //arrange
         ThemeDtoPost themeDtoPost = new ThemeDtoPost();
         themeDtoPost.setTitle("Réseau");
         themeDtoPost.setImagePath("./chemin");
 
-        //arrange
-        ThemeDtoGet themeDtoGet = new ThemeDtoGet();
-        themeDtoGet.setId(1);
-        themeDtoGet.setTitle("Réseau");
-        themeDtoGet.setImagePath("./chemin");
-
         //act
         trainingService.addTheme(themeDtoPost);
 
-        //TODO assert
+        //assert
+        verify(themeRepository, times(1)).save(any(Theme.class));
     }
 }

@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.dao.DataIntegrityViolationException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,12 +38,10 @@ public class SubThemeServiceTest {
         SubThemeDtoPost subThemeDtoPost = new SubThemeDtoPost();
         subThemeDtoPost.setTitle("testAddSubTheme");
         subThemeDtoPost.setImagePath("testAddSubTheme");
-        subThemeDtoPost.setThemes(List.of());
+        //subThemeDtoPost.setThemes(List.of());
 
         //act
         SubThemeDtoGet subThemeDtoGet = trainingService.addSubTheme(subThemeDtoPost);
-
-
 
         //assert
         Assertions.assertEquals("testAddSubTheme", subThemeDtoGet.getTitle());
@@ -99,5 +98,36 @@ public class SubThemeServiceTest {
         Assertions.assertEquals(2, subThemeDtoGet.getThemes().size());
         Assertions.assertEquals("theme1", subThemeDtoGet.getThemes().get(0).getTitle());
         Assertions.assertEquals("theme2", subThemeDtoGet.getThemes().get(1).getTitle());
+    }
+
+    @Test
+    public void WhenGetAllSubThemes_ThenReturnThemes(){
+        //arrange
+        SubTheme subTheme1 = SubTheme.builder().id(1).title("subTheme1").build();
+        SubTheme subTheme2 = SubTheme.builder().id(2).title("subTheme2").build();
+        List<SubTheme> subThemes = List.of(subTheme1, subTheme2);
+        Mockito.when(subThemeRepository.findAll()).thenReturn(subThemes);
+
+        //act
+        List<SubThemeDtoGet> subThemeDtoGets = trainingService.getAllSubThemes();
+
+        //assert
+        Assertions.assertEquals(2, subThemeDtoGets.size());
+        Assertions.assertEquals("subTheme1", subThemeDtoGets.get(0).getTitle());
+        Assertions.assertEquals("subTheme2", subThemeDtoGets.get(1).getTitle());
+        Mockito.verify(subThemeRepository, times(1)).findAll();
+    }
+
+    @Test
+    public void WhenGetAllSubThemes_ThenReturnEmptyList(){
+        //arrange
+        Mockito.when(subThemeRepository.findAll()).thenReturn(new ArrayList<>());
+
+        //act
+        List<SubThemeDtoGet> subThemeDtoGets = trainingService.getAllSubThemes();
+
+        //arrange
+        Assertions.assertTrue( subThemeDtoGets.isEmpty());
+        Mockito.verify(subThemeRepository, times(1)).findAll();
     }
 }

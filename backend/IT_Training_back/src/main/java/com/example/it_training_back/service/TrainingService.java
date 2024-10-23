@@ -5,7 +5,10 @@ import com.example.it_training_back.dto.theme.ThemeDtoPost;
 import com.example.it_training_back.entity.Theme;
 import com.example.it_training_back.repository.SubThemeRepository;
 import com.example.it_training_back.repository.ThemeRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class TrainingService {
@@ -18,8 +21,12 @@ public class TrainingService {
         this.subThemeRepository = subThemeRepository;
     }
 
-    //TODO faire la méthode
     public ThemeDtoGet addTheme(ThemeDtoPost themeDtoPost) {
+
+        Optional<Theme> themeInData = themeRepository.findByTitleIgnoreCase(themeDtoPost.getTitle());
+
+        if (themeInData.isPresent()) throw new DataIntegrityViolationException("A theme already has this title");
+
         Theme theme = Theme.builder()
                 .title(themeDtoPost.getTitle())
                 .imagePath(themeDtoPost.getImagePath()).build();

@@ -12,6 +12,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.dao.DataIntegrityViolationException;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -57,17 +60,16 @@ public class TrainingServiceTest {
         assertEquals("./chemin", result.getImagePath());
     }
 
-    //TODO finir le test
     @Test public void GivenDuplicateTitle_WhenAddTheme_ThenThrowException() {
         //arrange
         ThemeDtoPost themeDtoPost = new ThemeDtoPost();
         themeDtoPost.setTitle("Réseau");
         themeDtoPost.setImagePath("./chemin");
 
-        //act
-        trainingService.addTheme(themeDtoPost);
+        Theme existingTheme = Theme.builder().title("Réseau").id(1).build();
+        Mockito.when(themeRepository.findByTitleIgnoreCase("Réseau")).thenReturn(Optional.of(existingTheme));
 
         //assert
-        Assertions.assertThrows(Exception.class, () -> trainingService.addTheme(themeDtoPost));
+        Assertions.assertThrows(DataIntegrityViolationException.class, () -> trainingService.addTheme(themeDtoPost));
     }
 }

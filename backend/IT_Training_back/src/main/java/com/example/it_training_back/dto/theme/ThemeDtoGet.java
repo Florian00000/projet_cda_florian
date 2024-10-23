@@ -12,7 +12,7 @@ public class ThemeDtoGet {
     private int id;
     private String title;
     private String imagePath;
-    private List<SubTheme> subThemes;
+    //private List<SubTheme> subThemes;
 
     public ThemeDtoGet() {
     }
@@ -21,6 +21,6 @@ public class ThemeDtoGet {
         this.id = theme.getId();
         this.title = theme.getTitle();
         this.imagePath = theme.getImagePath();
-        this.subThemes = theme.getSubThemes();
+       // this.subThemes = theme.getSubThemes();
     }
 }

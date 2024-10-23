@@ -21,8 +21,8 @@ public class GeneralExceptionHandler {
     }
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<String> notFoundExceptionHandler (NotFoundException ex){
-        return new ResponseEntity<>("not found entity from advice", HttpStatus.NOT_FOUND);
+    public ResponseEntity<String> notFoundExceptionHandler (NotFoundException e){
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

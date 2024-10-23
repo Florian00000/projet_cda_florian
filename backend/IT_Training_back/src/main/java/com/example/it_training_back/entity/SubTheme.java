@@ -24,7 +24,12 @@ public class SubTheme {
     @Column(name = "image_path")
     private String imagePath;
 
-    @ManyToMany(mappedBy = "subThemes")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "theme_subtheme",
+            joinColumns = @JoinColumn(name = "id_subtheme"),
+            inverseJoinColumns = @JoinColumn(name = "id_theme")
+    )
     @JsonIgnore
     private List<Theme> themes;
 }

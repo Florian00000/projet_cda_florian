@@ -25,12 +25,7 @@ public class Theme {
     @Column(name = "image_path")
     private String imagePath;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "theme_subtheme",
-            joinColumns = @JoinColumn(name = "id_theme"),
-            inverseJoinColumns = @JoinColumn(name = "id_subtheme")
-    )
+    @ManyToMany(mappedBy = "themes")
     @JsonIgnore
     private List<SubTheme> subThemes;
 }

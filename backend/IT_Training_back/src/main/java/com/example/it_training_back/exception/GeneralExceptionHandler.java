@@ -20,6 +20,11 @@ public class GeneralExceptionHandler {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<String> notFoundExceptionHandler (NotFoundException ex){
+        return new ResponseEntity<>("not found entity from advice", HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<List<Map<String,String>>> handleBindErrors(MethodArgumentNotValidException ex) {
         List<Map<String, String>> errorList = ex.getFieldErrors().stream().map(fieldError -> {

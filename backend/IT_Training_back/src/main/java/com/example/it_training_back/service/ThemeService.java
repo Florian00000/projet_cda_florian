@@ -17,12 +17,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class TrainingService {
+public class ThemeService {
 
     private final ThemeRepository themeRepository;
     private final SubThemeRepository subThemeRepository;
 
-    public TrainingService(ThemeRepository themeRepository, SubThemeRepository subThemeRepository) {
+    public ThemeService(ThemeRepository themeRepository, SubThemeRepository subThemeRepository) {
         this.themeRepository = themeRepository;
         this.subThemeRepository = subThemeRepository;
     }
@@ -81,11 +81,7 @@ public class TrainingService {
                 .build();
 
         if (subThemeDtoPost.getThemes() != null && !subThemeDtoPost.getThemes().isEmpty()){
-            List<Theme> themeList = new ArrayList<>();
-            for (Integer id : subThemeDtoPost.getThemes()) {
-                Theme theme = themeRepository.findById(id).orElseThrow(() -> new NotFoundException("Theme with id " + id + " not found"));
-                themeList.add(theme);
-            }
+            List<Theme> themeList = updateThemesOfSubTheme(subThemeDtoPost.getThemes());
             subTheme.setThemes(themeList);
         }
 
@@ -97,4 +93,33 @@ public class TrainingService {
         SubTheme subTheme = subThemeRepository.findById(id).orElseThrow(() -> new NotFoundException("SubTheme with id " + id + " not found"));
         subThemeRepository.delete(subTheme);
     }
+
+    public SubThemeDtoGet updateSubTheme(int id, SubThemeDtoPost subThemeDtoPost) {
+        SubTheme subTheme = subThemeRepository.findById(id).orElseThrow(() -> new NotFoundException("SubTheme with id " + id + " not found"));
+
+        Optional<SubTheme> subThemeInData = subThemeRepository.findByTitleIgnoreCase(subThemeDtoPost.getTitle());
+        if (subThemeInData.isPresent()) throw new DataIntegrityViolationException("A subTheme already has this title");
+
+        if (subThemeDtoPost.getThemes() == null || subThemeDtoPost.getThemes().isEmpty()){
+            subTheme.setThemes(null);
+        }else {
+            List<Theme> themeList = updateThemesOfSubTheme(subThemeDtoPost.getThemes());
+            subTheme.setThemes(themeList);
+        }
+
+        subTheme.setTitle(subThemeDtoPost.getTitle());
+        subTheme.setImagePath(subThemeDtoPost.getImagePath());
+        subThemeRepository.save(subTheme);
+        return new SubThemeDtoGet(subTheme);
+    }
+
+    private List<Theme> updateThemesOfSubTheme(List<Integer> themesId) {
+        List<Theme> themeList = new ArrayList<>();
+        for (Integer idTheme : themesId) {
+            Theme theme = themeRepository.findById(idTheme).orElseThrow(() -> new NotFoundException("Theme with id " + idTheme + " not found"));
+            themeList.add(theme);
+        }
+        return themeList;
+    }
+
 }

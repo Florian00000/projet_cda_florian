@@ -6,7 +6,7 @@ import com.example.it_training_back.entity.Theme;
 import com.example.it_training_back.exception.NotFoundException;
 import com.example.it_training_back.repository.SubThemeRepository;
 import com.example.it_training_back.repository.ThemeRepository;
-import com.example.it_training_back.service.TrainingService;
+import com.example.it_training_back.service.ThemeService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,13 +28,13 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(MockitoExtension.class)
 public class ThemeServiceTest {
 
-    private TrainingService trainingService;
+    private ThemeService themeService;
     private ThemeRepository themeRepository = Mockito.mock(ThemeRepository.class);
     private SubThemeRepository subThemeRepository = Mockito.mock(SubThemeRepository.class);
 
     @BeforeEach
     public void setUp() {
-        trainingService = new TrainingService(themeRepository, subThemeRepository);
+        themeService = new ThemeService(themeRepository, subThemeRepository);
     }
 
     @Test public void GivenNewTest_ThenNewTestIsSaved() {
@@ -44,7 +44,7 @@ public class ThemeServiceTest {
         themeDtoPost.setImagePath("./chemin");
 
         //act
-        trainingService.addTheme(themeDtoPost);
+        themeService.addTheme(themeDtoPost);
 
         //assert
         verify(themeRepository, times(1)).save(any(Theme.class));
@@ -57,7 +57,7 @@ public class ThemeServiceTest {
         themeDtoPost.setImagePath("./chemin");
 
         //act
-        ThemeDtoGet result = trainingService.addTheme(themeDtoPost);
+        ThemeDtoGet result = themeService.addTheme(themeDtoPost);
 
         //assert
         assertEquals("Réseau", result.getTitle());
@@ -74,7 +74,7 @@ public class ThemeServiceTest {
         Mockito.when(themeRepository.findByTitleIgnoreCase("Réseau")).thenReturn(Optional.of(existingTheme));
 
         //act and assert
-        Assertions.assertThrows(DataIntegrityViolationException.class, () -> trainingService.addTheme(themeDtoPost));
+        Assertions.assertThrows(DataIntegrityViolationException.class, () -> themeService.addTheme(themeDtoPost));
     }
 
     @Test public void WhenRemoveTheme_ThenRemoveTheme() {
@@ -83,12 +83,12 @@ public class ThemeServiceTest {
         Mockito.when(themeRepository.findById(1)).thenReturn(Optional.of(existingTheme));
 
         //act
-        trainingService.deleteTheme(1);
+        themeService.deleteTheme(1);
 
         //assert
         verify(themeRepository, times(1)).delete(existingTheme);
         Mockito.when(themeRepository.findById(1)).thenReturn(Optional.empty());
-        Assertions.assertThrows(NotFoundException.class, () -> trainingService.deleteTheme(1));
+        Assertions.assertThrows(NotFoundException.class, () -> themeService.deleteTheme(1));
     }
 
     @Test
@@ -102,7 +102,7 @@ public class ThemeServiceTest {
         Mockito.when(themeRepository.findAll()).thenReturn(mockThemes);
 
         // act
-        List<ThemeDtoGet> result = trainingService.getAllThemes();
+        List<ThemeDtoGet> result = themeService.getAllThemes();
 
         // assert
         assertEquals(2, result.size());
@@ -117,7 +117,7 @@ public class ThemeServiceTest {
         Mockito.when(themeRepository.findAll()).thenReturn(Collections.emptyList());
 
         // act
-        List<ThemeDtoGet> result = trainingService.getAllThemes();
+        List<ThemeDtoGet> result = themeService.getAllThemes();
 
         // assert
         Assertions.assertTrue(result.isEmpty());
@@ -136,7 +136,7 @@ public class ThemeServiceTest {
         Mockito.when(themeRepository.findByTitleIgnoreCase("réseau")).thenReturn(Optional.empty());
 
         //act
-        ThemeDtoGet updatedTheme = trainingService.updateTheme(1, themeDtoPost);
+        ThemeDtoGet updatedTheme = themeService.updateTheme(1, themeDtoPost);
 
         //assert
         assertEquals("réseau", updatedTheme.getTitle());
@@ -160,7 +160,7 @@ public class ThemeServiceTest {
 
         // act & assert
         Assertions.assertThrows(DataIntegrityViolationException.class,
-                () -> trainingService.updateTheme(1, themeDtoPost));
+                () -> themeService.updateTheme(1, themeDtoPost));
     }
 
     @Test
@@ -174,7 +174,7 @@ public class ThemeServiceTest {
 
         //act & assert
         Assertions.assertThrows(NotFoundException.class,
-                () -> trainingService.updateTheme(1, themeDtoPost));
+                () -> themeService.updateTheme(1, themeDtoPost));
     }
 
 }

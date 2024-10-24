@@ -7,7 +7,7 @@ import com.example.it_training_back.entity.Theme;
 import com.example.it_training_back.exception.NotFoundException;
 import com.example.it_training_back.repository.SubThemeRepository;
 import com.example.it_training_back.repository.ThemeRepository;
-import com.example.it_training_back.service.TrainingService;
+import com.example.it_training_back.service.ThemeService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,13 +24,13 @@ import static org.mockito.Mockito.times;
 
 public class SubThemeServiceTest {
 
-    private TrainingService trainingService;
+    private ThemeService themeService;
     private ThemeRepository themeRepository = Mockito.mock(ThemeRepository.class);
     private SubThemeRepository subThemeRepository = Mockito.mock(SubThemeRepository.class);
 
     @BeforeEach
     public void setUp() {
-        trainingService = new TrainingService(themeRepository, subThemeRepository);
+        themeService = new ThemeService(themeRepository, subThemeRepository);
     }
 
     @Test
@@ -42,7 +42,7 @@ public class SubThemeServiceTest {
         //subThemeDtoPost.setThemes(List.of());
 
         //act
-        SubThemeDtoGet subThemeDtoGet = trainingService.addSubTheme(subThemeDtoPost);
+        SubThemeDtoGet subThemeDtoGet = themeService.addSubTheme(subThemeDtoPost);
 
         //assert
         Assertions.assertEquals("testAddSubTheme", subThemeDtoGet.getTitle());
@@ -61,7 +61,7 @@ public class SubThemeServiceTest {
         Mockito.when(subThemeRepository.findByTitleIgnoreCase("testAddSubTheme")).thenReturn(Optional.of(existingSubTheme));
 
         //act and assert
-        Assertions.assertThrows(DataIntegrityViolationException.class, ()->trainingService.addSubTheme(subThemeDtoPost));
+        Assertions.assertThrows(DataIntegrityViolationException.class, ()-> themeService.addSubTheme(subThemeDtoPost));
     }
 
     @Test
@@ -75,7 +75,7 @@ public class SubThemeServiceTest {
         Mockito.when(themeRepository.findById(1)).thenReturn(Optional.empty());
 
         //act and assert
-        Assertions.assertThrows(NotFoundException.class, ()->trainingService.addSubTheme(subThemeDtoPost));
+        Assertions.assertThrows(NotFoundException.class, ()-> themeService.addSubTheme(subThemeDtoPost));
     }
 
     @Test
@@ -93,7 +93,7 @@ public class SubThemeServiceTest {
         Mockito.when(themeRepository.findById(2)).thenReturn(Optional.of(theme2));
 
         //act
-        SubThemeDtoGet subThemeDtoGet = trainingService.addSubTheme(subThemeDtoPost);
+        SubThemeDtoGet subThemeDtoGet = themeService.addSubTheme(subThemeDtoPost);
 
         //assert
         Assertions.assertEquals(2, subThemeDtoGet.getThemes().size());
@@ -110,7 +110,7 @@ public class SubThemeServiceTest {
         Mockito.when(subThemeRepository.findAll()).thenReturn(subThemes);
 
         //act
-        List<SubThemeDtoGet> subThemeDtoGets = trainingService.getAllSubThemes();
+        List<SubThemeDtoGet> subThemeDtoGets = themeService.getAllSubThemes();
 
         //assert
         Assertions.assertEquals(2, subThemeDtoGets.size());
@@ -125,7 +125,7 @@ public class SubThemeServiceTest {
         Mockito.when(subThemeRepository.findAll()).thenReturn(new ArrayList<>());
 
         //act
-        List<SubThemeDtoGet> subThemeDtoGets = trainingService.getAllSubThemes();
+        List<SubThemeDtoGet> subThemeDtoGets = themeService.getAllSubThemes();
 
         //arrange
         Assertions.assertTrue( subThemeDtoGets.isEmpty());
@@ -138,7 +138,7 @@ public class SubThemeServiceTest {
         Mockito.when(subThemeRepository.findById(1)).thenReturn(Optional.empty());
 
         //act & arrange
-        Assertions.assertThrows(NotFoundException.class, ()->trainingService.deleteSubTheme(1));
+        Assertions.assertThrows(NotFoundException.class, ()-> themeService.deleteSubTheme(1));
     }
 
     @Test
@@ -148,12 +148,12 @@ public class SubThemeServiceTest {
         Mockito.when(subThemeRepository.findById(1)).thenReturn(Optional.of(existingSubTheme));
 
         //act
-        trainingService.deleteSubTheme(1);
+        themeService.deleteSubTheme(1);
 
         //assert
         Mockito.verify(subThemeRepository, times(1)).delete(existingSubTheme);
         Mockito.when(subThemeRepository.findById(1)).thenReturn(Optional.empty());
-        Assertions.assertThrows(NotFoundException.class, ()->trainingService.deleteTheme(1));
+        Assertions.assertThrows(NotFoundException.class, ()-> themeService.deleteTheme(1));
     }
 
     @Test
@@ -166,9 +166,103 @@ public class SubThemeServiceTest {
         Mockito.when(subThemeRepository.findById(1)).thenReturn(Optional.of(subTheme));
 
         //act
-        trainingService.deleteSubTheme(1);
+        themeService.deleteSubTheme(1);
 
         Mockito.verify(themeRepository, never()).delete(theme1);
         Mockito.verify(themeRepository, never()).delete(theme2);
+    }
+
+    @Test
+    public void WhenSubUpdateThemeWithValidData_ThenSubThemeIsUpdated(){
+        //arrange
+        SubTheme existingSubTheme = SubTheme.builder().id(1).title("SubTheme").build();
+        SubThemeDtoPost subThemeDtoPost = new SubThemeDtoPost();
+        subThemeDtoPost.setTitle("testUpdateSubTheme");
+        subThemeDtoPost.setImagePath("testUpdateSubTheme");
+
+        Mockito.when(subThemeRepository.findById(1)).thenReturn(Optional.of(existingSubTheme));
+        Mockito.when(subThemeRepository.findByTitleIgnoreCase("testUpdateSubTheme")).thenReturn(Optional.empty());
+
+        //act
+        SubThemeDtoGet subThemeDtoGet = themeService.updateSubTheme(1, subThemeDtoPost);
+
+        //assert
+        Assertions.assertEquals("testUpdateSubTheme", subThemeDtoGet.getTitle());
+        Assertions.assertEquals("testUpdateSubTheme", subThemeDtoGet.getImagePath());
+        Assertions.assertEquals(1, subThemeDtoGet.getId());
+        Mockito.verify(subThemeRepository, times(1)).save(any(SubTheme.class));
+    }
+
+    @Test
+    public void WhenUpdateSubThemeWithDuplicateTitle_ThenThrowDataIntegrityViolationException(){
+        //arrange
+        SubTheme existingSubTheme1 = SubTheme.builder().id(1).title("SubTheme").build();
+        SubThemeDtoPost subThemeDtoPost = new SubThemeDtoPost();
+        subThemeDtoPost.setTitle("testUpdateSubTheme");
+        SubTheme existingSubTheme2 = SubTheme.builder().id(2).title("testUpdateSubTheme").build();
+
+        Mockito.when(subThemeRepository.findById(1)).thenReturn(Optional.of(existingSubTheme1));
+        Mockito.when(subThemeRepository.findByTitleIgnoreCase("testUpdateSubTheme")).thenReturn(Optional.of(existingSubTheme2));
+
+        //act & assert
+        Assertions.assertThrows(DataIntegrityViolationException.class, ()-> themeService.updateSubTheme(1, subThemeDtoPost));
+    }
+
+    @Test
+    public void WhenUpdateSubThemeWithNonExistentId_ThenThrowNotFoundException(){
+        //arrange
+        SubThemeDtoPost subThemeDtoPost = new SubThemeDtoPost();
+        subThemeDtoPost.setTitle("testUpdateSubTheme");
+        Mockito.when(subThemeRepository.findById(1)).thenReturn(Optional.empty());
+
+        //act & assert
+        Assertions.assertThrows(NotFoundException.class, ()-> themeService.updateSubTheme(1, subThemeDtoPost));
+    }
+
+    @Test
+    public void WhenUpdateSubTheme_ThenSubThemeIsUpdatedWithNewThemes() {
+        //arrange
+        SubTheme existingSubTheme = SubTheme.builder()
+                .id(1).title("SubTheme")
+                .themes(List.of(Theme.builder().id(1).title("theme1").build(),
+                        Theme.builder().id(2).title("theme2").build()))
+                .build();
+        SubThemeDtoPost subThemeDtoPost = new SubThemeDtoPost();
+        subThemeDtoPost.setTitle("testUpdateSubTheme");
+        subThemeDtoPost.setThemes(List.of(3,4));
+
+        Mockito.when(subThemeRepository.findById(1)).thenReturn(Optional.of(existingSubTheme));
+        Mockito.when(subThemeRepository.findByTitleIgnoreCase("testUpdateSubTheme")).thenReturn(Optional.empty());
+        Mockito.when(themeRepository.findById(3)).thenReturn(Optional.of(Theme.builder().id(3).title("theme3").build()));
+        Mockito.when(themeRepository.findById(4)).thenReturn(Optional.of(Theme.builder().id(4).title("theme4").build()));
+
+        //act
+        SubThemeDtoGet subThemeDtoGet = themeService.updateSubTheme(1, subThemeDtoPost);
+
+        //assert
+        List<Theme> updatedThemes = subThemeDtoGet.getThemes();
+        Assertions.assertEquals(2, updatedThemes.size());
+        Assertions.assertTrue(updatedThemes.stream().anyMatch(t -> t.getId() == 3));
+        Assertions.assertTrue(updatedThemes.stream().anyMatch(t -> t.getId() == 4));
+    }
+
+    @Test
+    public void GivenUpdateSubTheme_WhenNonExistantIdForThemes_ThenThrowNotFoundException() {
+        //arrange
+        SubTheme existingSubTheme = SubTheme.builder()
+                .id(1).title("SubTheme")
+                .themes(List.of(Theme.builder().id(1).title("theme1").build(),
+                        Theme.builder().id(2).title("theme2").build()))
+                .build();
+        SubThemeDtoPost subThemeDtoPost = new SubThemeDtoPost();
+        subThemeDtoPost.setTitle("testUpdateSubTheme");
+        subThemeDtoPost.setThemes(List.of(3));
+
+        Mockito.when(subThemeRepository.findById(1)).thenReturn(Optional.of(existingSubTheme));
+        Mockito.when(subThemeRepository.findByTitleIgnoreCase("testUpdateSubTheme")).thenReturn(Optional.empty());
+        Mockito.when(themeRepository.findById(3)).thenReturn(Optional.empty());
+
+        //act & assert
+        Assertions.assertThrows(NotFoundException.class, ()-> themeService.updateSubTheme(1, subThemeDtoPost));
     }
 }

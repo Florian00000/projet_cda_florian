@@ -92,4 +92,9 @@ public class TrainingService {
         subThemeRepository.save(subTheme);
         return new SubThemeDtoGet(subTheme);
     }
+
+    public void deleteSubTheme(int id) {
+        SubTheme subTheme = subThemeRepository.findById(id).orElseThrow(() -> new NotFoundException("SubTheme with id " + id + " not found"));
+        subThemeRepository.delete(subTheme);
+    }
 }

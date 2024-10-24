@@ -24,7 +24,7 @@ public class SubTheme {
     @Column(name = "image_path")
     private String imagePath;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             name = "theme_subtheme",
             joinColumns = @JoinColumn(name = "id_subtheme"),

@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 
 public class SubThemeServiceTest {
@@ -129,5 +130,45 @@ public class SubThemeServiceTest {
         //arrange
         Assertions.assertTrue( subThemeDtoGets.isEmpty());
         Mockito.verify(subThemeRepository, times(1)).findAll();
+    }
+
+    @Test
+    public void GivenRemoveSubTheme_WhenNonExistantId_ThenThrowNotFoundException(){
+        //arrange
+        Mockito.when(subThemeRepository.findById(1)).thenReturn(Optional.empty());
+
+        //act & arrange
+        Assertions.assertThrows(NotFoundException.class, ()->trainingService.deleteSubTheme(1));
+    }
+
+    @Test
+    public void GivenRemoveSubTheme_WhenExistantId_ThenRemoveSubTheme(){
+        //arrange
+        SubTheme existingSubTheme = SubTheme.builder().id(1).title("testAddSubTheme").build();
+        Mockito.when(subThemeRepository.findById(1)).thenReturn(Optional.of(existingSubTheme));
+
+        //act
+        trainingService.deleteSubTheme(1);
+
+        //assert
+        Mockito.verify(subThemeRepository, times(1)).delete(existingSubTheme);
+        Mockito.when(subThemeRepository.findById(1)).thenReturn(Optional.empty());
+        Assertions.assertThrows(NotFoundException.class, ()->trainingService.deleteTheme(1));
+    }
+
+    @Test
+    public void WhenDeleteSubTheme_ThenSubThemeIsRemoveButThemesAreNot(){
+        //arrange
+        Theme theme1 = Theme.builder().id(1).title("Theme 1").build();
+        Theme theme2 = Theme.builder().id(2).title("Theme 2").build();
+
+        SubTheme subTheme = SubTheme.builder().id(1).title("SubTheme").themes(List.of(theme1, theme2)).build();
+        Mockito.when(subThemeRepository.findById(1)).thenReturn(Optional.of(subTheme));
+
+        //act
+        trainingService.deleteSubTheme(1);
+
+        Mockito.verify(themeRepository, never()).delete(theme1);
+        Mockito.verify(themeRepository, never()).delete(theme2);
     }
 }

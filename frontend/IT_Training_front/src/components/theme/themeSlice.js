@@ -12,16 +12,15 @@ export const fetchAllTheme = createAsyncThunk("theme/fetchAllTheme", async () =>
 const themeSlice = createSlice({
     name:"theme",
     initialState: {
-        themes: []
+        list: []
     },
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(fetchAllTheme.fulfilled, (state, actions) => {
-            state.themes = actions.payload;
-            console.log(actions.payload);
-            
+            state.list = actions.payload;
+            console.log(actions.payload);            
         })
     }
 })
 
-export default themeSlice;
+export default themeSlice.reducer;

@@ -1,0 +1,13 @@
+.list{
+    display: flex;
+    flex-wrap: wrap;
+    flex-grow: 1;
+}
+
+.card{
+    border-radius: 5px;
+    margin: 5px;
+    background-color: var(--greyCard);
+    height: 40%;
+    width: 30%;
+}

@@ -9,9 +9,9 @@ function App() {
     <>
       <Navbar/>
       
-      <main>
+      <div id='master'>
         <Outlet/>
-      </main>
+      </div>
     </>
   )
 }

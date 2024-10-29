@@ -28,7 +28,7 @@ public class DataInitializer implements CommandLineRunner {
         for (int i = 0; i < 5; i++) {
             ThemeDtoPost themeDtoPost = new ThemeDtoPost();
             themeDtoPost.setTitle(faker.book().title());
-            themeDtoPost.setImagePath(faker.file().fileName("./assert/images", null, "jpg", "/"));
+            themeDtoPost.setImagePath(faker.file().fileName("/images", null, "png", "/"));
             themeService.addTheme(themeDtoPost);
         }
 
@@ -36,7 +36,7 @@ public class DataInitializer implements CommandLineRunner {
         for (int i = 0; i < 5; i++) {
             SubThemeDtoPost subThemeDtoPost = new SubThemeDtoPost();
             subThemeDtoPost.setTitle(faker.twinPeaks().character());
-            subThemeDtoPost.setImagePath(faker.file().fileName("./assert/images", null, "png", "/"));
+            subThemeDtoPost.setImagePath(faker.file().fileName("/images", null, "png", "/"));
 
             //choix d'un theme au hasard
             int id = themeService.getAllThemes()

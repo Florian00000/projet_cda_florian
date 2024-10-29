@@ -25,15 +25,15 @@ const HomeTheme = () => {
     
 
     return (
-        <>
+        <main>
             <div>
-                <h1>Formations proposées</h1>
+                <h2>Formations proposées</h2>
                 <hr />
             </div>
             
 
             <ThemeList list={list}/>
-        </>
+        </main>
     );
 }
 

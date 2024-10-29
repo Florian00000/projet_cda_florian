@@ -12,6 +12,9 @@ const router = createBrowserRouter([
             {
                 path: "/",
                 element: <HomeTheme/>
+            },
+            {
+                path: "/:idSubTheme", element: <HomeTheme/>
             }
         ]
     }

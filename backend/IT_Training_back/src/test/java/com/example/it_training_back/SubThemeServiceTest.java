@@ -265,4 +265,50 @@ public class SubThemeServiceTest {
         //act & assert
         Assertions.assertThrows(NotFoundException.class, ()-> themeService.updateSubTheme(1, subThemeDtoPost));
     }
+
+    @Test
+    public void GivenGetAllSubThemesByThemeId_WhenNonExistantIdForThemes_ThenThrowNotFoundException() {
+        //arrange
+        int themeId = 1;
+        Mockito.when(themeRepository.findById(themeId)).thenReturn(Optional.empty());
+
+        //act & assert
+        Assertions.assertThrows(NotFoundException.class, ()-> themeService.getAllSubThemesByThemeId(themeId));
+    }
+
+    @Test
+    public void GivenGetAllSubThemesByThemeId_WhenNoRelationsForThemes_ThenReturnEmptyList() {
+        //arrange
+        int themeId = 1;
+        Theme theme = Theme.builder().id(1).title("theme1").build();
+        Mockito.when(themeRepository.findById(themeId)).thenReturn(Optional.of(theme));
+        Mockito.when(subThemeRepository.findAllByThemes(List.of(theme))).thenReturn(List.of());
+
+        //act
+        List<SubThemeDtoGet> result = themeService.getAllSubThemesByThemeId(themeId);
+
+        //assert
+        Assertions.assertTrue(result.isEmpty());
+        Mockito.verify(subThemeRepository, Mockito.times(1)).findAllByThemes(List.of(theme));
+    }
+
+    @Test
+    public void GivenGetAllSubThemesByThemeId_WhenRelationsForThemes_ThenReturnThemes(){
+        //arrange
+        int themeId = 1;
+        Theme theme = Theme.builder().id(1).title("theme1").build();
+        SubTheme subTheme1 = SubTheme.builder().id(2).title("subTheme1").build();
+        SubTheme subTheme2 = SubTheme.builder().id(3).title("subTheme2").build();
+        Mockito.when(themeRepository.findById(themeId)).thenReturn(Optional.of(theme));
+        Mockito.when(subThemeRepository.findAllByThemes(List.of(theme))).thenReturn(List.of(subTheme1, subTheme2));
+
+        //act
+        List<SubThemeDtoGet> result = themeService.getAllSubThemesByThemeId(themeId);
+
+        //assert
+        Assertions.assertEquals(2, result.size());
+        Assertions.assertTrue(result.stream().anyMatch(t -> t.getId() == 2));
+        Assertions.assertTrue(result.stream().anyMatch(t -> t.getId() == 3));
+        Mockito.verify(subThemeRepository, Mockito.times(1)).findAllByThemes(List.of(theme));
+    }
 }

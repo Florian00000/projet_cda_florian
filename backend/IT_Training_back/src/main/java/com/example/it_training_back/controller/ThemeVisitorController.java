@@ -4,10 +4,7 @@ import com.example.it_training_back.dto.subTheme.SubThemeDtoGet;
 import com.example.it_training_back.dto.theme.ThemeDtoGet;
 import com.example.it_training_back.service.ThemeService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,5 +27,10 @@ public class ThemeVisitorController {
     @GetMapping("/subThemes")
     public ResponseEntity<List<SubThemeDtoGet>> getAllSubThemes() {
         return ResponseEntity.ok(themeService.getAllSubThemes());
+    }
+
+    @GetMapping("/subThemes/findByTheme/{themeId}")
+    public ResponseEntity<List<SubThemeDtoGet>> getSubThemesByThemeId(@PathVariable int themeId) {
+        return ResponseEntity.ok(themeService.getAllSubThemesByThemeId(themeId));
     }
 }

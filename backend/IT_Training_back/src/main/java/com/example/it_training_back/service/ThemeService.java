@@ -70,6 +70,12 @@ public class ThemeService {
         return subThemes.stream().map(SubThemeDtoGet::new).toList();
     }
 
+    public List<SubThemeDtoGet> getAllSubThemesByThemeId(int id) {
+        Theme themeInData = themeRepository.findById(id).orElseThrow(() -> new NotFoundException("Theme with id " + id + " not found"));
+        List<SubTheme> subThemes = subThemeRepository.findAllByThemes(List.of(themeInData));
+        return subThemes.stream().map(SubThemeDtoGet::new).toList();
+    }
+
     public SubThemeDtoGet addSubTheme(SubThemeDtoPost subThemeDtoPost) {
         Optional<SubTheme> subThemeInData = subThemeRepository.findByTitleIgnoreCase(subThemeDtoPost.getTitle());
 

@@ -1,12 +1,14 @@
 import React from 'react';
 import ThemeCube from './ThemeCube';
 import classes from './Theme.module.css'
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-const ThemeList = ({list}) => {
+const ThemeList = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const navigate = useNavigate();
     const mode = searchParams.get("mode") ?? "theme";
+    const list = useSelector((state) => state.theme.list);
 
     const linkTo = (id) =>{  
         switch (mode) {

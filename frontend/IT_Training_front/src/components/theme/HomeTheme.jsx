@@ -10,7 +10,6 @@ const HomeTheme = () => {
     const { idSubTheme } = useParams();
 
     const mode = searchParams.get("mode") ?? "theme"; 
-    const list = useSelector((state) => state.theme.list);
 
     useEffect(() => {
         switch (mode) {
@@ -37,7 +36,7 @@ const HomeTheme = () => {
             </div>
             
 
-            <ThemeList list={list}/>
+            <ThemeList />
         </main>
     );
 }

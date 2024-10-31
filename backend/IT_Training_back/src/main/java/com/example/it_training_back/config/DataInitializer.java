@@ -50,8 +50,6 @@ public class DataInitializer implements CommandLineRunner {
             themeService.addSubTheme(subThemeDtoPost);
         }
 
-         */
-
         //fake training
         for (int i = 0; i < 5; i++) {
             TrainingDtoPost trainingDtoPost = TrainingDtoPost.builder()
@@ -65,5 +63,7 @@ public class DataInitializer implements CommandLineRunner {
             trainingDtoPost.setSubThemes(List.of(id));
             trainingService.addTraining(trainingDtoPost);
         }
+
+         */
     }
 }

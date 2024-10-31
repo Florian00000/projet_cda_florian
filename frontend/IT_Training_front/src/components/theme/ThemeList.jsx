@@ -18,6 +18,9 @@ const ThemeList = () => {
             case "subtheme":
                 navigate(`/${id}?mode=training`)             
                 break;
+            case "training" :
+                navigate(`/training/${id}`)
+                break;
             default:
                 navigate("/")
                 break;
@@ -28,7 +31,7 @@ const ThemeList = () => {
     return (
         <section className={classes.list}>
             {list.map((theme, index) => (            
-                    <ThemeCube key={index} theme={theme} onClick={() => linkTo(theme.id)}/>                 
+                    <ThemeCube key={index} theme={theme} onClick={() => linkTo(theme.id)}/>                
                                               
             ))} 
         </section>

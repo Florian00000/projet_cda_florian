@@ -1,0 +1,5 @@
+.listSubThemes{
+    display: flex;
+    gap: 20px;
+    color: var(--blueButton);
+}

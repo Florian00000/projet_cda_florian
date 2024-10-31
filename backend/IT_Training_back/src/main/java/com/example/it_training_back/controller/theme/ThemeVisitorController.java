@@ -1,4 +1,4 @@
-package com.example.it_training_back.controller;
+package com.example.it_training_back.controller.theme;
 
 import com.example.it_training_back.dto.subTheme.SubThemeDtoGet;
 import com.example.it_training_back.dto.theme.ThemeDtoGet;
@@ -19,7 +19,7 @@ public class ThemeVisitorController {
         this.themeService = themeService;
     }
 
-    @GetMapping("themes")
+    @GetMapping("/themes")
     public ResponseEntity<List<ThemeDtoGet>> getThemes() {
         return ResponseEntity.ok(themeService.getAllThemes());
     }

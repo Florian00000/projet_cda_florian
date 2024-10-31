@@ -1,0 +1,28 @@
+package com.example.it_training_back.controller.training;
+
+import com.example.it_training_back.dto.training.TrainingDtoGet;
+import com.example.it_training_back.service.TrainingService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api")
+
+public class TrainingVisitorController {
+
+    private final TrainingService trainingService;
+
+    public TrainingVisitorController(TrainingService trainingService) {
+        this.trainingService = trainingService;
+    }
+
+    @GetMapping("/training/findBySubTheme/{subThemeId}")
+    public ResponseEntity<List<TrainingDtoGet>> getTrainingBySubTheme(@PathVariable int subThemeId) {
+        return ResponseEntity.ok(trainingService.getAllTrainingsBySubThemeId(subThemeId));
+    }
+}

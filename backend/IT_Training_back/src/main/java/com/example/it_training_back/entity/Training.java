@@ -21,9 +21,10 @@ public class Training {
     private int id;
     @Column(nullable = false)
     private String title;
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String description;
     private double price;
+    @Column(nullable = false)
     private boolean inter;
     @Column(name = "image_path")
     private String imagePath;

@@ -47,6 +47,12 @@ public class TrainingService {
         return new TrainingDtoGet(training);
     }
 
+    public List<TrainingDtoGet> getAllTrainingsBySubThemeId(int subThemeId){
+        SubTheme subThemeInData = subThemeRepository.findById(subThemeId).orElseThrow(() -> new NotFoundException("SubTheme with id " + subThemeId + " not found"));
+        List<Training> trainings = trainingRepository.findAllBySubThemes(List.of(subThemeInData));
+        return trainings.stream().map(TrainingDtoGet::new).toList();
+    }
+
     private List<SubTheme> updateSubThemesOfTraining(List<Integer> subThemesId){
         List<SubTheme> subThemeList = new ArrayList<>();
         for (Integer idSubTheme: subThemesId){

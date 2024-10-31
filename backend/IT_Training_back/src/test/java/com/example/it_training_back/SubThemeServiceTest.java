@@ -293,7 +293,7 @@ public class SubThemeServiceTest {
     }
 
     @Test
-    public void GivenGetAllSubThemesByThemeId_WhenRelationsForThemes_ThenReturnThemes(){
+    public void GivenGetAllSubThemesByThemeId_WhenRelationsForThemes_ThenReturnSubThemes(){
         //arrange
         int themeId = 1;
         Theme theme = Theme.builder().id(1).title("theme1").build();

@@ -16,10 +16,10 @@ const ThemeList = () => {
                 navigate(`/${id}?mode=subtheme`)   
                 break;
             case "subtheme":
-                //TODO
-                console.log("faire la fonction");                
+                navigate(`/${id}?mode=training`)             
                 break;
             default:
+                navigate("/")
                 break;
         }      
                    

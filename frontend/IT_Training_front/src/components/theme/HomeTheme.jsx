@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux'
-import { fetchAllTheme, fetchAllSubThemeByThemeId } from './themeSlice';
+import { fetchAllTheme, fetchAllSubThemeByThemeId, fetchAllTrainingBySubThemeId } from './themeSlice';
 import ThemeList from './ThemeList';
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
@@ -9,7 +9,7 @@ import remarkGfm from 'remark-gfm'
 const HomeTheme = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const dispatch = useDispatch();
-    const { idSubTheme } = useParams();
+    const { idList } = useParams();
 
     const mode = searchParams.get("mode") ?? "theme"; 
 
@@ -37,21 +37,26 @@ const HomeTheme = () => {
                     dispatch(fetchAllTheme());                    
                     break;
                 case "subtheme":          
-                    if (idSubTheme) {
-                        dispatch(fetchAllSubThemeByThemeId(idSubTheme))
+                    if (idList) {
+                        dispatch(fetchAllSubThemeByThemeId(idList))
                     }              
-                    break;            
-                default:
                     break;
+                case "training":
+                    if (idList) {
+                        dispatch(fetchAllTrainingBySubThemeId(idList))
+                    }
+                break;
             }
-    }, [mode, idSubTheme, dispatch])
+    }, [mode, idList, dispatch])
 
     
 
     return (
         <main>
             <div>
-                <h2>Formations proposées</h2>
+                {mode === "theme" && (<h2>Domaines proposées</h2>)}
+                {mode === "subtheme" && (<h2>Spécialitées techniques proposées</h2>)}
+                {mode === "training" && (<h2>Formations proposées</h2>)}                
                 <hr />
             </div>
 

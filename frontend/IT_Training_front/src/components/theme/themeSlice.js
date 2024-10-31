@@ -16,6 +16,13 @@ export const fetchAllSubThemeByThemeId = createAsyncThunk("theme/fetchAllSubThem
     return data;
 });
 
+export const fetchAllTrainingBySubThemeId = createAsyncThunk("theme/fetchAllTrainingBySubThemeId", async (idSubTheme) => {
+    const response = await axios.get(`${BASE_URL}training/findBySubTheme/${idSubTheme}`)
+    const data = await response.data;
+
+    return data;
+} )
+
 const themeSlice = createSlice({
     name:"theme",
     initialState: {
@@ -30,6 +37,11 @@ const themeSlice = createSlice({
         builder.addCase(fetchAllSubThemeByThemeId.fulfilled, (state, actions) => {
             state.list = actions.payload;
             console.log(actions.payload);            
+        });
+        builder.addCase(fetchAllTrainingBySubThemeId.fulfilled, (state, actions) => {
+            state.list = actions.payload;
+            console.log(actions.payload);
+            
         })
     }
 })

@@ -14,7 +14,7 @@ const router = createBrowserRouter([
                 element: <HomeTheme/>
             },
             {
-                path: "/:idSubTheme", element: <HomeTheme/>
+                path: "/:idList", element: <HomeTheme/>
             }
         ]
     }

@@ -22,4 +22,9 @@ public class TrainingVisitorController {
     public ResponseEntity<List<TrainingDtoGet>> getTrainingBySubTheme(@PathVariable int subThemeId) {
         return ResponseEntity.ok(trainingService.getAllTrainingsBySubThemeId(subThemeId));
     }
+
+    @GetMapping("/training/{trainingId}")
+    public ResponseEntity<TrainingDtoGet> getTrainingById(@PathVariable int trainingId) {
+        return ResponseEntity.ok(trainingService.getTraining(trainingId));
+    }
 }

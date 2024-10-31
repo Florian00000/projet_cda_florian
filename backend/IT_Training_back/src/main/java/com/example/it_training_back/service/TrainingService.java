@@ -53,6 +53,11 @@ public class TrainingService {
         return trainings.stream().map(TrainingDtoGet::new).toList();
     }
 
+    public TrainingDtoGet getTraining(int trainingId) {
+        Training training = trainingRepository.findById(trainingId).orElseThrow(() -> new NotFoundException("Training with id " + trainingId + " not found"));
+        return new TrainingDtoGet(training);
+    }
+
     private List<SubTheme> updateSubThemesOfTraining(List<Integer> subThemesId){
         List<SubTheme> subThemeList = new ArrayList<>();
         for (Integer idSubTheme: subThemesId){

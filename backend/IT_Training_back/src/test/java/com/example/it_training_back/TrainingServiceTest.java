@@ -132,4 +132,32 @@ public class TrainingServiceTest {
         Assertions.assertTrue(result.stream().anyMatch(s -> s.getId() == 1));
         Assertions.assertTrue(result.stream().anyMatch(s -> s.getId() == 2));
     }
+
+    @Test
+    public void GivenGetTraining_ThenReturnTraining(){
+        //arrange
+        int trainingId = 1;
+        Training training = Training.builder().id(trainingId).title("title1").description("text").inter(true).build();
+        Mockito.when(trainingRepository.findById(trainingId)).thenReturn(Optional.of(training));
+
+        //act
+        TrainingDtoGet result = trainingService.getTraining(trainingId);
+
+        //assert
+        Mockito.verify(trainingRepository, Mockito.times(1)).findById(trainingId);
+        Assertions.assertEquals(1, result.getId());
+        Assertions.assertEquals("title1", result.getTitle());
+        Assertions.assertEquals("text", result.getDescription());
+        Assertions.assertTrue(result.isInter());
+    }
+
+    @Test
+    public void GivenGetTraining_WhenNonExistantId_ThenThrowNotFoundException() {
+        //arrange
+        int trainingId = 1;
+        Mockito.when(trainingRepository.findById(trainingId)).thenReturn(Optional.empty());
+
+        //act & assert
+        Assertions.assertThrows(NotFoundException.class, () -> trainingService.getTraining(trainingId));
+    }
 }

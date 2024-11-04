@@ -1,8 +1,11 @@
 package com.example.it_training_back.config;
 
+import com.example.it_training_back.dto.location.LocationDtoPost;
+import com.example.it_training_back.dto.session.SessionDtoPost;
 import com.example.it_training_back.dto.subTheme.SubThemeDtoPost;
 import com.example.it_training_back.dto.theme.ThemeDtoPost;
 import com.example.it_training_back.dto.training.TrainingDtoPost;
+import com.example.it_training_back.entity.Location;
 import com.example.it_training_back.service.ThemeService;
 import com.example.it_training_back.service.TrainingService;
 import com.github.javafaker.Faker;
@@ -62,6 +65,36 @@ public class DataInitializer implements CommandLineRunner {
             int id = themeService.getAllSubThemes().get(rand.nextInt(themeService.getAllSubThemes().size())).getId();
             trainingDtoPost.setSubThemes(List.of(id));
             trainingService.addTraining(trainingDtoPost);
+        }
+
+
+        //fake Location
+        for (int i = 0; i < 5; i++) {
+            LocationDtoPost locationDtoPost = LocationDtoPost.builder()
+                    .street(faker.address().streetAddress())
+                    .number(Integer.toString( rand.nextInt(50)))
+                    .city(faker.address().city())
+                    .zipCode(rand.nextInt(60000))
+                    .build();
+            trainingService.addLocation(locationDtoPost);
+        }
+
+        //fake Session
+        for (int i = 0; i < 5; i++) {
+            SessionDtoPost sessionDtoPost = SessionDtoPost.builder()
+                    .startDate("01/0"+ (i+1) + "/2025")
+                    .endDate("01/0"+ (i+2) + "/2025")
+                    .placeLimit(rand.nextInt(3,30))
+                    .roomReserved(false).machinesInstalled(false).traineesConfirmation(false)
+                    .trainerConfirmation(false).traineesConfirmation(false).evaluationForms(false)
+                    .build();
+            int idLocation = trainingService.getAllLocations()
+                    .get(rand.nextInt(trainingService.getAllLocations().size())).getId();
+            sessionDtoPost.setLocationID(idLocation);
+            int idTraining = trainingService.getAllTrainings()
+                    .get(rand.nextInt(trainingService.getAllTrainings().size())).getId();
+            sessionDtoPost.setTrainingID(idTraining);
+            trainingService.addSession(sessionDtoPost);
         }
 
          */

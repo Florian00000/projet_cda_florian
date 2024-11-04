@@ -37,4 +37,8 @@ public class Training {
     )
     @JsonIgnore
     private List<SubTheme> subThemes;
+
+    @OneToMany(mappedBy = "training", cascade = CascadeType.MERGE)
+    @JsonIgnore
+    private List<Session> sessions;
 }

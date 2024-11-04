@@ -27,4 +27,9 @@ public class TrainingVisitorController {
     public ResponseEntity<TrainingDtoGet> getTrainingById(@PathVariable int trainingId) {
         return ResponseEntity.ok(trainingService.getTraining(trainingId));
     }
+
+    @GetMapping("/training")
+    public ResponseEntity<List<TrainingDtoGet>> getAllTrainings() {
+        return ResponseEntity.ok(trainingService.getAllTrainings());
+    }
 }

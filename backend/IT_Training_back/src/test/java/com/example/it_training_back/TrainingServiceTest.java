@@ -2,6 +2,7 @@ package com.example.it_training_back;
 
 import com.example.it_training_back.dto.training.TrainingDtoGet;
 import com.example.it_training_back.dto.training.TrainingDtoPost;
+import com.example.it_training_back.entity.Session;
 import com.example.it_training_back.entity.SubTheme;
 import com.example.it_training_back.entity.Training;
 import com.example.it_training_back.exception.NotFoundException;
@@ -99,7 +100,7 @@ public class TrainingServiceTest {
     }
 
     @Test
-    public void GivenGetAllTrainingsBySubThemeId_WhenNoRelationsForThemes_ThenReturnEmptyList() {
+    public void GivenGetAllTrainingsBySubThemeId_WhenNoRelationsForSubThemes_ThenReturnEmptyList() {
         //arrange
         int subThemeId = 1;
         SubTheme subTheme = SubTheme.builder().id(1).title("title1").build();
@@ -115,7 +116,7 @@ public class TrainingServiceTest {
     }
 
     @Test
-    public void GivenGetAllTrainingsBySubThemeId_WhenRelationsForThemes_ThenReturnTrainings(){
+    public void GivenGetAllTrainingsBySubThemeId_WhenRelationsForSubThemes_ThenReturnTrainings(){
         //arrange
         int subThemeId = 1;
         SubTheme subTheme = SubTheme.builder().id(1).title("title1").build();
@@ -131,6 +132,28 @@ public class TrainingServiceTest {
         Assertions.assertEquals(2, result.size());
         Assertions.assertTrue(result.stream().anyMatch(s -> s.getId() == 1));
         Assertions.assertTrue(result.stream().anyMatch(s -> s.getId() == 2));
+    }
+
+    @Test
+    public void GivenGetAllTrainingsBySubThemeId_WhenTrainingHaveSessions_ThenReturnSessions(){
+        //arrange
+        int subThemeId = 1;
+        SubTheme subTheme = SubTheme.builder().id(1).title("title1").build();
+        Session session = Session.builder().id(1).build();
+        Training training1 = Training.builder().id(1).title("title1").
+                sessions(List.of(session)).build();
+        Training training2 = Training.builder().id(2).title("title2").description("test").inter(true).build();
+        Mockito.when(subThemeRepository.findById(subThemeId)).thenReturn(Optional.of(subTheme));
+        Mockito.when(trainingRepository.findAllBySubThemes(List.of(subTheme))).thenReturn(List.of(training1, training2));
+
+        //act
+        List<TrainingDtoGet> result = trainingService.getAllTrainingsBySubThemeId(subThemeId);
+
+        //assert
+        TrainingDtoGet trainingDtoGet = result.stream().filter(t -> t.getId() == 1).findFirst().get();
+        boolean sessionPresent = trainingDtoGet.getSessions().stream().anyMatch(s -> s.getId() == 1);
+        Assertions.assertTrue(sessionPresent);
+
     }
 
     @Test
@@ -159,5 +182,35 @@ public class TrainingServiceTest {
 
         //act & assert
         Assertions.assertThrows(NotFoundException.class, () -> trainingService.getTraining(trainingId));
+    }
+
+    @Test
+    public void GivenGetAllTrainings_ThenReturnAllTrainings(){
+        //arrange
+        Training training1 = Training.builder().id(1).title("title1").build();
+        Training training2 = Training.builder().id(2).title("title2").build();
+        List<Training> trainings = List.of(training1, training2);
+        Mockito.when(trainingRepository.findAll()).thenReturn(trainings);
+
+        //act
+        List<TrainingDtoGet> result = trainingService.getAllTrainings();
+
+        //assert
+        Assertions.assertEquals(2, result.size());
+        Assertions.assertTrue(result.stream().anyMatch(s -> s.getId() == 1));
+        Assertions.assertTrue(result.stream().anyMatch(s -> s.getId() == 2));
+    }
+
+    @Test
+    public void  GivenGetAllTrainings_ThenReturnEmptyList(){
+        //arrange
+        Mockito.when(trainingRepository.findAll()).thenReturn(List.of());
+
+        //act
+        List<TrainingDtoGet> result = trainingService.getAllTrainings();
+
+        //assert
+        Assertions.assertTrue(result.isEmpty());
+        Mockito.verify(trainingRepository, Mockito.times(1)).findAll();
     }
 }

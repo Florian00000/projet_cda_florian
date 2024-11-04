@@ -40,4 +40,9 @@ public class Session {
     @JoinColumn(name = "location_id")
     @JsonIgnore
     private Location location;
+
+    @ManyToOne
+    @JoinColumn(name = "training_id")
+    @JsonIgnore
+    private Training training;
 }

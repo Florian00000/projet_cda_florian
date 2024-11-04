@@ -1,10 +1,11 @@
 package com.example.it_training_back.dto.training;
 
+import com.example.it_training_back.entity.Session;
 import com.example.it_training_back.entity.SubTheme;
 import com.example.it_training_back.entity.Training;
-import lombok.Builder;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -18,6 +19,7 @@ public class TrainingDtoGet {
     private String imagePath;
 
     private List<SubTheme> subThemes;
+    private List<Session> sessions;
 
     public TrainingDtoGet(Training training) {
         this.id = training.getId();
@@ -27,6 +29,7 @@ public class TrainingDtoGet {
         this.inter = training.isInter();
         this.imagePath = training.getImagePath();
         this.subThemes = training.getSubThemes();
+        this.sessions = training.getSessions();
     }
 
 

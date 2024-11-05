@@ -3,3 +3,15 @@
     gap: 20px;
     color: var(--blueButton);
 }
+
+.spaceAround{
+    display: flex;
+    justify-content: space-between;
+}
+
+.sectionTraining{
+    background-color: var(--blueBackgroundCard);
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 5px;
+}

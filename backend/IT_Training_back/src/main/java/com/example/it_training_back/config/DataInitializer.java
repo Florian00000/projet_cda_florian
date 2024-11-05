@@ -79,6 +79,8 @@ public class DataInitializer implements CommandLineRunner {
             trainingService.addLocation(locationDtoPost);
         }
 
+         */
+
         //fake Session
         for (int i = 0; i < 5; i++) {
             SessionDtoPost sessionDtoPost = SessionDtoPost.builder()
@@ -97,6 +99,5 @@ public class DataInitializer implements CommandLineRunner {
             trainingService.addSession(sessionDtoPost);
         }
 
-         */
     }
 }

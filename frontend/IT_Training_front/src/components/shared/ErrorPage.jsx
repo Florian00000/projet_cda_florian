@@ -6,8 +6,8 @@ const ErrorPage = () => {
 
     return (
         <>
-            <h1>Error: {error.status}  </h1>
-            <p> {error.data} </p>
+            <h1>Error: {error?.status || "Erreur inconnue"}  </h1>
+            <p> {error?.statusText || error?.data || error?.message || "Une erreur inattendue s'est produite."} </p>
             <Link to={'/'}>Revenir à l'accueil</Link>
         </>
     );

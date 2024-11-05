@@ -111,6 +111,12 @@ public class TrainingService {
         return new SessionDtoGet(session);
     }
 
+    public List<SessionDtoGet> getSessionsByTrainingID(int trainingID) {
+        trainingRepository.findById(trainingID).orElseThrow(() -> new NotFoundException("Training with id " + trainingID + " not found"));
+        List<Session> sessions = sessionRepository.findAllByTrainingId(trainingID);
+        return sessions.stream().map(SessionDtoGet::new).toList();
+    }
+
 
     //============================= Location =============================
 

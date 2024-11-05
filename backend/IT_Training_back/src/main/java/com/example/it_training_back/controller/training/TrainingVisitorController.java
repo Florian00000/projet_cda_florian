@@ -1,5 +1,6 @@
 package com.example.it_training_back.controller.training;
 
+import com.example.it_training_back.dto.session.SessionDtoGet;
 import com.example.it_training_back.dto.training.TrainingDtoGet;
 import com.example.it_training_back.service.TrainingService;
 import org.springframework.http.ResponseEntity;
@@ -31,5 +32,10 @@ public class TrainingVisitorController {
     @GetMapping("/training")
     public ResponseEntity<List<TrainingDtoGet>> getAllTrainings() {
         return ResponseEntity.ok(trainingService.getAllTrainings());
+    }
+
+    @GetMapping("/session/findByTraining/{trainingId}")
+    public ResponseEntity<List<SessionDtoGet>> getSessionsByTraining(@PathVariable int trainingId) {
+        return ResponseEntity.ok(trainingService.getSessionsByTrainingID(trainingId));
     }
 }

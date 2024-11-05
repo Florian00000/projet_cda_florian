@@ -18,6 +18,7 @@ import org.mockito.Mockito;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 
 public class SessionServiceTest {
@@ -125,5 +126,45 @@ public class SessionServiceTest {
 
         //act & assert
         Assertions.assertThrows(IllegalArgumentException.class, () -> trainingService.addSession(sessionDtoPost));
+    }
+
+    @Test
+    public void GivenGetSessionsByTrainingID_WhenTrainingHaveNonExistantId_ThenThrowException() {
+        //arrange
+        Mockito.when(trainingRepository.findById(1)).thenReturn(Optional.empty());
+
+        //act & assert
+        Assertions.assertThrows(NotFoundException.class, () -> trainingService.getSessionsByTrainingID(1));
+    }
+
+    @Test
+    public void GivenGetSessionsByTrainingID_ThenReturnSessions() {
+        //arrange
+        Session session1 = Session.builder().id(1).build();
+        Session session2 = Session.builder().id(2).build();
+        Mockito.when(trainingRepository.findById(1)).thenReturn(Optional.of(Training.builder().id(1).build()));
+        Mockito.when(sessionRepository.findAllByTrainingId(1)).thenReturn(List.of(session1, session2));
+
+        //act
+        List<SessionDtoGet> result = trainingService.getSessionsByTrainingID(1);
+
+        //assert
+        Assertions.assertEquals(2, result.size());
+        Assertions.assertTrue(result.stream().anyMatch(s -> s.getId() == 1));
+        Assertions.assertTrue(result.stream().anyMatch(s -> s.getId() == 2));
+    }
+
+    @Test
+    public void GivenGetSessionsByTrainingID_ThenReturnEmptyList(){
+        //arrange
+        Mockito.when(trainingRepository.findById(1)).thenReturn(Optional.of(Training.builder().id(1).build()));
+        Mockito.when(sessionRepository.findAllByTrainingId(1)).thenReturn(List.of());
+
+        //act
+        List<SessionDtoGet> result = trainingService.getSessionsByTrainingID(1);
+
+        //assert
+        Assertions.assertTrue(result.isEmpty());
+        Mockito.verify(sessionRepository, Mockito.times(1)).findAllByTrainingId(1);
     }
 }

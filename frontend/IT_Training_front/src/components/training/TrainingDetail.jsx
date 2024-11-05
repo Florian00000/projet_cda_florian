@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTrainingById } from "./trainingSlice";
+import { fetchSessionsByTrainingId, fetchTrainingById } from "./trainingSlice";
 import { useParams, Link } from "react-router-dom";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -12,9 +12,11 @@ const TrainingDetail = () => {
   const dispatch = useDispatch();
   const { idTraining } = useParams();
   const training = useSelector((state) => state.training.training);
+  const sessions = useSelector((state) => state.training.sessions);
 
   useEffect(() => {
     dispatch(fetchTrainingById(idTraining));
+    dispatch(fetchSessionsByTrainingId(idTraining))
   }, [idTraining, dispatch]);
 
   return (
@@ -46,8 +48,8 @@ const TrainingDetail = () => {
               </div>
             </section>
 
-            { training.sessions.length && (<section>
-                {training.sessions.map((session, index) => (
+            { sessions.length && (<section className={classes.sectionSessions}>
+                {sessions.map((session, index) => (
                     <SessionCube key={index} session={session}/>
                 ))}
             </section>)}

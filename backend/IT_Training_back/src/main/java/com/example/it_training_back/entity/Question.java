@@ -1,5 +1,6 @@
 package com.example.it_training_back.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,8 +27,10 @@ public class Question {
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_test_user")
+    @JsonIgnore
     private TestUser testUser;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Proposition> propositions;
 }

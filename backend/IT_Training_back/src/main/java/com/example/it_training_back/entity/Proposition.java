@@ -1,5 +1,6 @@
 package com.example.it_training_back.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,9 +18,11 @@ public class Proposition {
     @Column(name = "id_proposition")
     private long id;
 
-    private String proposition;
+    @Column(nullable = false)
+    private String option;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_question")
+    @JsonIgnore
     private Question question;
 }

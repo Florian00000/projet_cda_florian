@@ -27,5 +27,6 @@ public class TestUser {
     private List<Training> trainings;
 
     @OneToMany(mappedBy = "testUser", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Question> questions;
 }

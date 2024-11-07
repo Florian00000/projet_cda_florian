@@ -2,6 +2,8 @@ package com.example.it_training_back.service;
 
 import com.example.it_training_back.dto.testUser.TestUserDtoGet;
 import com.example.it_training_back.dto.testUser.TestUserDtoPost;
+import com.example.it_training_back.dto.testUser.proposition.PropositionDtoGet;
+import com.example.it_training_back.dto.testUser.question.QuestionDtoGet;
 import com.example.it_training_back.dto.testUser.question.QuestionDtoPost;
 import com.example.it_training_back.dto.training.TrainingDtoGet;
 import com.example.it_training_back.entity.Proposition;
@@ -98,6 +100,16 @@ public class TestUserService {
         training.setTestUser(testUser);
         trainingRepository.save(training);
         return new TrainingDtoGet(training);
+    }
+
+    public QuestionDtoGet getQuestion(long id){
+        Question question = questionRepository.findById(id).orElseThrow(() -> new NotFoundException("Question with "+id+" not found"));
+        return new QuestionDtoGet(question);
+    }
+
+    public PropositionDtoGet getProposition(long id){
+        Proposition proposition = propositionRepository.findById(id).orElseThrow(() -> new NotFoundException("Proposition with "+id+" not found"));
+        return new PropositionDtoGet(proposition);
     }
 
 }

@@ -2,7 +2,9 @@ package com.example.it_training_back;
 
 import com.example.it_training_back.dto.testUser.TestUserDtoGet;
 import com.example.it_training_back.dto.testUser.TestUserDtoPost;
+import com.example.it_training_back.dto.testUser.proposition.PropositionDtoGet;
 import com.example.it_training_back.dto.testUser.proposition.PropositionDtoPost;
+import com.example.it_training_back.dto.testUser.question.QuestionDtoGet;
 import com.example.it_training_back.dto.testUser.question.QuestionDtoPost;
 import com.example.it_training_back.dto.training.TrainingDtoGet;
 import com.example.it_training_back.entity.Proposition;
@@ -239,5 +241,51 @@ public class TestUserServiceTest {
 
         //act & assertion
         Assertions.assertThrows(NotFoundException.class, () -> testUserService.addTestToTraining(1L, 1));
+    }
+
+    @Test
+    public void GivenExistantIdForQuestion_WhenGetQuestion_ThenReturnQuestion() {
+        //arrange
+        Question question = Question.builder().id(1L).propositions(List.of()).build();
+        Mockito.when(questionRepository.findById(1L)).thenReturn(Optional.of(question));
+
+        //act
+        QuestionDtoGet result = testUserService.getQuestion(1L);
+
+        //assert
+        Mockito.verify(questionRepository, Mockito.times(1)).findById(1L);
+        Assertions.assertEquals(1L, result.getId());
+    }
+
+    @Test
+    public void GivenNonExistantIdForQuestion_WhenGetQuestion_ThenThrowException(){
+        //arrange
+        Mockito.when(questionRepository.findById(1L)).thenReturn(Optional.empty());
+
+        //act & assert
+        Assertions.assertThrows(NotFoundException.class, () -> testUserService.getQuestion(1L));
+    }
+
+    @Test
+    public void GivenExistantIdForProposition_WhenGetProposition_ThenReturnProposition(){
+        //arrange
+        Proposition proposition = Proposition.builder().id(1L).build();
+        Mockito.when(propositionRepository.findById(1L)).thenReturn(Optional.of(proposition));
+
+        //act
+        PropositionDtoGet result = testUserService.getProposition(1L);
+
+        //assert
+        Mockito.verify(propositionRepository, Mockito.times(1)).findById(1L);
+        Assertions.assertEquals(1L, result.getId());
+    }
+
+    @Test
+    public void GivenNonExistantIdForProposition_WhenGetProposition_ThenThrowException(){
+        //arrange
+        Mockito.when(propositionRepository.findById(1L)).thenReturn(Optional.empty());
+
+        //act & assert
+        Assertions.assertThrows(NotFoundException.class, () -> testUserService.getProposition(1L));
     }
 }

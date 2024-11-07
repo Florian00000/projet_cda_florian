@@ -3,9 +3,12 @@ package com.example.it_training_back.service;
 import com.example.it_training_back.dto.testUser.TestUserDtoGet;
 import com.example.it_training_back.dto.testUser.TestUserDtoPost;
 import com.example.it_training_back.dto.testUser.question.QuestionDtoPost;
+import com.example.it_training_back.dto.training.TrainingDtoGet;
 import com.example.it_training_back.entity.Proposition;
 import com.example.it_training_back.entity.Question;
 import com.example.it_training_back.entity.TestUser;
+import com.example.it_training_back.entity.Training;
+import com.example.it_training_back.exception.NotFoundException;
 import com.example.it_training_back.repository.TrainingRepository;
 import com.example.it_training_back.repository.testUser.PropositionRepository;
 import com.example.it_training_back.repository.testUser.QuestionRepository;
@@ -76,6 +79,25 @@ public class TestUserService {
         }
 
         return new TestUserDtoGet(testUserSaved);
+    }
+
+    public TestUserDtoGet getTestUser(long id) {
+        TestUser testUser = testUserRepository.findById(id).orElseThrow(() -> new NotFoundException("Test user with "+id+" not found"));
+        return new TestUserDtoGet(testUser);
+    }
+
+    public List<TestUserDtoGet> getAllTestUsers() {
+        List<TestUser> testUserList = (List<TestUser>) testUserRepository.findAll();
+        return testUserList.stream().map(TestUserDtoGet::new).toList();
+    }
+
+    public TrainingDtoGet addTestToTraining(long testId, int trainingId) {
+        TestUser testUser = testUserRepository.findById(testId).orElseThrow(() -> new NotFoundException("Test user with "+testId+" not found"));
+        Training training = trainingRepository.findById(trainingId).orElseThrow(() -> new NotFoundException("Training with "+trainingId+" not found"));
+
+        training.setTestUser(testUser);
+        trainingRepository.save(training);
+        return new TrainingDtoGet(training);
     }
 
 }

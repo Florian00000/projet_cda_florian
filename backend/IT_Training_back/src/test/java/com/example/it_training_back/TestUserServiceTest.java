@@ -46,7 +46,7 @@ public class TestUserServiceTest {
     public void GivenValidTestUser_WhenAddTestUser_ThenSaveTestUser() {
         //arrange
         TestUserDtoPost testUserDtoPost = TestUserDtoPost.builder()
-                .expectedResult(35)
+                .expectedResult(1)
                 .questions(List.of(
                         QuestionDtoPost.builder()
                                 .label("question1")
@@ -83,6 +83,24 @@ public class TestUserServiceTest {
         Assertions.assertEquals(35, result.getExpectedResult());
         Assertions.assertEquals(2, result.getQuestions().size());
         Assertions.assertEquals("question1", result.getQuestions().get(0).getLabel());
+    }
+
+    @Test
+    public void GivenExpectedResultGreaterThanQuestionsSize_WhenAddTestUser_ThenThrowException() {
+        //arrange
+        TestUserDtoPost testUserDtoPost = TestUserDtoPost.builder()
+                .expectedResult(5)
+                .questions(List.of(
+                        QuestionDtoPost.builder()
+                                .label("question1")
+                                .answer("option1")
+                                .propositions(List.of())
+                                .build()
+                ))
+                .build();
+
+        //act & assert
+        Assertions.assertThrows(IllegalArgumentException.class, () -> testUserService.addTestUser(testUserDtoPost));
     }
 
     @Test

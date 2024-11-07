@@ -45,6 +45,11 @@ public class TestUserService {
         if ( testUserDtoPost.getQuestions() == null || testUserDtoPost.getQuestions().isEmpty()){
             throw new IllegalArgumentException("Questions cannot be null or empty");
         }
+
+        if (testUserDtoPost.getQuestions().size() < testUserDtoPost.getExpectedResult()){
+            throw new IllegalArgumentException("The expected result cannot be greater than the number of questions");
+        }
+
         TestUser testUser = TestUser.builder()
                 .expectedResult(testUserDtoPost.getExpectedResult())
                 .build();

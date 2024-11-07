@@ -18,7 +18,7 @@ public class Proposition {
     @Column(name = "id_proposition")
     private long id;
 
-    @Column(nullable = false)
+    @Column(name = "option_value", nullable = false)
     private String option;
 
     @ManyToOne(cascade = CascadeType.MERGE)

@@ -25,12 +25,12 @@ public class Question {
     @Column(nullable = false)
     private String answer;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_test_user")
     @JsonIgnore
     private TestUser testUser;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "question", cascade = CascadeType.MERGE)
     @JsonIgnore
     private List<Proposition> propositions;
 }

@@ -40,8 +40,11 @@ public class TestUserService {
         if ( testUserDtoPost.getQuestions() == null || testUserDtoPost.getQuestions().isEmpty()){
             throw new IllegalArgumentException("Questions cannot be null or empty");
         }
-        TestUser testUser = TestUser.builder().expectedResult(testUserDtoPost.getExpectedResult()).build();
-        testUser = testUserRepository.save(testUser);
+        TestUser testUser = TestUser.builder()
+                .expectedResult(testUserDtoPost.getExpectedResult())
+                .build();
+        TestUser testUserSaved = testUserRepository.save(testUser);
+        testUserSaved.setQuestions(new ArrayList<>());
 
         for (QuestionDtoPost questionDtoPost : testUserDtoPost.getQuestions()) {
 
@@ -54,7 +57,12 @@ public class TestUserService {
                     .answer(questionDtoPost.getAnswer())
                     .testUser(testUser)
                     .build();
-            questionRepository.save(question);
+            Question questionSaved = questionRepository.save(question);
+
+            if (questionDtoPost.getPropositions().stream()
+                    .noneMatch(propositionDtoPost -> propositionDtoPost.getOption().equals(question.getAnswer()))){
+                throw new IllegalArgumentException("no option matches the solution");
+            }
 
             List<Proposition> propositions = questionDtoPost.getPropositions().stream()
                     .map(propositionDto -> Proposition.builder()
@@ -62,10 +70,12 @@ public class TestUserService {
                             .question(question)
                             .build())
                     .toList();
-            propositionRepository.saveAll(propositions);
+            List<Proposition> propositionList = (List<Proposition>) propositionRepository.saveAll(propositions);
+            questionSaved.setPropositions(propositionList);
+            testUserSaved.getQuestions().add(questionSaved);
         }
 
-        return new TestUserDtoGet(testUser);
+        return new TestUserDtoGet(testUserSaved);
     }
 
 }

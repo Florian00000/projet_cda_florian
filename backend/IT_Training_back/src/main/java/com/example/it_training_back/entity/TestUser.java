@@ -26,7 +26,7 @@ public class TestUser {
     @JsonIgnore
     private List<Training> trainings;
 
-    @OneToMany(mappedBy = "testUser", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "testUser", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Question> questions;
 }

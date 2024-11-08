@@ -1,0 +1,11 @@
+main{
+    height: calc(100vh - 100px);
+    display: flex;
+    flex-direction: column;
+    grid-column: 2/3;
+}
+
+#master{
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr;
+}

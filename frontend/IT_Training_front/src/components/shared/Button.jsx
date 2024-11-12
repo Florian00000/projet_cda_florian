@@ -1,9 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 
-const Button = ({children}) => {
+const Button = ({
+    children,
+    disabled = false,
+    type = 'button',
+    onClick
+}) => {
     return (
-        <button>
+        <button type={type} disabled={disabled} onClick={onClick}> 
             {children}
         </button>
     );
@@ -11,7 +16,10 @@ const Button = ({children}) => {
 
 Button.propTypes = {
     children: PropTypes.node.isRequired,
-    onclick: PropTypes.func
+    onclick: PropTypes.func,
+    disabled: PropTypes.bool,
+    type: PropTypes.oneOf(['button', 'submit', 'reset']),
+    onClick: PropTypes.func
 }
 
 export default Button;

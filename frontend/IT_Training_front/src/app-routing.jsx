@@ -4,6 +4,7 @@ import ErrorPage from "./components/shared/ErrorPage";
 import HomeTheme from "./components/theme/HomeTheme";
 import TrainingDetail from "./components/training/TrainingDetail";
 import TestUser from "./components/testUser/TestUser";
+import ResultTest from "./components/testUser/ResultTest";
 
 const router = createBrowserRouter([
     {
@@ -19,7 +20,8 @@ const router = createBrowserRouter([
                 path: "/:idList", element: <HomeTheme/>
             },
             {path: "/training/:idTraining", element: <TrainingDetail/>},
-            {path: "/training/prérequis/:idTestUSer", element: <TestUser/>}
+            {path: "/training/testUser/:idTestUser", element: <TestUser/>},
+            {path: "/training/testUser/result", element: <ResultTest/>}
         ]
     }
 ]);

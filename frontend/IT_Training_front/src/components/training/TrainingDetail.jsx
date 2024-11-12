@@ -21,7 +21,7 @@ const TrainingDetail = () => {
   }, [idTraining, dispatch]);
 
   const redirectTo = () => {
-    navigate(`/training/prérequis/${training.testUser.id}`)
+    navigate(`/training/testUser/${training.testUser.id}`)
   }
 
   return (

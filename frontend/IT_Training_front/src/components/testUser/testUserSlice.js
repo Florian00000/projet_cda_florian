@@ -8,17 +8,28 @@ export const fetchTestUserById = createAsyncThunk("testUser/fetchTestUserById", 
     return data;
 })
 
+export const fetchQuestionById = createAsyncThunk("testUser/fetchQuestionById", async (idQuestion) => {
+    const response = await axios.get(`${BASE_URL}test-user/question/${idQuestion}`)
+    const data = await response.data;
+    return data; 
+} )
+
 const testUserSlice = createSlice({
     name:"testUser",
     initialState: {
-        testUser: null
+        testUser: null,
+        question : null
     },
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(fetchTestUserById.fulfilled, (state, actions) => {
             state.testUser = actions.payload;
             console.log(actions.payload);            
-        })
+        });
+        builder.addCase(fetchQuestionById.fulfilled, (state, actions) => {
+            state.question = actions.payload;
+            console.log(actions.payload);            
+        } )
     }
 })
 

@@ -7,7 +7,9 @@
   color: #271A38;
   background-color: #FFFAEE;
 
+  --backgroundColor: #FFFAEE;
   --blueHeader: #9CC7F2;
+  --blueHeaderOpacity:rgba(156, 199, 242, 0.95);
   --greyCard: #E6E6E6;
   --blueButton: #0F4C8A;
   --blueBackgroundCard: #E2EBF0;
@@ -62,6 +64,9 @@ button {
 }
 button:not([disabled]):hover {
   border-color: var(--greyCard);
+}
+button:disabled{
+  cursor: default;
 }
 button:focus,
 button:focus-visible {

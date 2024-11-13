@@ -37,7 +37,6 @@ Button.propTypes = {
     onClick: PropTypes.func,
     disabled: PropTypes.bool,
     type: PropTypes.oneOf(['button', 'submit', 'reset']),
-    onClick: PropTypes.func,
     size: PropTypes.oneOf(['small', 'medium', 'large'])
 }
 

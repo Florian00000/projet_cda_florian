@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchQuestionById, fetchTestUserById } from "./testUserSlice";
 import Button from "../shared/Button";
+import classes from "./TestUser.module.css"
 
 const TestUser = () => {
     const dispatch = useDispatch();
@@ -30,10 +31,7 @@ const TestUser = () => {
     };
 
     const validateAnswer = () => {
-        // if (testUser && selectedAnswer == testQuestion.answer) {
-        //     setScore((prevNumber) => prevNumber + 1);
-        // }
-
+    
         const isCorrect = selectedAnswer === testQuestion.answer
         const updatedScore = isCorrect ? score + 1 : score;
 
@@ -55,7 +53,7 @@ const TestUser = () => {
         <main>
             {testQuestion ? (
                 <>
-                    <article>
+                    <article className={classes.articleTitle}>
                         <div>
                             <h2> Test des prérequis </h2>
                             <hr />
@@ -63,11 +61,11 @@ const TestUser = () => {
                     </article>
 
                     <section>
-                        <article>
+                        <article className={classes.articleQuestion}>
                             <h3>Question:</h3>
                             <p>{testQuestion.label} </p>
                         </article>
-                        <article>
+                        <article className={classes.articleQuestion}>
                             <h3>Réponses possibles: </h3>
                             {testQuestion.propositions.map((proposition, index) => (
                                 <div key={index}>
@@ -83,14 +81,15 @@ const TestUser = () => {
                                 </div>
                             ))}
                         </article>
-                        <article>
+                        <article className={classes.articleBottom}>
                             <p>
-                                Question <span>{questionNumber + 1}</span> /{" "}
+                                Question <span className={classes.numberQuestion} >{questionNumber + 1}</span> /{" "}
                                 {testUser.questions.length}{" "}
                             </p>
-                            <Button
-                                children={"Valider ma réponse"}
+                            <Button                                
+                                children={questionNumber < testUser.questions.length - 1 ? "Valider ma réponse"  : "Valider le Test"}
                                 onClick={validateAnswer}
+                                disabled={!selectedAnswer}
                             ></Button>
                         </article>
                     </section>

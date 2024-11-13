@@ -5,21 +5,40 @@ const Button = ({
     children,
     disabled = false,
     type = 'button',
-    onClick
+    onClick,
+    size = 'medium'
 }) => {
+
+    let buttonClass = '';
+    switch (size) {
+        case 'small':
+            buttonClass = 'button-small';
+            break;
+        case 'medium':
+            buttonClass = 'button-medium';
+            break;
+        case 'large':
+            buttonClass = 'button-large';
+            break;    
+        default:
+            buttonClass = 'button-medium';
+            break;
+    }
+
     return (
-        <button type={type} disabled={disabled} onClick={onClick}> 
-            {children}
-        </button>
+    <button type={type} disabled={disabled} onClick={onClick} className={buttonClass}>
+        {children}
+    </button>
     );
 }
 
 Button.propTypes = {
     children: PropTypes.node.isRequired,
-    onclick: PropTypes.func,
+    onClick: PropTypes.func,
     disabled: PropTypes.bool,
     type: PropTypes.oneOf(['button', 'submit', 'reset']),
-    onClick: PropTypes.func
+    onClick: PropTypes.func,
+    size: PropTypes.oneOf(['small', 'medium', 'large'])
 }
 
 export default Button;

@@ -30,7 +30,7 @@
     top: 100%; 
     left: 0;
     background-color: var(--blueHeaderOpacity);
-    box-shadow:4px 4px 5px rgba(0, 0, 0, 0.1);
+    /* box-shadow:4px 4px 5px rgba(0, 0, 0, 0.1); */
     border-radius: 5px ;
     min-width: 150px;
     z-index: 10;

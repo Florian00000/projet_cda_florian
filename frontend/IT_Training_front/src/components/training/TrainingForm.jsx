@@ -1,27 +1,42 @@
 import React, { useRef, useState } from 'react';
 import Button from '../shared/Button';
+import { useDispatch } from 'react-redux';
+import { addTraining } from './trainingSlice';
 
 const TrainingForm = () => {
+    const dispatch = useDispatch();
 
     const titleRef = useRef();
     const [trainingType, setTrainingType] = useState(true)
     const priceRef = useRef();
     const descriptionRef = useRef();
     const imageRef = useRef();
+
+    const getBase64 = file => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+        })
+    }
     
-    const trainingSubmit = (e) => {
-        e.preventDefault();    
+    const trainingSubmit = async (e) => {
+        e.preventDefault();           
 
         const training = {
             title: titleRef.current.value,
             description: descriptionRef.current.value,
             price: priceRef.current.value,
             inter: trainingType,
-            imagePath: `/images/${imageRef.current.value.substring(12)}` ,
             subThemes: []
         }
+        if (imageRef.current.files[0]) {
+            const base64image = await getBase64(imageRef.current.files[0]);
+            training.imagePath = base64image;
+        }
         console.log(training);
-        
+        dispatch(addTraining(training));
     };
 
     const handleTypeChange = (e) => {

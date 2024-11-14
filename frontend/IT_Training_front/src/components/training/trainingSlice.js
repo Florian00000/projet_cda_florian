@@ -9,6 +9,12 @@ export const fetchTrainingById = createAsyncThunk("training/fetchTrainingById", 
     return data;
 });
 
+export const addTraining = createAsyncThunk("training/addTraining", async(training) => {
+    const response = await axios.post(`${BASE_URL}admin/training/add`,training);
+    const status =  response.status;
+    return status;
+})
+
 export const fetchSessionsByTrainingId = createAsyncThunk("training/fetchSessionsByTrainingId", async (idTraining) => {
     const response = await axios.get(`${BASE_URL}session/findByTraining/${idTraining}`)
     const data = await response.data;
@@ -27,11 +33,16 @@ const trainingSlice = createSlice({
             state.training = actions.payload;
             console.log(actions.payload);           
         });
+        builder.addCase((addTraining.fulfilled), (state, actions) => {
+            console.log(actions.payload);            
+        } )
+
         builder.addCase(fetchSessionsByTrainingId.fulfilled, (state, actions) => {
             state.sessions = actions.payload;
             console.log(actions.payload);
             
-        })
+        });
+
     }
 })
 

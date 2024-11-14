@@ -23,7 +23,7 @@ const Navbar = () => {
                                 
                 {isDropdownVisible && (
                     <div className={classes.dropdown} >
-                        <Link to={"#"} className={classes.dropdownItem} >Ajouter Formation</Link>
+                        <Link to={"/training/admin/addTraining"} className={classes.dropdownItem} >Ajouter Formation</Link>
                         <Link to={"#"} className={classes.dropdownItem} >test</Link>
                         <Link to={"#"} className={classes.dropdownItem} >test</Link>
                     </div>

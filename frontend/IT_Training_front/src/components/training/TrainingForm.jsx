@@ -1,25 +1,20 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Button from '../shared/Button';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addTraining } from './trainingSlice';
+import { fetchAllSubThemes } from '../theme/themeSlice';
+import { getBase64 } from '../../utils/methods';
 
 const TrainingForm = () => {
     const dispatch = useDispatch();
+    const subThemes = useSelector((state) => state.theme.list)
 
     const titleRef = useRef();
     const [trainingType, setTrainingType] = useState(true)
     const priceRef = useRef();
     const descriptionRef = useRef();
     const imageRef = useRef();
-
-    const getBase64 = file => {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onloadend = () => resolve(reader.result);
-            reader.onerror = reject;
-            reader.readAsDataURL(file);
-        })
-    }
+    const [selectedSubThemes, setSelectedSubThemes] = useState([]);
     
     const trainingSubmit = async (e) => {
         e.preventDefault();           
@@ -29,7 +24,7 @@ const TrainingForm = () => {
             description: descriptionRef.current.value,
             price: priceRef.current.value,
             inter: trainingType,
-            subThemes: []
+            subThemes: selectedSubThemes
         }
         if (imageRef.current.files[0]) {
             const base64image = await getBase64(imageRef.current.files[0]);
@@ -42,6 +37,16 @@ const TrainingForm = () => {
     const handleTypeChange = (e) => {
         setTrainingType(e.target.value === "inter")
     }
+
+    const handleSubThemeChange = (e) => {
+        const value = +e.target.value;
+        setSelectedSubThemes((prev) => 
+        e.target.checked ? [...prev, value] : prev.filter((id) => id !== value))
+    }
+
+    useEffect(() => {
+        dispatch(fetchAllSubThemes())
+    }, [dispatch])
 
     return (
         <main>
@@ -84,6 +89,16 @@ const TrainingForm = () => {
                     <label htmlFor="image">Ajouter une image:</label>
                     <input type="file" id="image" accept='.jpg, .jpeg, .png' ref={imageRef}/>
                 </div>
+
+                <fieldset>
+                    <legend>Ajouter des thèmes</legend>
+                    {subThemes.map((subTheme, index) => (
+                        <div key={index}>
+                            <input type="checkbox" id={subTheme.id} value={subTheme.id} onChange={handleSubThemeChange}/>
+                            <label htmlFor={subTheme.id}>{subTheme.title} </label>
+                        </div>
+                    ))}
+                </fieldset>
 
 
                 <Button type={"submit"} children={"Valider"}/>

@@ -35,7 +35,7 @@ const TrainingDetail = () => {
             </div>
 
             <div className={classes.listSubThemes}>
-              {training.subThemes.map((subTheme, index) => (
+              { training.subThemes && training.subThemes.map((subTheme, index) => (
                 <span key={index}>{subTheme.title}</span>
               ))}
             </div>

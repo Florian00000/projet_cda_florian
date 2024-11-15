@@ -1,13 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Button from '../shared/Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTraining } from './trainingSlice';
+import { addTraining, changeStatusAddTraining } from './trainingSlice';
 import { fetchAllSubThemes } from '../theme/themeSlice';
 import { getBase64 } from '../../utils/methods';
+import Modal from '../shared/modal/Modal';
+import { useNavigate } from 'react-router-dom';
 
 const TrainingForm = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const subThemes = useSelector((state) => state.theme.list)
+    const returnStatus = useSelector((state) => state.training.statusAddTraining)
+    const training = useSelector((state) => state.training.training)
+    const [isModalOpen, setModalOpen] = useState(false);
 
     const titleRef = useRef();
     const [trainingType, setTrainingType] = useState(true)
@@ -44,12 +50,34 @@ const TrainingForm = () => {
         e.target.checked ? [...prev, value] : prev.filter((id) => id !== value))
     }
 
+    const closeModal = () => {
+        dispatch(changeStatusAddTraining(null))        
+        setModalOpen(false);
+        navigate(`/training/${training.id}`)
+    }
+
     useEffect(() => {
-        dispatch(fetchAllSubThemes())
+        dispatch(fetchAllSubThemes())        
     }, [dispatch])
+
+    useEffect(() => {
+        if (returnStatus) {           
+            
+            setModalOpen(true)
+        }
+    }, [returnStatus])
+
 
     return (
         <main>
+            
+            {isModalOpen && (
+                console.log("modal"),
+                <Modal changeModal={closeModal} buttonChildren={"ok"}>
+                    <p>Formation ajouté avec succès</p>
+                </Modal>
+            )}
+
             <div>
               <h2> Ajouter une Formation </h2>
               <hr />

@@ -11,8 +11,7 @@ export const fetchTrainingById = createAsyncThunk("training/fetchTrainingById", 
 
 export const addTraining = createAsyncThunk("training/addTraining", async(training) => {
     const response = await axios.post(`${BASE_URL}admin/training/add`,training);
-    const status =  response.status;
-    return status;
+    return response.data;
 })
 
 export const fetchSessionsByTrainingId = createAsyncThunk("training/fetchSessionsByTrainingId", async (idTraining) => {
@@ -25,17 +24,23 @@ const trainingSlice = createSlice({
     name:"training",
     initialState: {
         training: null,
-        sessions: []
+        sessions: [],
+        statusAddTraining: null
     },
-    reducers: {},
+    reducers: {
+        changeStatusAddTraining: (state, actions) => {
+            state.statusAddTraining = actions.payload;             
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(fetchTrainingById.fulfilled, (state, actions) => {
             state.training = actions.payload;
             console.log(actions.payload);           
         });
         builder.addCase((addTraining.fulfilled), (state, actions) => {
-            console.log(actions.payload);            
-        } )
+            state.training = actions.payload;
+            state.statusAddTraining = true;            
+        })
 
         builder.addCase(fetchSessionsByTrainingId.fulfilled, (state, actions) => {
             state.sessions = actions.payload;
@@ -45,5 +50,5 @@ const trainingSlice = createSlice({
 
     }
 })
-
+export const { changeStatusAddTraining } = trainingSlice.actions;
 export default trainingSlice.reducer;

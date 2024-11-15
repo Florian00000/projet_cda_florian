@@ -46,14 +46,15 @@ const TrainingDetail = () => {
                   {training.description}
                 </Markdown>
               </div>
-              {training.price && <p>prix: {training.price} €</p>}
+              {training.price && training.price != 0 ? (<p>prix: {training.price} €</p>) : ((<p>prix: gratuit</p>))}
+
               <div className={classes.spaceAround}>
                 <Link to={"#"}>Entreprise? je personnalise ma formation</Link>
                 {training.testUser ? <Button children={"Tester ses compétences"} onClick={redirectTo}></Button> : <Button children={"Tester ses compétences"} disabled={true} ></Button>}
               </div>
             </section>
 
-            { sessions.length && (<section className={classes.sectionSessions}>
+            {sessions.length != 0 && (<section className={classes.sectionSessions}>
                 {sessions.map((session, index) => (
                     <SessionCube key={index} session={session}/>
                 ))}

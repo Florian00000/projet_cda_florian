@@ -6,6 +6,7 @@ import { fetchAllSubThemes } from '../theme/themeSlice';
 import { getBase64 } from '../../utils/methods';
 import Modal from '../shared/modal/Modal';
 import { useNavigate } from 'react-router-dom';
+import classes from "./TrainingForm.module.css";
 
 const TrainingForm = () => {
     const dispatch = useDispatch();
@@ -82,13 +83,13 @@ const TrainingForm = () => {
               <h2> Ajouter une Formation </h2>
               <hr />
             </div>
-            <form onSubmit={trainingSubmit}>
-                <div>
+            <form onSubmit={trainingSubmit} className={classes.formAddTraining} >
+                <div className={classes.inpuTitle}>
                     <label htmlFor="title">Titre: </label>
                     <input type="text" id='title' required ref={titleRef} />
                 </div>
 
-                <fieldset>
+                <fieldset className={classes.inputInter}>
                     <legend>Type de formation</legend>
                     <div>
                         <input type="radio" name="type" id="inter" value="inter" 
@@ -102,23 +103,23 @@ const TrainingForm = () => {
                     </div>
                 </fieldset>
 
-                <div>
+                <div className={classes.inputPrice}>
                     <label htmlFor="price">prix: </label>
                     <input type="number" id="price" min={0} step={0.01} ref={priceRef} required />
                 </div>
                 
-                <div>
+                <div className={classes.inputDescription} >
                     <label htmlFor="description">Descriptif de la formation: </label>
-                    <textarea id="description" rows={10} cols={35} ref={descriptionRef} defaultValue={"# Vous pouvez écrire avec la syntaxe markdown."}>
+                    <textarea id="description" rows={10} cols={30} ref={descriptionRef} defaultValue={"# Vous pouvez écrire avec la syntaxe markdown."}>
                     </textarea>
                 </div>
 
-                <div>
+                <div className={classes.inputFile}>
                     <label htmlFor="image">Ajouter une image:</label>
                     <input type="file" id="image" accept='.jpg, .jpeg, .png' ref={imageRef}/>
                 </div>
 
-                <fieldset>
+                <fieldset className={classes.inputThemes}>
                     <legend>Ajouter des thèmes</legend>
                     {subThemes.map((subTheme, index) => (
                         <div key={index}>
@@ -128,8 +129,10 @@ const TrainingForm = () => {
                     ))}
                 </fieldset>
 
-
-                <Button type={"submit"} children={"Valider"}/>
+                    <div className={classes.buttonValidate}> 
+                        <Button type={"submit"} children={"Valider"} size={"large"}/>
+                    </div>
+                
 
             </form>
         </main>

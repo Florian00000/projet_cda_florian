@@ -84,11 +84,14 @@ button:focus-visible {
   height: 40px;
   min-width: 13vw;
 }
-/* 
+
 .button-large {
   padding: 12px 24px;
-  font-size: 20px;
-} */
+  font-size: 16px;
+  height: 40px;
+  padding: 8px 25px;
+  width: 100%;
+}
 
 input[type="radio"] {
   cursor: pointer; 
@@ -106,6 +109,44 @@ input[type="radio"] + label{
 input[type="radio"]:checked + label {
   color: var(--blueButton);
   font-weight: bold;
+}
+
+input[type="text"]{
+  background-color: var(--backgroundColor);
+  border: 2px solid var(--darkPurple);
+  color: var(--darkPurple);
+  padding-left: 10px;
+  border-radius: 5px;
+  height: 2.3em;
+}
+
+input[type="text"]:focus{
+  border: 1px solid var(--blueButton);
+}
+
+input[type="number"]{
+  background-color: var(--backgroundColor);
+  border: 2px solid var(--darkPurple);
+  color: var(--darkPurple);
+  padding-left: 10px;
+  border-radius: 5px;
+  height: 2.3em;
+  appearance: textfield;
+}
+
+input[type="number"]:focus{
+  border: 1px solid var(--blueButton);
+}
+
+textarea{
+  background-color: var(--backgroundColor);
+  color: var(--darkPurple);
+  border-radius: 5px;
+  border: 2px solid var(--darkPurple);
+}
+
+textarea:focus{
+  border: 2px solid var(--blueButton);
 }
 
 /* @media (prefers-color-scheme: dark) {

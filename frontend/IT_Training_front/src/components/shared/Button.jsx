@@ -6,7 +6,8 @@ const Button = ({
     disabled = false,
     type = 'button',
     onClick,
-    size = 'medium'
+    size = 'medium',
+    style
 }) => {
 
     let buttonClass = '';
@@ -26,7 +27,7 @@ const Button = ({
     }
 
     return (
-    <button type={type} disabled={disabled} onClick={onClick} className={buttonClass}>
+    <button type={type} disabled={disabled} onClick={onClick} className={buttonClass} style={style}>
         {children}
     </button>
     );

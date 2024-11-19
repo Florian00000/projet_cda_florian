@@ -1,0 +1,19 @@
+FROM maven AS builder
+
+WORKDIR /app
+
+COPY pom.xml .
+RUN mvn dependency:go-offline
+
+COPY /src ./src
+RUN mvn package
+
+FROM openjdk
+
+WORKDIR /app
+
+COPY --from=builder /app/target/IT_Training_back-0.0.1-SNAPSHOT.jar .
+
+EXPOSE 8080
+
+ENTRYPOINT [ "java", "-jar", "IT_Training_back-0.0.1-SNAPSHOT.jar" ]

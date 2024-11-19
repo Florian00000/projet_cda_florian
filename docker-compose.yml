@@ -54,3 +54,15 @@ services:
       - "8080:8080"
     networks:
       - id_training
+
+  front_it_training:
+    depends_on:
+      - back_it_training
+    container_name: front_it_training_container
+    build:
+      context: ./frontend/IT_Training_front
+      dockerfile: dockerfile
+    ports:
+      - "80:80"
+    networks:
+      - id_training

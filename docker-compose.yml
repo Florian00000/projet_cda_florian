@@ -1,0 +1,56 @@
+volumes:
+  docker_mysqldata:
+networks:
+  id_training:
+
+services:
+  mysql:
+    image: mysql
+    container_name: docker_mysql
+    restart: always
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABSE: projet_cda_db      
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+    volumes:
+      - docker_mysqldata:/var/lib/mysql
+      - ./sql/data.sql:/docker-entrypoint-initdb.d/data.sql
+    networks:
+      - id_training
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 5s
+      retries: 10
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: phpmyadmin_container
+    depends_on:
+      mysql:
+        condition: service_healthy
+    ports:
+      - "8033:80"
+    environment:
+      PMA_HOST: docker_mysql
+    networks:
+      - id_training
+  
+  back_it_training:
+    container_name: back_it_training_container
+    depends_on:
+      mysql:
+        condition: service_healthy
+    build:
+      context: ./backend/IT_Training_back
+      dockerfile: dockerfile
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://docker_mysql/projet_cda_db
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    ports:
+      - "8080:8080"
+    networks:
+      - id_training

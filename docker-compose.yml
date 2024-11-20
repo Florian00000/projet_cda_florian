@@ -1,5 +1,6 @@
 volumes:
   docker_mysqldata:
+  uploaded_images:
 networks:
   id_training:
 
@@ -12,7 +13,7 @@ services:
       - "3307:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABSE: projet_cda_db      
+      MYSQL_DATABASE: projet_cda_db      
       MYSQL_USER: user
       MYSQL_PASSWORD: user
     volumes:
@@ -50,6 +51,9 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://docker_mysql/projet_cda_db
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
+      SPRING_WEB_RESOURCES_STATIC-LOCATION: /app/public/images/,classpath:/public/
+    volumes:
+      - uploaded_images:/app/public/images
     ports:
       - "8080:8080"
     networks:

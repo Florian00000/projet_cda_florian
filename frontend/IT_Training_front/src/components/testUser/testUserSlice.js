@@ -3,13 +3,13 @@ import axios from "axios";
 import { BASE_URL } from "../../utils/constant";
 
 export const fetchTestUserById = createAsyncThunk("testUser/fetchTestUserById", async (idTestUser) => {
-    const response = await axios.get(`${BASE_URL}test-user/${idTestUser}`)
+    const response = await axios.get(`${BASE_URL}visitor/test-user/${idTestUser}`)
     const data = await response.data;
     return data;
 })
 
 export const fetchQuestionById = createAsyncThunk("testUser/fetchQuestionById", async (idQuestion) => {
-    const response = await axios.get(`${BASE_URL}test-user/question/${idQuestion}`)
+    const response = await axios.get(`${BASE_URL}visitor/test-user/question/${idQuestion}`)
     const data = await response.data;
     return data; 
 } )

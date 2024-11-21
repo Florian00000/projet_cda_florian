@@ -6,8 +6,10 @@ import com.example.it_training_back.dto.subTheme.SubThemeDtoPost;
 import com.example.it_training_back.dto.theme.ThemeDtoPost;
 import com.example.it_training_back.dto.training.TrainingDtoPost;
 import com.example.it_training_back.entity.Location;
+import com.example.it_training_back.entity.user.Role;
 import com.example.it_training_back.service.ThemeService;
 import com.example.it_training_back.service.TrainingService;
+import com.example.it_training_back.service.UserService;
 import com.github.javafaker.Faker;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -20,11 +22,13 @@ public class DataInitializer implements CommandLineRunner {
 
     private final ThemeService themeService;
     private final TrainingService trainingService;
+    private final UserService userService;
     Random rand = new Random();
 
-    public DataInitializer(ThemeService themeService, TrainingService trainingService) {
+    public DataInitializer(ThemeService themeService, TrainingService trainingService, UserService userService) {
         this.themeService = themeService;
         this.trainingService = trainingService;
+        this.userService = userService;
     }
 
     @Override
@@ -79,7 +83,7 @@ public class DataInitializer implements CommandLineRunner {
             trainingService.addLocation(locationDtoPost);
         }
 
-         */
+
 
         //fake Session
         for (int i = 0; i < 5; i++) {
@@ -99,5 +103,13 @@ public class DataInitializer implements CommandLineRunner {
             trainingService.addSession(sessionDtoPost);
         }
 
+
+
+        //ROLE
+        userService.createRole(Role.builder().role("USER").build());
+        userService.createRole(Role.builder().role("TRAINER").build());
+        userService.createRole(Role.builder().role("ADMIN").build());
+
+         */
     }
 }

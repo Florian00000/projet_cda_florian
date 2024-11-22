@@ -66,7 +66,7 @@ public class UserService implements UserDetailsService {
                             .map(this::findRole).toList();
                     user.setRoles(roles);
                 }else {
-                    user.setRoles(List.of(findRole("USER")));
+                    user.setRoles(List.of(findRole("ROLE_USER")));
                 }
             }catch (Exception e){
                 throw new IllegalArgumentException("problem with role allocation");

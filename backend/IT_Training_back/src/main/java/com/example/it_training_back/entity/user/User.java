@@ -33,7 +33,7 @@ public class User implements UserDetails {
     private int nbBlame;
     private String phone;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinTable(name = "user_role")
     @JsonIgnore
     private List<Role> roles;

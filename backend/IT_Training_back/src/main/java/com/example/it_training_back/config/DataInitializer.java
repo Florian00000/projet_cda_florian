@@ -106,9 +106,9 @@ public class DataInitializer implements CommandLineRunner {
 
 
         //ROLE
-        userService.createRole(Role.builder().role("USER").build());
-        userService.createRole(Role.builder().role("TRAINER").build());
-        userService.createRole(Role.builder().role("ADMIN").build());
+        userService.createRole(Role.builder().role("ROLE_USER").build());
+        userService.createRole(Role.builder().role("ROLE_TRAINER").build());
+        userService.createRole(Role.builder().role("ROLE_ADMIN").build());
 
          */
     }

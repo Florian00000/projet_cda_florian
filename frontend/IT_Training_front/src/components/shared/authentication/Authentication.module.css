@@ -1,0 +1,47 @@
+.mainForm{
+    align-items: center;
+}
+
+.sectionForm{
+    width: 60%;
+    margin-top: 6dvh;
+    background-color: var(--greyCard);
+    padding: 25px;
+    border-radius: 5px;
+}
+
+.hrTitle{
+    margin-bottom: 30px;
+}
+
+.inputBlock{
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0px;
+
+    & input {
+        margin-top: 3px;
+    }
+}
+
+.blockName{
+    display: flex;
+    justify-content: space-between;
+
+    & div {
+        display: flex;
+        flex-direction: column;
+        width: 48%;
+
+        & input {
+            margin-top: 3px;
+        }
+    }
+
+}
+
+.divButton{
+    margin: 5vh 0px;
+    display: flex;
+    justify-content: flex-end;
+}

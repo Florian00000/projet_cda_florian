@@ -7,6 +7,7 @@ import com.example.it_training_back.repository.LocationRepository;
 import com.example.it_training_back.repository.SessionRepository;
 import com.example.it_training_back.repository.SubThemeRepository;
 import com.example.it_training_back.repository.TrainingRepository;
+import com.example.it_training_back.repository.course.CourseRepository;
 import com.example.it_training_back.service.TrainingService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,10 +23,12 @@ public class LocationServiceTest {
     private final LocationRepository locationRepository = Mockito.mock(LocationRepository.class);
     private final SessionRepository sessionRepository = Mockito.mock(SessionRepository.class);
     private final SubThemeRepository subThemeRepository = Mockito.mock(SubThemeRepository.class);
+    private final CourseRepository courseRepository = Mockito.mock(CourseRepository.class);
 
     @BeforeEach
     public void setUp() {
-        trainingService = new TrainingService(trainingRepository, locationRepository, sessionRepository, subThemeRepository);
+        trainingService = new TrainingService(trainingRepository, locationRepository, sessionRepository,
+                subThemeRepository, courseRepository);
     }
 
     @Test

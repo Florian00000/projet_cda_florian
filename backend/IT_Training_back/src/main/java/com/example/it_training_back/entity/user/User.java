@@ -1,5 +1,6 @@
 package com.example.it_training_back.entity.user;
 
+import com.example.it_training_back.entity.course.Presence;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -37,6 +38,10 @@ public class User implements UserDetails {
     @JoinTable(name = "user_role")
     @JsonIgnore
     private List<Role> roles;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Presence> presences;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

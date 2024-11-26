@@ -1,5 +1,6 @@
 package com.example.it_training_back.entity;
 
+import com.example.it_training_back.entity.course.Course;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -9,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
@@ -48,4 +50,8 @@ public class Session {
     @JoinColumn(name = "training_id")
     @JsonIgnore
     private Training training;
+
+    @OneToMany(mappedBy = "session", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Course> courses;
 }

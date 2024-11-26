@@ -28,13 +28,15 @@ const authenticationSlice = createSlice({
     name: "authentication",
     initialState: {
         token: localStorage.getItem('token') || null,
+        user: JSON.parse(localStorage.getItem('user')) || null,
         error: null        
     },
     reducers: {
         logout: (state, actions) => {
             localStorage.removeItem("token");
             localStorage.removeItem("user");
-            state.token = null;           
+            state.token = null;
+            state.user = null;           
         },
         emptyError: (state, actions) => {
             state.error = null;
@@ -46,7 +48,8 @@ const authenticationSlice = createSlice({
             
             state.token = actions.payload.data.token;
             localStorage.setItem('token', actions.payload.data.token);
-            localStorage.setItem('user', JSON.stringify(jwtDecode(actions.payload.data.token)))            
+            localStorage.setItem('user', JSON.stringify(jwtDecode(actions.payload.data.token)))
+            state.user = jwtDecode(actions.payload.data.token);            
             state.error = null;          
         });
         builder.addCase(fetchLogin.rejected, (state, actions) => {                        
@@ -57,7 +60,8 @@ const authenticationSlice = createSlice({
             console.log(actions.payload);            
             state.token = actions.payload.data.token;
             localStorage.setItem('token', actions.payload.data.token);
-            localStorage.setItem('user', JSON.stringify(jwtDecode(actions.payload.data.token)))            
+            localStorage.setItem('user', JSON.stringify(jwtDecode(actions.payload.data.token)))
+            state.user = jwtDecode(actions.payload.data.token);            
             state.error = null;
         });
         builder.addCase(fetchRegister.rejected, (state, actions) => {

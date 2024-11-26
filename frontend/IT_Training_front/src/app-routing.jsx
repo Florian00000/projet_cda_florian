@@ -7,6 +7,7 @@ import TestUser from "./components/testUser/TestUser";
 import ResultTest from "./components/testUser/ResultTest";
 import TrainingForm from "./components/training/TrainingForm";
 import AuthenticationForm from "./components/shared/authentication/AuthenticationForm";
+import ProtectedPathAdmin from "./components/shared/authentication/ProtectedPathAdmin";
 
 const router = createBrowserRouter([
     {
@@ -24,7 +25,10 @@ const router = createBrowserRouter([
             {path: "/training/:idTraining", element: <TrainingDetail/>},
             {path: "/training/testUser/:idTestUser", element: <TestUser/>},
             {path: "/training/testUser/result", element: <ResultTest/>},
-            {path: "/training/admin/addTraining", element: <TrainingForm/> },
+            {path: "/training/admin/addTraining", 
+                element: <ProtectedPathAdmin>
+                            <TrainingForm/>
+                        </ProtectedPathAdmin>},
             {path: "/authentication", element: <AuthenticationForm/>}
         ]
     }

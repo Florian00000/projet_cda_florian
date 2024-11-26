@@ -11,7 +11,7 @@ const Navbar = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const token = useSelector((state) => state.authentication.token);
+    const {token, user} = useSelector((state) => state.authentication);
 
     const toggleDopdown = () => {
         setDropdownVisible(!isDropdownVisible)
@@ -29,9 +29,10 @@ const Navbar = () => {
                                 
                 {isDropdownVisible && (
                     <div className={classes.dropdown} >
-                        <Link to={"/training/admin/addTraining"} className={classes.dropdownItem} >Ajouter Formation</Link>
-                        <Link to={"#"} className={classes.dropdownItem} >test</Link>
-                        <Link to={"#"} className={classes.dropdownItem} >test</Link>
+                        <Link to={"/"} className={classes.dropdownItem} >Domaines proposés</Link>
+                        {user && user?.roles.split(",").includes("ROLE_ADMIN") && 
+                        (<Link to={"/training/admin/addTraining"} className={classes.dropdownItem} >Ajouter Formation</Link>)}
+                        
                     </div>
                 )}
             </div>

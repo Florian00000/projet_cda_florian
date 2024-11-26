@@ -71,7 +71,7 @@ button:disabled{
 }
 button:focus,
 button:focus-visible {
-  outline: 4px solid var(--backgroundColor)
+  outline: 1px solid var(--backgroundColor)
 }
 /* 
 .button-small {

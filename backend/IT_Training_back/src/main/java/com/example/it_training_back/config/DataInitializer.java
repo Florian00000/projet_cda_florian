@@ -19,7 +19,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Random;
 
-@Component
+//@Component
 public class DataInitializer implements CommandLineRunner {
 
     private final ThemeService themeService;
@@ -96,6 +96,7 @@ public class DataInitializer implements CommandLineRunner {
                     .placeLimit(rand.nextInt(3,30))
                     .roomReserved(false).machinesInstalled(false).traineesConfirmation(false)
                     .trainerConfirmation(false).traineesConfirmation(false).evaluationForms(false)
+
                     .timetables(List.of(
                             CourseDtoPostSession.builder()
                                     .dayOfWeek("MONDAY")

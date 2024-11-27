@@ -1,6 +1,8 @@
 package com.example.it_training_back.entity.user;
 
+import com.example.it_training_back.entity.Session;
 import com.example.it_training_back.entity.course.Presence;
+import com.example.it_training_back.entity.testUser.Note;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -42,6 +44,14 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Presence> presences;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Note> notes;
+
+    @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
+    @JsonIgnore
+    private List<Session> sessions;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

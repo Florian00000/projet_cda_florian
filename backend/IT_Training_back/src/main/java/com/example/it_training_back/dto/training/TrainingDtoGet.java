@@ -2,7 +2,7 @@ package com.example.it_training_back.dto.training;
 
 import com.example.it_training_back.entity.Session;
 import com.example.it_training_back.entity.SubTheme;
-import com.example.it_training_back.entity.TestUser;
+import com.example.it_training_back.entity.testUser.TestUser;
 import com.example.it_training_back.entity.Training;
 import lombok.Data;
 

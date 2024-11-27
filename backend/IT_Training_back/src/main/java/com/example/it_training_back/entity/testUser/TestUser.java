@@ -1,5 +1,7 @@
-package com.example.it_training_back.entity;
+package com.example.it_training_back.entity.testUser;
 
+import com.example.it_training_back.entity.Question;
+import com.example.it_training_back.entity.Training;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -29,4 +31,8 @@ public class TestUser {
     @OneToMany(mappedBy = "testUser", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Question> questions;
+
+    @OneToMany(mappedBy = "testUser", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnore
+    private List<Note> notes;
 }

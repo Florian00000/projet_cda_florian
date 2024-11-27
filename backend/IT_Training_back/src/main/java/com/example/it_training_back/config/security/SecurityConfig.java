@@ -54,7 +54,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/images/**").permitAll()
                         .requestMatchers("/api/visitor/**").permitAll()
-                        .requestMatchers("/api/user/**").authenticated()
+                        .requestMatchers("/api/user/**").hasRole("USER")
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                 )
                 .addFilterBefore(jwtRequestFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -66,7 +66,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
 
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE"));
         // configuration.setAllowedOriginPatterns(Collections.singletonList("http://localhost:5173"));
         configuration.setAllowedOriginPatterns(List.of("http://localhost:5173", "http://localhost:80",
                 "http://front_it_training_container:80", "http://localhost"));

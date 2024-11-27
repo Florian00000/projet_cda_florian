@@ -110,11 +110,13 @@ public class TrainingService {
         Session session = Session.builder()
                 .startDate(LocalDate.parse(sessionDtoPost.getStartDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy")))
                 .endDate(LocalDate.parse(sessionDtoPost.getEndDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy")))
-                .placeLimit(sessionDtoPost.getPlaceLimit()).roomReserved(sessionDtoPost.isRoomReserved())
+                .placeLimit(sessionDtoPost.getPlaceLimit())
+                .roomReserved(sessionDtoPost.isRoomReserved())
                 .machinesInstalled(sessionDtoPost.isMachinesInstalled())
                 .trainerConfirmation(sessionDtoPost.isTrainerConfirmation())
                 .traineesConfirmation(sessionDtoPost.isTraineesConfirmation())
                 .evaluationForms(sessionDtoPost.isEvaluationForms())
+
                 .build();
 
         Training training = trainingRepository.findById(sessionDtoPost.getTrainingID()).orElseThrow(

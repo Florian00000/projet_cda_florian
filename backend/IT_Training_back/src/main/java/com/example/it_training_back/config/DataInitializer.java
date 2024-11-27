@@ -1,5 +1,6 @@
 package com.example.it_training_back.config;
 
+import com.example.it_training_back.dto.course.CourseDtoPostSession;
 import com.example.it_training_back.dto.location.LocationDtoPost;
 import com.example.it_training_back.dto.session.SessionDtoPost;
 import com.example.it_training_back.dto.subTheme.SubThemeDtoPost;
@@ -14,10 +15,11 @@ import com.github.javafaker.Faker;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Random;
 
-//@Component
+@Component
 public class DataInitializer implements CommandLineRunner {
 
     private final ThemeService themeService;
@@ -83,6 +85,7 @@ public class DataInitializer implements CommandLineRunner {
             trainingService.addLocation(locationDtoPost);
         }
 
+        */
 
 
         //fake Session
@@ -93,6 +96,18 @@ public class DataInitializer implements CommandLineRunner {
                     .placeLimit(rand.nextInt(3,30))
                     .roomReserved(false).machinesInstalled(false).traineesConfirmation(false)
                     .trainerConfirmation(false).traineesConfirmation(false).evaluationForms(false)
+                    .timetables(List.of(
+                            CourseDtoPostSession.builder()
+                                    .dayOfWeek("MONDAY")
+                                    .startTime( LocalTime.of(14,30,0))
+                                    .endTime( LocalTime.of(17,30,0))
+                                    .build(),
+                            CourseDtoPostSession.builder()
+                                    .dayOfWeek("TUESDAY")
+                                    .startTime( LocalTime.of(13,30,0))
+                                    .endTime( LocalTime.of(17,30,0))
+                                    .build()
+                            ))
                     .build();
             int idLocation = trainingService.getAllLocations()
                     .get(rand.nextInt(trainingService.getAllLocations().size())).getId();
@@ -100,9 +115,13 @@ public class DataInitializer implements CommandLineRunner {
             int idTraining = trainingService.getAllTrainings()
                     .get(rand.nextInt(trainingService.getAllTrainings().size())).getId();
             sessionDtoPost.setTrainingID(idTraining);
+
+
+
             trainingService.addSession(sessionDtoPost);
         }
 
+        /*
 
 
         //ROLE
@@ -110,6 +129,8 @@ public class DataInitializer implements CommandLineRunner {
         userService.createRole(Role.builder().role("ROLE_TRAINER").build());
         userService.createRole(Role.builder().role("ROLE_ADMIN").build());
 
+
          */
+
     }
 }

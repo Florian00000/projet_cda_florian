@@ -132,10 +132,14 @@ public class TrainingService {
 
         sessionRepository.save(session);
 
-        //TODO à tester
         verifyDaysOfSession(sessionDtoPost.getTimetables());
         try {
             for (CourseDtoPostSession timetable : sessionDtoPost.getTimetables()){
+
+                if (timetable.getEndTime().isBefore(timetable.getStartTime())){
+                    throw new IllegalArgumentException("End date cannot be before start date");
+                }
+
                 LocalDate currentDate = session.getStartDate();
                 while (!currentDate.getDayOfWeek().equals(DayOfWeek.valueOf(timetable.getDayOfWeek()))){
                     currentDate = currentDate.plusDays(1);

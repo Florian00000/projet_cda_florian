@@ -13,7 +13,8 @@ const TrainingDetail = () => {
   const { idTraining } = useParams();
   const training = useSelector((state) => state.training.training);
   const sessions = useSelector((state) => state.training.sessions);
-  const navigate = useNavigate(); 
+  const token = useSelector((state) => state.authentication.token)
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchTrainingById(idTraining));
@@ -35,7 +36,7 @@ const TrainingDetail = () => {
             </div>
 
             <div className={classes.listSubThemes}>
-              { training.subThemes && training.subThemes.map((subTheme, index) => (
+              {training.subThemes && training.subThemes.map((subTheme, index) => (
                 <span key={index}>{subTheme.title}</span>
               ))}
             </div>
@@ -50,16 +51,21 @@ const TrainingDetail = () => {
 
               <div className={classes.spaceAround}>
                 <Link to={"#"}>Entreprise? je personnalise ma formation</Link>
-                {training.testUser ? <Button children={"Tester ses compétences"} onClick={redirectTo}></Button> : <Button children={"Tester ses compétences"} disabled={true} ></Button>}
+                {training.testUser && token ? <Button children={"Tester ses compétences"} onClick={redirectTo}></Button>
+                  : <div>
+                    <Button children={"Tester ses compétences"} disabled={true} ></Button>
+                    <p className={classes.blueTextNotConnected}>Connectez vous pour passer le test</p>
+                  </div>
+                }
               </div>
             </section>
 
             {sessions.length != 0 && (<section className={classes.sectionSessions}>
-                {sessions.map((session, index) => (
-                    <SessionCube key={index} session={session}/>
-                ))}
+              {sessions.map((session, index) => (
+                <SessionCube key={index} session={session} />
+              ))}
             </section>)}
-            
+
           </article>
         </>
       ) : (

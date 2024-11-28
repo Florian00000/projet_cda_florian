@@ -48,3 +48,10 @@
         margin-left: auto;
     }
 }
+
+.blueTextNotConnected{
+    color: var(--blueButton);
+    margin: 5px 0px;
+    font-size: 0.9em;
+    text-align: center;
+}

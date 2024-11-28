@@ -68,7 +68,15 @@ public class UserToTrainingService {
         return new NoteDtoGet(note);
     }
 
-    //TODO tester
+    public boolean userHasNote(long userId, long testUserId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("id_user not found"));
+        TestUser testUser = testUserRepository.findById(testUserId)
+                .orElseThrow(() -> new NotFoundException("id_test_user not found"));
+        Optional<Note> note = noteRepository.findNoteByUserAndTestUser(user, testUser);
+        return note.isPresent();
+    }
+
     @Transactional
     public boolean addUserToSession(long userId, long sessionId) {
         //Verification liés au test utilisateur

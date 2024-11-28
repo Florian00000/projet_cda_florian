@@ -1,14 +1,12 @@
 package com.example.it_training_back.controller.testUser;
 
+import com.example.it_training_back.dto.BaseResponseDto;
 import com.example.it_training_back.dto.testUser.note.NoteDtoGet;
 import com.example.it_training_back.dto.testUser.note.NoteDtoPost;
 import com.example.it_training_back.service.UserToTrainingService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/user")
@@ -23,5 +21,14 @@ public class TestUserUserController {
     @PostMapping("/note/add")
     public ResponseEntity<NoteDtoGet> addNote(@RequestBody NoteDtoPost noteDtoPost) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userToTrainingService.addNote(noteDtoPost));
+    }
+
+    @GetMapping("/note/{idTestUser}/userHasNote/{idUser}")
+    public ResponseEntity<BaseResponseDto> userHasNote(@PathVariable long idTestUser, @PathVariable long idUser) {
+        if (userToTrainingService.userHasNote(idUser, idTestUser)) {
+            return ResponseEntity.ok().body(new BaseResponseDto("This user has already done this test", true));
+        }else{
+            return ResponseEntity.ok(new BaseResponseDto("This user has not yet passed the test", false));
+        }
     }
 }

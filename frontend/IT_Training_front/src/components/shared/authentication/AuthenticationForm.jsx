@@ -52,11 +52,16 @@ const AuthenticationForm = () => {
     }, [token])
 
     const closeModal = () => {
-        emailRef.current.value = "";
-        passwordRef.current.value = "";
-        firstnameRef.current.value = "";
-        lastnameRef.current.value = "";
-        passwordRef2.current.value = "";
+        if (mode === "login") {
+            emailRef.current.value = "";
+            passwordRef.current.value = "";
+        }else{
+            emailRef.current.value = "";
+            passwordRef.current.value = "";
+            firstnameRef.current.value = "";
+            lastnameRef.current.value = "";
+            passwordRef2.current.value = "";
+        }
         dispatch(emptyError())
     }
 

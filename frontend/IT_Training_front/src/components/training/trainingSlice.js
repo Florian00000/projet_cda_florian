@@ -9,8 +9,13 @@ export const fetchTrainingById = createAsyncThunk("training/fetchTrainingById", 
     return data;
 });
 
-export const addTraining = createAsyncThunk("training/addTraining", async(training) => {
-    const response = await axios.post(`${BASE_URL}admin/training/add`,training);
+export const addTraining = createAsyncThunk("training/addTraining", async(credentials) => {
+    const response = await axios.post(`${BASE_URL}admin/training/add`,
+        credentials.training,
+        {headers: {
+            "Authorization": `Bearer ${credentials.token}`
+        }}
+    );
     return response.data;
 })
 

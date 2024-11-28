@@ -14,6 +14,7 @@ const TrainingForm = () => {
     const subThemes = useSelector((state) => state.theme.list)
     const returnStatus = useSelector((state) => state.training.statusAddTraining)
     const training = useSelector((state) => state.training.training)
+    const token = useSelector((state) => state.authentication.token)
     const [isModalOpen, setModalOpen] = useState(false);
 
     const titleRef = useRef();
@@ -38,7 +39,11 @@ const TrainingForm = () => {
             training.imagePath = base64image;
         }
         console.log(training);
-        dispatch(addTraining(training));
+        const credentials = {
+            training: training,
+            token: token
+        }
+        dispatch(addTraining(credentials));
     };
 
     const handleTypeChange = (e) => {

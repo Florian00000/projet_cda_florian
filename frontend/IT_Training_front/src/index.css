@@ -84,6 +84,7 @@ button:focus-visible {
   font-size: 16px;
   height: 40px;
   min-width: 13vw;
+  max-width: 20vw;
 }
 
 .button-large {

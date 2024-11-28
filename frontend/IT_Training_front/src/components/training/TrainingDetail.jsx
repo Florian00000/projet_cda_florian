@@ -38,7 +38,7 @@ const TrainingDetail = () => {
     navigate(`/training/testUser/${training.testUser.id}`)
   }
 
-  const renderTestButton = () => {
+  const renderTestButton = () => {   
     if (!token) {
       return (
         <div>
@@ -62,7 +62,9 @@ const TrainingDetail = () => {
   
       return <Button children={"Tester ses compétences"} onClick={redirectTo} />;
     }  
-    return null;
+    console.log("ici");
+    
+    return <Button children={"Tester ses compétences"} disabled={true} />;
   }
 
   return (

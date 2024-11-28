@@ -20,3 +20,9 @@
     padding: 3px 10px; 
     display: inline-block;
 }
+
+.sectionResultTest{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

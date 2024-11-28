@@ -60,7 +60,8 @@ const TestUser = () => {
             navigate(`/training/testUser/result`, {
                 state: {
                     testPassed,
-                    finalScore: updatedScore
+                    finalScore: updatedScore,
+                    testUser: testUser
                 }
             })
         };

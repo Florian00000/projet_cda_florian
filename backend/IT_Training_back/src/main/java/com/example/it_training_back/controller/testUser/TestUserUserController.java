@@ -25,10 +25,6 @@ public class TestUserUserController {
 
     @GetMapping("/note/{idTestUser}/userHasNote/{idUser}")
     public ResponseEntity<BaseResponseDto> userHasNote(@PathVariable long idTestUser, @PathVariable long idUser) {
-        if (userToTrainingService.userHasNote(idUser, idTestUser)) {
-            return ResponseEntity.ok().body(new BaseResponseDto("This user has already done this test", true));
-        }else{
-            return ResponseEntity.ok(new BaseResponseDto("This user has not yet passed the test", false));
-        }
+        return ResponseEntity.ok(userToTrainingService.userHasNote(idUser, idTestUser));
     }
 }

@@ -45,8 +45,7 @@ const testUserSlice = createSlice({
             state.question = actions.payload;
             console.log(actions.payload);            
         });
-        builder.addCase(fetchUserHasNote.fulfilled, (state, actions) => {
-            console.log(actions.payload);            
+        builder.addCase(fetchUserHasNote.fulfilled, (state, actions) => {                  
             state.userHasPassedTest = actions.payload.data
         })
     }

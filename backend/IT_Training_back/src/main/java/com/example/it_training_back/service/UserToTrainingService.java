@@ -1,5 +1,6 @@
 package com.example.it_training_back.service;
 
+import com.example.it_training_back.dto.BaseResponseDto;
 import com.example.it_training_back.dto.testUser.note.NoteDtoGet;
 import com.example.it_training_back.dto.testUser.note.NoteDtoPost;
 import com.example.it_training_back.entity.Session;
@@ -20,7 +21,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -68,13 +71,22 @@ public class UserToTrainingService {
         return new NoteDtoGet(note);
     }
 
-    public boolean userHasNote(long userId, long testUserId) {
+    public BaseResponseDto userHasNote(long userId, long testUserId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("id_user not found"));
         TestUser testUser = testUserRepository.findById(testUserId)
                 .orElseThrow(() -> new NotFoundException("id_test_user not found"));
         Optional<Note> note = noteRepository.findNoteByUserAndTestUser(user, testUser);
-        return note.isPresent();
+        Map<String, Object> data = new HashMap<>();
+       if (note.isPresent()) {
+           data.put("completed", true);
+           data.put("success", note.get().isSuccess());
+           data.put("note", note.get().getResult());
+           return new BaseResponseDto("This user has already done this test",data);
+       }else{
+           data.put("completed", false);
+           return new BaseResponseDto("This user has not yet passed the test",data);
+       }
     }
 
     @Transactional

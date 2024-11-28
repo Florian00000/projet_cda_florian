@@ -7,13 +7,15 @@ import remarkGfm from "remark-gfm";
 import classes from "./Training.module.css";
 import Button from "../shared/Button";
 import SessionCube from "./SessionCube"
+import { fetchUserHasNote } from "../testUser/testUserSlice";
 
 const TrainingDetail = () => {
   const dispatch = useDispatch();
   const { idTraining } = useParams();
   const training = useSelector((state) => state.training.training);
   const sessions = useSelector((state) => state.training.sessions);
-  const token = useSelector((state) => state.authentication.token)
+  const { token, user } = useSelector((state) => state.authentication)
+  const { userHasPassedTest } = useSelector((state) => state.testUser)
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,8 +23,46 @@ const TrainingDetail = () => {
     dispatch(fetchSessionsByTrainingId(idTraining))
   }, [idTraining, dispatch]);
 
+  useEffect(() => {
+    if (training?.testUser && token) {
+      const credentials = {
+        idTestUser: training.testUser.id,
+        idUser: user.userId,
+        token: token
+      }
+      dispatch(fetchUserHasNote(credentials))
+    }
+  }, [training, token, user, dispatch])
+
   const redirectTo = () => {
     navigate(`/training/testUser/${training.testUser.id}`)
+  }
+
+  const renderTestButton = () => {
+    if (!token) {
+      return (
+        <div>
+          <Button children={"Tester ses compétences"} disabled={true} />
+          <p className={classes.blueTextNotConnected}>Connectez-vous pour passer le test</p>
+        </div>
+      );
+    }
+  
+    if (training.testUser) {
+      if (userHasPassedTest?.completed) {
+        return (
+          <div>
+            <Button children={"Tester ses compétences"} onClick={redirectTo} disabled={true} />
+            <p className={classes.blueTextNotConnected}>
+              Résultat du test : {userHasPassedTest?.success ? "Réussi" : "Échec"}
+            </p>
+          </div>
+        );
+      }
+  
+      return <Button children={"Tester ses compétences"} onClick={redirectTo} />;
+    }  
+    return null;
   }
 
   return (
@@ -51,12 +91,9 @@ const TrainingDetail = () => {
 
               <div className={classes.spaceAround}>
                 <Link to={"#"}>Entreprise? je personnalise ma formation</Link>
-                {training.testUser && token ? <Button children={"Tester ses compétences"} onClick={redirectTo}></Button>
-                  : <div>
-                    <Button children={"Tester ses compétences"} disabled={true} ></Button>
-                    <p className={classes.blueTextNotConnected}>Connectez vous pour passer le test</p>
-                  </div>
-                }
+
+                {renderTestButton()}
+
               </div>
             </section>
 

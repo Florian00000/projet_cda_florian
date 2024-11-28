@@ -34,13 +34,8 @@ const TestUser = () => {
             idUser: user.userId,
             token: token
         }
-        dispatch(fetchUserHasNote(credentials));
-        if (userHasPassedTest === false) {            
-            //a changer après la validation du formulaire
-            dispatch(emptyUserHasPassedTest())
-        }
+        dispatch(fetchUserHasNote(credentials));       
               
-        
     }, [dispatch, user, token])
 
     const closeModal = () => {
@@ -74,7 +69,7 @@ const TestUser = () => {
     return (
         <main>
 
-            {userHasPassedTest && (
+            {userHasPassedTest?.completed && (
                 <Modal changeModal={closeModal} buttonChildren={"ok"}>
                     {"Désolé mais vous avez déjà passé ce test"}
                 </Modal>

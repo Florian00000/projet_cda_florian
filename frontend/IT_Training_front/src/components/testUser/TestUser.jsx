@@ -13,11 +13,12 @@ const TestUser = () => {
     const {testUser, userHasPassedTest} = useSelector((state) => state.testUser);
     const testQuestion = useSelector((state) => state.testUser.question);
     const { user, token } = useSelector((state) => state.authentication)
+    const { training } = useSelector((state) => state.training)
     const [questionNumber, setQuestionNumber] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [score, setScore] = useState(0);
 
-    useEffect(() => {
+    useEffect(() => {                
         dispatch(fetchTestUserById(idTestUser));
     }, [idTestUser, dispatch]);
 
@@ -61,7 +62,8 @@ const TestUser = () => {
                 state: {
                     testPassed,
                     finalScore: updatedScore,
-                    testUser: testUser
+                    testUser: testUser,
+                    training: training
                 }
             })
         };

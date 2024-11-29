@@ -26,7 +26,7 @@ export const fetchUserHasNote = createAsyncThunk("testUser/fetchUserHasNote", as
     return data;
 })
 
-export const fetchAddNote = createAsyncThunk("testUser/fetchAddNote", async (note, token, { rejectWithValue }) => {
+export const fetchAddNote = createAsyncThunk("testUser/fetchAddNote", async ({note, token}, { rejectWithValue }) => {
     try {
         const reponse = await axios.post(`${BASE_URL}user/note/add`, note, {
             headers: {
@@ -36,7 +36,7 @@ export const fetchAddNote = createAsyncThunk("testUser/fetchAddNote", async (not
         const data = await reponse.data;
         return data;
     } catch (error) {
-        return rejectWithValue(error.response.data)
+        return rejectWithValue(error.response)
     }
 
 })
@@ -69,7 +69,8 @@ const testUserSlice = createSlice({
             console.log(action.payload);
         });
         builder.addCase(fetchAddNote.rejected, (state, actions) => {
-            console.log(actions.payload);            
+            console.log(actions.payload.data);    
+            console.log("status: " +actions.payload.status);        
         })
 
     }

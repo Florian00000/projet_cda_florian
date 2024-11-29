@@ -38,7 +38,11 @@ const Navbar = () => {
             </div>
          
             {token ? 
-            <button className={classes.loginButton} onClick={() => dispatch(logout())}>Se déconnecter</button>
+            <div className={classes.divLoginButton}>
+                <p className={classes.username}> {user.sub.split("@")[0]} </p>
+                <button className={classes.loginButton} onClick={() => dispatch(logout())}>Se déconnecter</button>
+            </div>
+            
             :<button className={classes.loginButton} onClick={() => navigate("/authentication")}>Se connecter</button> }
 
                 

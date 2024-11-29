@@ -8,12 +8,12 @@ import classes from "./TestUser.module.css"
 const ResultTest = () => {
     const location = useLocation();
     const dispatch = useDispatch();
-    const { testPassed, finalScore, testUser } = location.state;
+    const { testPassed, finalScore, testUser, training } = location.state;
     const { token, user } = useSelector((state) => state.authentication);
-    const { training } = useSelector((state) => state.training)
     const navigate = useNavigate()
 
-    useEffect(() => {
+    useEffect(() => {    
+            
         if (token && testUser) {
             const note = {
                 result: +finalScore,
@@ -21,10 +21,12 @@ const ResultTest = () => {
                 testUserId: testUser.id,
                 userId: user.userId
             }
-            console.log(note);
-
-            //Reprendre ici, vérifier la fonction!!
-            //dispatch(fetchAddNote(note, token))
+            const credentials = {
+                note: note,
+                token: token
+            }
+            
+            dispatch(fetchAddNote(credentials))
         }
 
     }, [token, testUser, testPassed, finalScore, dispatch])

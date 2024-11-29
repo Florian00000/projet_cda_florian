@@ -20,6 +20,15 @@
     color: var(--darkPurple);
     width: 40%;
     max-width: 350px;
-    border-radius: 1rem;
+    border-radius: 5px;
     padding: 10px;
+}
+
+.divCloseButton{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.closeButton{
+    background-color: firebrick;
 }

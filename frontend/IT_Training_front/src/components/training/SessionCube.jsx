@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import classes from "./Training.module.css";
+import SessionModal from './SessionModal';
+import ModalButtonless from '../shared/modal/ModalButtonless';
 
 const SessionCube = ({ session }) => {
     const [earliestHour, setEarliestHour] = useState();
     const [latestHour, setLatestHour] = useState();
+    const [openModal, setOpenModal] = useState(false);
 
     useEffect(() => {
         if (session.courses?.length) {
@@ -25,12 +28,20 @@ const SessionCube = ({ session }) => {
     }, [session])
 
     return (
-        <article className={classes.articleSession}>
-            <p>du {session.startDate} au {session.endDate}</p>
-            <hr />
-            { earliestHour && latestHour ? (<p>Plage horaire: {earliestHour} - {latestHour} </p>) :(<p>informations sur les horaires à venir</p>) }
-            <p>{session.location.city}</p>
-        </article>
+        <>
+            {openModal && 
+                <ModalButtonless changeModal={() => setOpenModal(false)} >
+                    <SessionModal session={session}/>
+                </ModalButtonless>}
+
+            <article className={classes.articleSession} onClick={() => setOpenModal(!openModal)}>
+                <p>du {session.startDate} au {session.endDate}</p>
+                <hr />
+                { earliestHour && latestHour ? (<p>Plage horaire: {earliestHour} - {latestHour} </p>) :(<p>informations sur les horaires à venir</p>) }
+                <p>{session.location.city}</p>
+            </article>
+        </>
+        
     );
 }
 

@@ -7,7 +7,7 @@ const ModalButtonless = (props) => {
 
     return createPortal (
         <div className={classes.modal} >
-            <div className={classes.modalContent} > 
+            <div className={classes.modalContentButtonless} > 
                 <div className={classes.divCloseButton}>
                     <button onClick={changeModal} className={classes.closeButton}>X</button>
                 </div>

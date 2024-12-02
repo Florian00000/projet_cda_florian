@@ -24,6 +24,17 @@
     padding: 10px;
 }
 
+.modalContentButtonless{
+    margin: 15vh auto;
+    text-align: center;
+    background-color: var(--backgroundColor);
+    align-items: center;
+    color: var(--darkPurple);
+    width: 40%;
+    border-radius: 5px;
+    padding: 10px;
+}
+
 .divCloseButton{
     display: flex;
     justify-content: flex-end;

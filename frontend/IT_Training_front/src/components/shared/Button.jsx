@@ -18,6 +18,9 @@ const Button = ({
         case 'medium':
             buttonClass = 'button-medium';
             break;
+        case 'medium-white':
+            buttonClass = 'button-medium-white';
+            break;
         case 'large':
             buttonClass = 'button-large';
             break;    

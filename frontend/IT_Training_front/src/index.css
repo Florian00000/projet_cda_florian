@@ -87,6 +87,29 @@ button:focus-visible {
   max-width: 20vw;
 }
 
+.button-medium-white{
+  background-color: var(--backgroundColor);
+  border-color: var(--blueButton);
+  color: var(--blueButton);
+  padding: 8px 16px;
+  font-size: 16px;
+  height: 40px;
+  min-width: 13vw;
+  max-width: 20vw;
+}
+
+.button-medium-white,
+.button-medium-white:focus-visible {
+  outline: 1px solid var(--blueButton)
+}
+
+.button-medium-white:disabled{
+  cursor: default;
+  background-color: var(--greyCard);
+  border-color: var(--greyCard);
+  color:grey;
+}
+
 .button-large {
   padding: 12px 24px;
   font-size: 16px;

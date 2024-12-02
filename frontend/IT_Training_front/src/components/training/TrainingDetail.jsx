@@ -62,7 +62,6 @@ const TrainingDetail = () => {
   
       return <Button children={"Tester ses compétences"} onClick={redirectTo} />;
     }  
-    console.log("ici");
     
     return <Button children={"Tester ses compétences"} disabled={true} />;
   }

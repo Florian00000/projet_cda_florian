@@ -129,4 +129,12 @@ public class UserToTrainingService {
         return true;
     }
 
+    public boolean userHasRegisteredToSession(long userId, long sessionId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("id_user not found"));
+        Optional<Session> session = sessionRepository.findByIdAndUsers(sessionId, List.of(user));
+        if (session.isPresent()) {
+            return true;
+        }else return false;
+    }
+
 }

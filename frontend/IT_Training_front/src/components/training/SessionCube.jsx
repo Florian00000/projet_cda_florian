@@ -23,8 +23,7 @@ const SessionCube = ({ session }) => {
                 return current > max ? current : max;
             }, endHour[0]))                      
         }
-        
-        
+                   
     }, [session])
 
     return (
@@ -34,12 +33,24 @@ const SessionCube = ({ session }) => {
                     <SessionModal session={session}/>
                 </ModalButtonless>}
 
-            <article className={classes.articleSession} onClick={() => setOpenModal(!openModal)}>
-                <p>du {session.startDate} au {session.endDate}</p>
-                <hr />
-                { earliestHour && latestHour ? (<p>Plage horaire: {earliestHour} - {latestHour} </p>) :(<p>informations sur les horaires à venir</p>) }
-                <p>{session.location.city}</p>
-            </article>
+            {session?.users.length < session?.placeLimit ? 
+                <article className={[classes.articleSession, classes.pointer].join(' ')} onClick={() => setOpenModal(!openModal)}>
+                    <p>du {session.startDate} au {session.endDate}</p>
+                    <hr />
+                    { earliestHour && latestHour ? (<p>Plage horaire: {earliestHour} - {latestHour} </p>) :(<p>informations sur les horaires à venir</p>) }
+                    <p>{session.location.city}</p>
+                </article>
+                : 
+                <article className={classes.articleSession}>
+                    <p>du {session.startDate} au {session.endDate}</p>
+                    <hr />
+                    { earliestHour && latestHour ? (<p>Plage horaire: {earliestHour} - {latestHour} </p>) :(<p>informations sur les horaires à venir</p>) }
+                    <p>plus de places disponibles</p>
+                    <p>{session.location.city}</p>
+                </article>
+            }
+
+            
         </>
         
     );

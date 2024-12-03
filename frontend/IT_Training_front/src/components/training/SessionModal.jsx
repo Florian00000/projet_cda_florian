@@ -1,23 +1,28 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../shared/Button';
 import classes from "./Training.module.css";
+import { fetchAddUserToSession, fetchUserHasRegisteredToSession } from './trainingSlice';
 
 const SessionModal = ({ session }) => {
-    const { token } = useSelector((state) => state.authentication)
+    const { token, user } = useSelector((state) => state.authentication)
     const { userHasPassedTest } = useSelector((state) => state.testUser)
-    const { training } = useSelector((state) => state.training);
+    const { training, userHasRegistered } = useSelector((state) => state.training);
+    const dispatch = useDispatch();
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log(session);
-
-        console.log(userHasPassedTest);
-
-
-    }, [])
+        if (user) {
+            const credentials = {
+                user: user,
+                token: token,
+                session: session
+            }            
+            dispatch(fetchUserHasRegisteredToSession(credentials))
+        }                
+    }, [user, token, session, dispatch])
 
     const parseDate = (dateString) => {
         const [day, month, year] = dateString.split('/');
@@ -39,9 +44,24 @@ const SessionModal = ({ session }) => {
 
     const redirectToTest = () => {
         navigate(`/training/testUser/${training.testUser.id}`)
-      }
+    }
+
+    const addToSession = () => {
+        const credentials = {
+            user: user,
+            token: token,
+            session: session
+        }
+        dispatch(fetchAddUserToSession(credentials));
+    }
 
     const renderButton = () => {
+
+        if (userHasRegistered) {
+            return(
+                <p className={classes.blueTextNotConnected}>Vous êtes inscrit à cette session.</p>
+            )
+        }
         if (training?.testUser) {
             if (userHasPassedTest?.completed) {
                 if (userHasPassedTest?.success) {
@@ -53,7 +73,7 @@ const SessionModal = ({ session }) => {
                                     Résultat du test : Réussi
                                 </p>
                             </div>
-                            <Button children={"Je m'inscris à la session"} />
+                            <Button children={"Je m'inscris à la session"} onClick={addToSession} />
                         </div>
                     )
                 }
@@ -86,7 +106,7 @@ const SessionModal = ({ session }) => {
 
             )
         }
-        return <Button children={"Je m'inscris à la session"} />;
+        return <Button children={"Je m'inscris à la session"} onClick={addToSession}  />;
     }
 
     return (

@@ -4,10 +4,7 @@ import com.example.it_training_back.dto.BaseResponseDto;
 import com.example.it_training_back.service.UserToTrainingService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/user")
@@ -23,7 +20,15 @@ public class TrainingUserController {
     public ResponseEntity<BaseResponseDto> registerUserToSession(@PathVariable long userId, @PathVariable long sessionId) {
         boolean result = userToTrainingService.addUserToSession(userId, sessionId);
         if (result){
-            return ResponseEntity.ok(new BaseResponseDto("User registered successfully to Session"));
-        }else return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new BaseResponseDto("User not registered to Session"));
+            return ResponseEntity.ok(new BaseResponseDto("User registered successfully to Session", true));
+        }else return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new BaseResponseDto("User not registered to Session", false));
+    }
+
+    @GetMapping("/registered/{userId}/session/{sessionId}")
+    public ResponseEntity<BaseResponseDto> userHasRegisteredToSession(@PathVariable long userId, @PathVariable long sessionId) {
+        boolean result = userToTrainingService.userHasRegisteredToSession(userId, sessionId);
+        if (result){
+            return ResponseEntity.ok(new BaseResponseDto("User has registered to Session", true));
+        }else return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new BaseResponseDto("User not registered to Session", false));
     }
 }

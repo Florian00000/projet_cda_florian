@@ -24,6 +24,9 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
+
+      - name: Grant execute permission to mvnw
+        run: chmod +x ./backend/IT_Training_back/mvnw
  
       # Étape 3: Installation des dépendances backend
       - name: Install dependencies

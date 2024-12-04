@@ -100,6 +100,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Étape 2: Installer Docker et Docker Compose
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v2
+
       # Étape 2: Lancer Docker Compose
       - name: Start Docker Compose
         run: |

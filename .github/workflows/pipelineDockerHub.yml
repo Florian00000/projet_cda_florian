@@ -112,6 +112,9 @@ jobs:
 
       # Étape 3: Lancer Docker Compose
       - name: Start Docker Compose
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          GITHUB_SHA: ${{ github.sha }}
         run: |
           docker-compose -f docker-compose-hub.yml up -d --build
 
@@ -128,7 +131,7 @@ jobs:
       - name: Stop Docker Compose
         if: always()
         run: |
-          docker-compose -f docker-compose-hub.yml down      
+          docker-compose -f docker-compose-hub.yml down     
  
   #   steps:
   #     # Étape 1: Déploiement avec SSH (exemple vers un serveur distant)

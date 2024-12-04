@@ -36,7 +36,7 @@ public class TrainingServiceTest {
     public void GivenAddTraining_ThenSaveTraining(){
         //arrange
         TrainingDtoPost trainingDtoPost = TrainingDtoPost.builder().title("training")
-                .description("# title description #").price(5.5).inter(true).imagePath("/path")
+                .description("# title description #").price(5.5).inter(true)
                 .subThemes(List.of(1, 2)).build();
         SubTheme subTheme1 = SubTheme.builder().id(1).title("title1").build();
         SubTheme subTheme2 = SubTheme.builder().id(2).title("title2").build();
@@ -51,7 +51,6 @@ public class TrainingServiceTest {
         Assertions.assertEquals("training", trainingDtoGet.getTitle());
         Assertions.assertEquals(5.5, trainingDtoGet.getPrice());
         Assertions.assertTrue(trainingDtoGet.isInter());
-        Assertions.assertEquals("/path", trainingDtoGet.getImagePath());
         Assertions.assertTrue(trainingDtoGet.getSubThemes().stream().anyMatch(s -> s.getId() == 1));
         Assertions.assertTrue(trainingDtoGet.getSubThemes().stream().anyMatch(s -> s.getId() == 2));
     }

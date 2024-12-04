@@ -7,7 +7,8 @@ En tant que responsable logistique d'IT-Training, je souhaite gérer efficacemen
     - User Story:  
     *En tant que responsable logistique, je veux pouvoir planifier les sessions inter-entreprises sur toute l'année afin de proposer un calendrier fixe pour les clients.*
     - Critères d'acceptation:
-        - Un calandrier fixe est généré poru chaque formation, avec des sessions récurrentes.
+        - Un formulaire permet de rajouter des sessions aux formations
+        - (Un calandrier fixe est généré pour chaque formation, avec des sessions récurrentes.)?
         - Le calendrier est consultable en ligne pour les clients, avec la possibilié de s'inscire directement.
 2. Vérification du nombre minimum de participants :
     - User Story:  

@@ -2,10 +2,10 @@ package com.example.it_training_back.dto.training;
 
 import com.example.it_training_back.entity.Session;
 import com.example.it_training_back.entity.SubTheme;
+import com.example.it_training_back.entity.TestUser;
 import com.example.it_training_back.entity.Training;
 import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -20,6 +20,7 @@ public class TrainingDtoGet {
 
     private List<SubTheme> subThemes;
     private List<Session> sessions;
+    private TestUser testUser;
 
     public TrainingDtoGet(Training training) {
         this.id = training.getId();
@@ -30,6 +31,9 @@ public class TrainingDtoGet {
         this.imagePath = training.getImagePath();
         this.subThemes = training.getSubThemes();
         this.sessions = training.getSessions();
+        if (training.getTestUser() != null) {
+            this.testUser = training.getTestUser();
+        }
     }
 
 

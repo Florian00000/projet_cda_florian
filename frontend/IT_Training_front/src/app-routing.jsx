@@ -3,6 +3,9 @@ import App from "./App"
 import ErrorPage from "./components/shared/ErrorPage";
 import HomeTheme from "./components/theme/HomeTheme";
 import TrainingDetail from "./components/training/TrainingDetail";
+import TestUser from "./components/testUser/TestUser";
+import ResultTest from "./components/testUser/ResultTest";
+import TrainingForm from "./components/training/TrainingForm";
 
 const router = createBrowserRouter([
     {
@@ -17,7 +20,10 @@ const router = createBrowserRouter([
             {
                 path: "/:idList", element: <HomeTheme/>
             },
-            {path: "/training/:idTraining", element: <TrainingDetail/>}
+            {path: "/training/:idTraining", element: <TrainingDetail/>},
+            {path: "/training/testUser/:idTestUser", element: <TestUser/>},
+            {path: "/training/testUser/result", element: <ResultTest/>},
+            {path: "/training/admin/addTraining", element: <TrainingForm/> }
         ]
     }
 ]);

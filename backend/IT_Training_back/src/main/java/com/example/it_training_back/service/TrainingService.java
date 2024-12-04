@@ -17,10 +17,13 @@ import com.example.it_training_back.repository.SubThemeRepository;
 import com.example.it_training_back.repository.TrainingRepository;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.it_training_back.utils.StaticMethods.saveImage;
 
 @Service
 public class TrainingService {
@@ -45,8 +48,17 @@ public class TrainingService {
                 .description(trainingDtoPost.getDescription())
                 .price(trainingDtoPost.getPrice())
                 .inter(trainingDtoPost.isInter())
-                .imagePath(trainingDtoPost.getImagePath())
                 .build();
+        if (trainingDtoPost.getImagePath() != null) {
+            try {
+                String imagePath = saveImage(trainingDtoPost.getImagePath());
+                training.setImagePath(imagePath);
+            }catch (IOException e){
+                throw new IllegalArgumentException("Image path could not be saved");
+            }
+
+        }
+
         if (trainingDtoPost.getSubThemes() != null && !trainingDtoPost.getSubThemes().isEmpty()) {
             List<SubTheme> subThemeList = updateSubThemesOfTraining(trainingDtoPost.getSubThemes());
             training.setSubThemes(subThemeList);

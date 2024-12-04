@@ -1,0 +1,22 @@
+.articleTitle{
+    margin-top: 2vh;
+}
+
+.articleQuestion{
+    margin-top: 3vh;
+}
+
+.articleBottom{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2vh;
+}
+
+.numberQuestion{
+    border: 1px solid var(--darkPurple);
+    border-radius: 5px;
+    margin: 0px 2px 0px 2px;
+    padding: 3px 10px; 
+    display: inline-block;
+}

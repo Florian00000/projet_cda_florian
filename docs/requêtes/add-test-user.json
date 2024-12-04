@@ -1,0 +1,25 @@
+{
+  "expectedResult": 2,
+  "questions": [
+    {
+      "label": "Quel est le nom du centre de formation?",
+      "answer": "IT-Training",
+      "propositions": [
+        {"option": "m2i"},
+        {"option": "IT-Training"}
+      ]
+    },{
+      "label": "Quel mot-clé en Java est utilisé pour créer une nouvelle instance d’un objet ?",
+      "answer": "new",
+      "propositions": [
+        {"option": "this"}, {"option": "new"}, {"option": "class"}, {"option": "instance"}
+      ]
+    }, {
+      "label": "Quel mot-clé est utilisé pour hériter d'une classe en Java ?",
+      "answer": "extends",
+      "propositions": [
+        {"option": "extends"}, {"option": "implements"}, {"option": "inherits"}, {"option": "super"}
+      ]
+    }
+  ]
+}

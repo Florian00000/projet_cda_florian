@@ -7,10 +7,13 @@
   color: #271A38;
   background-color: #FFFAEE;
 
+  --backgroundColor: #FFFAEE;
   --blueHeader: #9CC7F2;
+  --blueHeaderOpacity:rgba(156, 199, 242, 0.98);
   --greyCard: #E6E6E6;
   --blueButton: #0F4C8A;
   --blueBackgroundCard: #E2EBF0;
+  --darkPurple: #271A38;
 
   width: 100vw;  
   margin: 0 auto;
@@ -25,6 +28,7 @@ body, html {
   margin: 0;
   padding: 0;
   min-height: 100vh;
+  overflow-x: hidden; 
 }
 
 a {
@@ -59,12 +63,91 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
-button:hover {
-  border-color: #646cff;
+button:not([disabled]):hover {
+  border-color: var(--greyCard);
+}
+button:disabled{
+  cursor: default;
 }
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+/* 
+.button-small {
+  padding: 4px 8px;
+  font-size: 12px;
+} */
+
+.button-medium {
+  padding: 8px 16px;
+  font-size: 16px;
+  height: 40px;
+  min-width: 13vw;
+}
+
+.button-large {
+  padding: 12px 24px;
+  font-size: 16px;
+  height: 40px;
+  padding: 8px 25px;
+  width: 100%;
+}
+
+input[type="radio"] {
+  cursor: pointer; 
+  accent-color: var(--blueButton); 
+}
+
+input[type="radio"] + label{
+  display: inline-block;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  color: var(--darkPurple);
+}
+
+input[type="radio"]:checked + label {
+  color: var(--blueButton);
+  font-weight: bold;
+}
+
+input[type="text"]{
+  background-color: var(--backgroundColor);
+  border: 2px solid var(--darkPurple);
+  color: var(--darkPurple);
+  padding-left: 10px;
+  border-radius: 5px;
+  height: 2.3em;
+}
+
+input[type="text"]:focus{
+  border: 1px solid var(--blueButton);
+}
+
+input[type="number"]{
+  background-color: var(--backgroundColor);
+  border: 2px solid var(--darkPurple);
+  color: var(--darkPurple);
+  padding-left: 10px;
+  border-radius: 5px;
+  height: 2.3em;
+  appearance: textfield;
+}
+
+input[type="number"]:focus{
+  border: 1px solid var(--blueButton);
+}
+
+textarea{
+  background-color: var(--backgroundColor);
+  color: var(--darkPurple);
+  border-radius: 5px;
+  border: 2px solid var(--darkPurple);
+}
+
+textarea:focus{
+  border: 2px solid var(--blueButton);
 }
 
 /* @media (prefers-color-scheme: dark) {

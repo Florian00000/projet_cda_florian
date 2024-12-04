@@ -41,4 +41,9 @@ public class Training {
     @OneToMany(mappedBy = "training", cascade = CascadeType.MERGE)
     @JsonIgnore
     private List<Session> sessions;
+
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "id_test_user")
+    @JsonIgnore
+    private TestUser testUser;
 }

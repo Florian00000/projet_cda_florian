@@ -2,7 +2,7 @@
     flex-grow: 1;
     display: grid;    
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 30vh 30vh;  
+    grid-auto-rows: 30vh;  
     gap: 15px;
     margin-top: 15px;
 }
@@ -17,6 +17,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 
     & img {
         max-width: 100%;
@@ -25,4 +26,15 @@
         object-fit: contain;          
     }
 
+}
+
+.divTitle{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    & input {
+        margin-top: 5px;
+        width: 15.3vw;
+    }
 }

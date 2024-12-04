@@ -44,6 +44,7 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
+    image: florian00000/back_it_training
     build:
       context: ./backend/IT_Training_back
       dockerfile: dockerfile
@@ -63,6 +64,7 @@ services:
     depends_on:
       - back_it_training
     container_name: front_it_training_container
+    image: florian00000/front_it_training
     build:
       context: ./frontend/IT_Training_front
       dockerfile: dockerfile

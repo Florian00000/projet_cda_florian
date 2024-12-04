@@ -125,15 +125,17 @@ jobs:
             curl --fail http://localhost:8080/api/training && break || sleep 5;
           done || exit 1
 
-      # - name: Test frontend
-      #   run: |
-      #     curl --fail http://localhost || exit 1
+      - name: Test frontend
+        run: |
+          for i in {1..10}; do
+            curl --fail http://localhost && break || sleep 5;
+          done || exit 1
 
-      # # Étape 5: Arrêt des services Docker Compose
-      # - name: Stop Docker Compose
-      #   if: always()
-      #   run: |
-      #     docker-compose -f docker-compose-hub.yml down     
+      # Étape 5: Arrêt des services Docker Compose
+      - name: Stop Docker Compose
+        if: always()
+        run: |
+          docker-compose -f docker-compose-hub.yml down     
  
   #   steps:
   #     # Étape 1: Déploiement avec SSH (exemple vers un serveur distant)

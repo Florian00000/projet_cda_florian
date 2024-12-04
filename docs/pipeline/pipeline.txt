@@ -1,0 +1,80 @@
+name: Projet CDA M2i Formation test pipeline
+
+# Déclenchement du workflow sur chaque push et pull request dans la branche main
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:    
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_DATABASE: projet_cda_db
+          MYSQL_USER: ${{ secrets.DB_USER }}
+          MYSQL_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          MYSQL_ROOT_PASSWORD: ${{ secrets.DB_ROOT_PASSWORD }}
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd "mysqladmin ping -h localhost"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 3
+
+    strategy:
+      matrix:
+        java-version: [11, 17]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install frontend dependencies
+        working-directory: ./frontend/IT_Training_front
+        run: npm install
+
+      - name: Build frontend
+        working-directory: ./frontend/IT_Training_front
+        run: npm run build
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          # java-version: ${{ matrix.java-version }}
+          java-version: 17
+          distribution: 'adopt'
+
+      - name: Build and Test with Maven
+        working-directory: ./backend/IT_Training_back
+        run: mvn clean verify
+        env:
+          CI: true
+          SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/projet_cda_db
+          SPRING_DATASOURCE_USERNAME: ${{ secrets.DB_USER }}
+          SPRING_DATASOURCE_PASSWORD: ${{ secrets.DB_PASSWORD }}
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: backend-test-results
+          path: backend/IT_Training_back/target/surefire-reports/
+
+      - name: Upload JAR Artifact
+        if: success()
+        uses: actions/upload-artifact@v3
+        with:
+          name: spring-boot-app
+          path: backend/IT_Training_back/target/*.jar

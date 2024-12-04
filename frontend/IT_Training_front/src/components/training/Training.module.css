@@ -1,0 +1,50 @@
+.listSubThemes{
+    display: flex;
+    gap: 20px;
+    color: var(--blueButton);
+}
+
+.spaceAround{
+    display: flex;
+    justify-content: space-between;
+}
+
+.sectionTraining{
+    background-color: var(--blueBackgroundCard);
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.sectionSessions{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-auto-rows: minmax(250px, auto);
+    gap: 20px;
+    margin-top: 30px;
+    
+}
+
+.articleSession{
+    background-color: var(--greyCard);
+    border-radius: 5px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    & p:first-child{
+        color: var(--blueButton);
+    }
+
+    & hr{
+        color: var(--blueButton);
+        width: 100%;
+    }
+
+    & p:last-child{
+        color: var(--blueButton);
+        margin-top: auto;
+        margin-left: auto;
+    }
+}

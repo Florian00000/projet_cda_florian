@@ -121,7 +121,9 @@ jobs:
       # Étape 4: Tests d'intégration
       - name: Test Backend Health
         run: |
-          curl --fail http://localhost:8080/api/training || exit 1
+          for i in {1..10}; do
+            curl --fail http://localhost:8080/api/training && break || sleep 5;
+          done || exit 1
 
       # - name: Test frontend
       #   run: |

@@ -121,7 +121,7 @@ jobs:
       # Étape 4: Tests d'intégration
       - name: Test Backend Health
         run: |
-          curl --fail http://localhost:8080/actuator/health || exit 1
+          curl --fail http://localhost:8080/api/training || exit 1
 
       - name: Test frontend
         run: |

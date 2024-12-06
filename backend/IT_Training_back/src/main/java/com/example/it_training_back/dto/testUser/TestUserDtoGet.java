@@ -1,7 +1,7 @@
 package com.example.it_training_back.dto.testUser;
 
 import com.example.it_training_back.dto.testUser.question.QuestionDtoGet;
-import com.example.it_training_back.entity.TestUser;
+import com.example.it_training_back.entity.testUser.TestUser;
 import com.example.it_training_back.entity.Training;
 import lombok.Data;
 

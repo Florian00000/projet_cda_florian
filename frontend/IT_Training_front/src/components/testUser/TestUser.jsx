@@ -1,21 +1,24 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { fetchQuestionById, fetchTestUserById } from "./testUserSlice";
+import { emptyUserHasPassedTest, fetchQuestionById, fetchTestUserById, fetchUserHasNote } from "./testUserSlice";
 import Button from "../shared/Button";
 import classes from "./TestUser.module.css"
+import Modal from "../shared/modal/Modal";
 
 const TestUser = () => {
     const dispatch = useDispatch();
     const { idTestUser } = useParams();
     const navigate = useNavigate();
-    const testUser = useSelector((state) => state.testUser.testUser);
+    const {testUser, userHasPassedTest} = useSelector((state) => state.testUser);
     const testQuestion = useSelector((state) => state.testUser.question);
+    const { user, token } = useSelector((state) => state.authentication)
+    const { training } = useSelector((state) => state.training)
     const [questionNumber, setQuestionNumber] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [score, setScore] = useState(0);
 
-    useEffect(() => {
+    useEffect(() => {                
         dispatch(fetchTestUserById(idTestUser));
     }, [idTestUser, dispatch]);
 
@@ -25,6 +28,21 @@ const TestUser = () => {
             setSelectedAnswer(null);
         }
     }, [questionNumber, dispatch, testUser]);
+
+    useEffect(() => {
+        const credentials = {
+            idTestUser: idTestUser,
+            idUser: user.userId,
+            token: token
+        }
+        dispatch(fetchUserHasNote(credentials));       
+              
+    }, [dispatch, user, token])
+
+    const closeModal = () => {
+        dispatch(emptyUserHasPassedTest())
+        navigate("/")
+    }
 
     const handleAnswerChange = (event) => {
         setSelectedAnswer(event.target.value);
@@ -43,7 +61,9 @@ const TestUser = () => {
             navigate(`/training/testUser/result`, {
                 state: {
                     testPassed,
-                    finalScore: updatedScore
+                    finalScore: updatedScore,
+                    testUser: testUser,
+                    training: training
                 }
             })
         };
@@ -51,6 +71,13 @@ const TestUser = () => {
 
     return (
         <main>
+
+            {userHasPassedTest?.completed && (
+                <Modal changeModal={closeModal} buttonChildren={"ok"}>
+                    {"Désolé mais vous avez déjà passé ce test"}
+                </Modal>
+            )}
+
             {testQuestion ? (
                 <>
                     <article className={classes.articleTitle}>

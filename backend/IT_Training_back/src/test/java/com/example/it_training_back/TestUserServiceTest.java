@@ -9,7 +9,7 @@ import com.example.it_training_back.dto.testUser.question.QuestionDtoPost;
 import com.example.it_training_back.dto.training.TrainingDtoGet;
 import com.example.it_training_back.entity.Proposition;
 import com.example.it_training_back.entity.Question;
-import com.example.it_training_back.entity.TestUser;
+import com.example.it_training_back.entity.testUser.TestUser;
 import com.example.it_training_back.entity.Training;
 import com.example.it_training_back.exception.NotFoundException;
 import com.example.it_training_back.repository.TrainingRepository;

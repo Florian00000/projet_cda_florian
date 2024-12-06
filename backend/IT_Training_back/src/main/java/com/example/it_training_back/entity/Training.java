@@ -1,5 +1,6 @@
 package com.example.it_training_back.entity;
 
+import com.example.it_training_back.entity.testUser.TestUser;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -42,7 +43,7 @@ public class Training {
     @JsonIgnore
     private List<Session> sessions;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_test_user")
     @JsonIgnore
     private TestUser testUser;

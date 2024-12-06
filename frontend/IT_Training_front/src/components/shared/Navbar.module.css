@@ -46,3 +46,32 @@
 .dropdownItem:hover {
     color: var(--backgroundColor);
 }
+
+.divLoginButton{
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+.username{
+    margin-right: 20px;
+}
+
+.loginButton{
+    margin-left: auto;
+    margin-right: 40px;
+    background-color: var(--blueHeader);
+    border: 1px solid var(--backgroundColor);
+    border-radius: 20px;
+    font-size: 0.9em;
+    padding: 0.4em 1.2em;;
+    
+}
+
+.loginButton:hover{
+    background-color: whitesmoke;
+    color: var(--blueHeader);
+}
+.loginButton:focus, .loginButton:focus-visible{
+    outline: 0px;
+}

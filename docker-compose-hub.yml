@@ -44,12 +44,13 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
-    image: "${DOCKER_USERNAME}/back_it_training:${GITHUB_SHA}"
+    image: "${DOCKER_USERNAME_HUB}/back_it_training:${GITHUB_SHA}"
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://docker_mysql/projet_cda_db
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
       SPRING_WEB_RESOURCES_STATIC-LOCATION: /app/public/images/,classpath:/public/
+      JWT_SECRET: ${JWT_SECRET}
     volumes:
       - uploaded_images:/app/public/images
     ports:
@@ -61,7 +62,7 @@ services:
     depends_on:
       - back_it_training
     container_name: front_it_training_container
-    image: "${DOCKER_USERNAME}/front_it_training:${GITHUB_SHA}"
+    image: "${DOCKER_USERNAME_HUB}/front_it_training:${GITHUB_SHA}"
     ports:
       - "80:80"
     networks:

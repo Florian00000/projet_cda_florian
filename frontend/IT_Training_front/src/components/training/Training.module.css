@@ -32,7 +32,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-
+    
     & p:first-child{
         color: var(--blueButton);
     }
@@ -47,4 +47,26 @@
         margin-top: auto;
         margin-left: auto;
     }
+}
+
+.pointer{
+    cursor: pointer;
+}
+
+.blueTextNotConnected{
+    color: var(--blueButton);
+    margin: 5px 0px;
+    font-size: 0.9em;
+    text-align: center;
+}
+
+.divButtonsModal{
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.textAlignLeft{
+    text-align: left;
+    margin-left: 2px;
 }

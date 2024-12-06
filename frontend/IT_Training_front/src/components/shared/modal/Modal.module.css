@@ -20,6 +20,26 @@
     color: var(--darkPurple);
     width: 40%;
     max-width: 350px;
-    border-radius: 1rem;
+    border-radius: 5px;
     padding: 10px;
+}
+
+.modalContentButtonless{
+    margin: 15vh auto;
+    text-align: center;
+    background-color: var(--backgroundColor);
+    align-items: center;
+    color: var(--darkPurple);
+    width: 40%;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.divCloseButton{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.closeButton{
+    background-color: firebrick;
 }

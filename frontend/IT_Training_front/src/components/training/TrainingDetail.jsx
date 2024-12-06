@@ -7,21 +7,63 @@ import remarkGfm from "remark-gfm";
 import classes from "./Training.module.css";
 import Button from "../shared/Button";
 import SessionCube from "./SessionCube"
+import { fetchUserHasNote } from "../testUser/testUserSlice";
 
 const TrainingDetail = () => {
   const dispatch = useDispatch();
   const { idTraining } = useParams();
   const training = useSelector((state) => state.training.training);
   const sessions = useSelector((state) => state.training.sessions);
-  const navigate = useNavigate(); 
+  const { token, user } = useSelector((state) => state.authentication)
+  const { userHasPassedTest } = useSelector((state) => state.testUser)
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchTrainingById(idTraining));
     dispatch(fetchSessionsByTrainingId(idTraining))
   }, [idTraining, dispatch]);
 
+  useEffect(() => {
+    if (training?.testUser && token) {
+      const credentials = {
+        idTestUser: training.testUser.id,
+        idUser: user.userId,
+        token: token
+      }
+      dispatch(fetchUserHasNote(credentials))
+    }
+  }, [training, token, user, dispatch])
+
   const redirectTo = () => {
     navigate(`/training/testUser/${training.testUser.id}`)
+  }
+
+  const renderTestButton = () => {   
+    if (!token) {
+      return (
+        <div>
+          <Button children={"Tester ses compétences"} disabled={true} />
+          <p className={classes.blueTextNotConnected}>Connectez-vous pour passer le test</p>
+        </div>
+      );
+    }
+  
+    if (training.testUser) {
+      if (userHasPassedTest?.completed) {
+        return (
+          <div>
+            <Button children={"Tester ses compétences"} onClick={redirectTo} disabled={true} />
+            <p className={classes.blueTextNotConnected}>
+              Résultat du test : {userHasPassedTest?.success ? "Réussi" : "Échec"}
+            </p>
+          </div>
+        );
+      }
+  
+      return <Button children={"Tester ses compétences"} onClick={redirectTo} />;
+    }  
+    
+    return <Button children={"Tester ses compétences"} disabled={true} />;
   }
 
   return (
@@ -35,7 +77,7 @@ const TrainingDetail = () => {
             </div>
 
             <div className={classes.listSubThemes}>
-              { training.subThemes && training.subThemes.map((subTheme, index) => (
+              {training.subThemes && training.subThemes.map((subTheme, index) => (
                 <span key={index}>{subTheme.title}</span>
               ))}
             </div>
@@ -50,16 +92,18 @@ const TrainingDetail = () => {
 
               <div className={classes.spaceAround}>
                 <Link to={"#"}>Entreprise? je personnalise ma formation</Link>
-                {training.testUser ? <Button children={"Tester ses compétences"} onClick={redirectTo}></Button> : <Button children={"Tester ses compétences"} disabled={true} ></Button>}
+
+                {renderTestButton()}
+
               </div>
             </section>
 
             {sessions.length != 0 && (<section className={classes.sectionSessions}>
-                {sessions.map((session, index) => (
-                    <SessionCube key={index} session={session}/>
-                ))}
+              {sessions.map((session, index) => (
+                <SessionCube key={index} session={session} />
+              ))}
             </section>)}
-            
+
           </article>
         </>
       ) : (

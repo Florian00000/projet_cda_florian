@@ -1,5 +1,6 @@
 package com.example.it_training_back.entity;
 
+import com.example.it_training_back.entity.testUser.TestUser;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

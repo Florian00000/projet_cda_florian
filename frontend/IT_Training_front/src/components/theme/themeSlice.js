@@ -3,35 +3,35 @@ import axios from 'axios'
 import { BASE_URL } from "../../utils/constant";
 
 export const fetchAllTheme = createAsyncThunk("theme/fetchAllTheme", async () => {
-    const response = await axios.get(`${BASE_URL}themes`);
+    const response = await axios.get(`${BASE_URL}visitor/themes`);
     const data = await response.data;
 
     return data;
 });
 
 export const fetchAllSubThemeByThemeId = createAsyncThunk("theme/fetchAllSubThemeByThemeId", async (idTheme) => {
-    const response = await axios.get(`${BASE_URL}subThemes/findByTheme/${idTheme}`);
+    const response = await axios.get(`${BASE_URL}visitor/subThemes/findByTheme/${idTheme}`);
     const data = await response.data;
 
     return data;
 });
 
 export const fetchAllSubThemes = createAsyncThunk("theme/fetchAllSubThemes", async () => {
-    const response = await axios.get(`${BASE_URL}subThemes`);
+    const response = await axios.get(`${BASE_URL}visitor/subThemes`);
     const data = await response.data;
 
     return data;
 } )
 
 export const fetchAllTrainingBySubThemeId = createAsyncThunk("theme/fetchAllTrainingBySubThemeId", async (idSubTheme) => {
-    const response = await axios.get(`${BASE_URL}training/findBySubTheme/${idSubTheme}`)
+    const response = await axios.get(`${BASE_URL}visitor/training/findBySubTheme/${idSubTheme}`)
     const data = await response.data;
 
     return data;
 } )
 
 export const fetchAllTrainings = createAsyncThunk("theme/fetchAllTrainings", async () => {
-    const response = await axios.get(`${BASE_URL}training`)
+    const response = await axios.get(`${BASE_URL}visitor/training`)
     const data = await response.data;
     return data;
 })

@@ -1,5 +1,6 @@
 package com.example.it_training_back.service;
 
+import com.example.it_training_back.dto.course.CourseDtoPostSession;
 import com.example.it_training_back.dto.location.LocationDtoGet;
 import com.example.it_training_back.dto.location.LocationDtoPost;
 import com.example.it_training_back.dto.session.SessionDtoGet;
@@ -10,18 +11,25 @@ import com.example.it_training_back.entity.Location;
 import com.example.it_training_back.entity.Session;
 import com.example.it_training_back.entity.SubTheme;
 import com.example.it_training_back.entity.Training;
+import com.example.it_training_back.entity.course.Course;
 import com.example.it_training_back.exception.NotFoundException;
 import com.example.it_training_back.repository.LocationRepository;
 import com.example.it_training_back.repository.SessionRepository;
 import com.example.it_training_back.repository.SubThemeRepository;
 import com.example.it_training_back.repository.TrainingRepository;
+import com.example.it_training_back.repository.course.CourseRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.example.it_training_back.utils.StaticMethods.saveImage;
 
@@ -32,13 +40,16 @@ public class TrainingService {
     private final LocationRepository locationRepository;
     private final SessionRepository sessionRepository;
     private final SubThemeRepository subThemeRepository;
+    private final CourseRepository courseRepository;
 
     public TrainingService(TrainingRepository trainingRepository, LocationRepository locationRepository,
-                           SessionRepository sessionRepository, SubThemeRepository subThemeRepository) {
+                           SessionRepository sessionRepository, SubThemeRepository subThemeRepository,
+                           CourseRepository courseRepository) {
         this.trainingRepository = trainingRepository;
         this.locationRepository = locationRepository;
         this.sessionRepository = sessionRepository;
         this.subThemeRepository = subThemeRepository;
+        this.courseRepository = courseRepository;
     }
 
     //============================= Training =============================
@@ -94,16 +105,18 @@ public class TrainingService {
 
     //============================= Session =============================
 
+    @Transactional
     public SessionDtoGet addSession(SessionDtoPost sessionDtoPost) {
-        //TODO ajout automatique de Course (passer une Liste de jour et d'heures)
         Session session = Session.builder()
                 .startDate(LocalDate.parse(sessionDtoPost.getStartDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy")))
                 .endDate(LocalDate.parse(sessionDtoPost.getEndDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy")))
-                .placeLimit(sessionDtoPost.getPlaceLimit()).roomReserved(sessionDtoPost.isRoomReserved())
+                .placeLimit(sessionDtoPost.getPlaceLimit())
+                .roomReserved(sessionDtoPost.isRoomReserved())
                 .machinesInstalled(sessionDtoPost.isMachinesInstalled())
                 .trainerConfirmation(sessionDtoPost.isTrainerConfirmation())
                 .traineesConfirmation(sessionDtoPost.isTraineesConfirmation())
                 .evaluationForms(sessionDtoPost.isEvaluationForms())
+
                 .build();
 
         Training training = trainingRepository.findById(sessionDtoPost.getTrainingID()).orElseThrow(
@@ -120,6 +133,36 @@ public class TrainingService {
         }
 
         sessionRepository.save(session);
+
+        verifyDaysOfSession(sessionDtoPost.getTimetables());
+        try {
+            for (CourseDtoPostSession timetable : sessionDtoPost.getTimetables()){
+
+                if (timetable.getEndTime().isBefore(timetable.getStartTime())){
+                    throw new IllegalArgumentException("End date cannot be before start date");
+                }
+
+                LocalDate currentDate = session.getStartDate();
+                while (!currentDate.getDayOfWeek().equals(DayOfWeek.valueOf(timetable.getDayOfWeek()))){
+                    currentDate = currentDate.plusDays(1);
+                }
+
+                while (!currentDate.isAfter(session.getEndDate())){
+                    Course course = Course.builder()
+                            .date(currentDate)
+                            .startHour(timetable.getStartTime())
+                            .endHour(timetable.getEndTime())
+                            .session(session)
+                            .build();
+                    courseRepository.save(course);
+                    currentDate = currentDate.plusWeeks(1);
+                }
+
+            }
+        }catch (Exception e){
+            throw new IllegalArgumentException("Error while adding courses of session", e);
+        }
+
         return new SessionDtoGet(session);
     }
 
@@ -127,6 +170,16 @@ public class TrainingService {
         trainingRepository.findById(trainingID).orElseThrow(() -> new NotFoundException("Training with id " + trainingID + " not found"));
         List<Session> sessions = sessionRepository.findAllByTrainingId(trainingID);
         return sessions.stream().map(SessionDtoGet::new).toList();
+    }
+
+    private void verifyDaysOfSession(List<CourseDtoPostSession> daysOfSession){
+        List<String> listOfDays = daysOfSession.stream()
+                .map(CourseDtoPostSession::getDayOfWeek).toList();
+        Set<String> setOfDays = new HashSet<>(listOfDays);
+
+        if (listOfDays.size() != setOfDays.size()) {
+            throw new IllegalArgumentException("The same day of the week is present twice for the session");
+        }
     }
 
 

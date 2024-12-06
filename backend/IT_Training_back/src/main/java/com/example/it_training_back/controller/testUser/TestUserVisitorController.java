@@ -8,8 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
-@CrossOrigin
+@RequestMapping("/api/visitor")
 public class TestUserVisitorController {
 
     private final TestUserService testUserService;

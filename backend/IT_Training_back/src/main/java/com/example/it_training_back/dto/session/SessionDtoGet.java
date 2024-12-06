@@ -3,10 +3,12 @@ package com.example.it_training_back.dto.session;
 import com.example.it_training_back.entity.Location;
 import com.example.it_training_back.entity.Session;
 import com.example.it_training_back.entity.Training;
+import com.example.it_training_back.entity.course.Course;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 public class SessionDtoGet {
@@ -26,6 +28,9 @@ public class SessionDtoGet {
     private Location location;
     private Training training;
 
+    private List<String> users;
+    private List<Course> courses;
+
     public SessionDtoGet(Session session) {
         this.id = session.getId();
         this.startDate = session.getStartDate();
@@ -38,5 +43,11 @@ public class SessionDtoGet {
         this.evaluationForms = session.isEvaluationForms();
         this.location = session.getLocation();
         this.training = session.getTraining();
+        if (session.getUsers() != null) {
+            this.users = session.getUsers().stream().map(user -> user.getFirstname()+ " " + user.getLastname()).toList();
+        }
+        if (session.getCourses() != null) {
+            this.courses = session.getCourses();
+        }
     }
 }

@@ -115,6 +115,7 @@ jobs:
         env:
           DOCKER_USERNAME_HUB: ${{ secrets.DOCKER_USERNAME }}
           GITHUB_SHA: ${{ github.sha }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET}}
         run: |
           docker-compose -f docker-compose-hub.yml up -d --build
 

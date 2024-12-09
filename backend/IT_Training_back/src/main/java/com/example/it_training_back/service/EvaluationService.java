@@ -83,4 +83,25 @@ public class EvaluationService {
         Optional<Evaluation> alreadyRated = evaluationRepository.findByIdUserAndIdSession(idUser, idSession);
         return alreadyRated.isPresent();
     }
+
+    public EvaluationDtoGet getEvaluation(String id) {
+        Evaluation evaluation = evaluationRepository.findById(id).orElseThrow(
+                () -> new NotFoundException("evaluation not found")
+        );
+        return new EvaluationDtoGet(evaluation);
+    }
+
+    public List<EvaluationDtoGet> getAllEvaluations(){
+        List<Evaluation> evaluations = evaluationRepository.findAllByOrderByValuationDateDesc();
+        return evaluations.stream().map(EvaluationDtoGet::new).toList();
+    }
+
+    public EvaluationDtoGet readEvaluation(String id) {
+        Evaluation evaluation = evaluationRepository.findById(id).orElseThrow(
+                () -> new NotFoundException("evaluation not found")
+        );
+        evaluation.setReadByAdmin(true);
+        evaluationRepository.save(evaluation);
+        return new EvaluationDtoGet(evaluation);
+    }
 }

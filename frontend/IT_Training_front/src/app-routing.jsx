@@ -9,6 +9,7 @@ import TrainingForm from "./components/training/TrainingForm";
 import AuthenticationForm from "./components/shared/authentication/AuthenticationForm";
 import ProtectedPathAdmin from "./components/shared/authentication/ProtectedPathAdmin";
 import ProtectedPath from "./components/shared/authentication/ProtectedPath";
+import EvaluationForm from "./components/evaluation/EvaluationForm";
 
 const router = createBrowserRouter([
     {
@@ -39,7 +40,9 @@ const router = createBrowserRouter([
                     <TrainingForm />
                 </ProtectedPathAdmin>
             },
-            { path: "/authentication", element: <AuthenticationForm /> }
+            { path: "/authentication", element: <AuthenticationForm /> },
+            //changer le chemin
+            {path: "/test", element: <EvaluationForm/> }
         ]
     }
 ]);

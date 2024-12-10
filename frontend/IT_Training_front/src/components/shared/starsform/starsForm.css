@@ -1,0 +1,10 @@
+.inputStar{
+    display: none;
+}
+
+.spanStar{
+    cursor: pointer;
+    font-size: 2rem;
+    margin: 5px;
+    display: inline-block;
+}

@@ -4,7 +4,7 @@
     color: var(--blueButton);
 }
 
-.spaceAround{
+.spaceBetween{
     display: flex;
     justify-content: space-between;
 }
@@ -69,4 +69,28 @@
 .textAlignLeft{
     text-align: left;
     margin-left: 2px;
+}
+
+.articleSessionRectangle{
+    background-color: var(--blueBackgroundCard);
+    padding: 20px;
+    margin: 20px 0px;
+    border-radius: 5px;
+}
+
+.divTitleSessionRectangle{
+    display: flex;
+    justify-content: space-between;
+} 
+
+.blueText{
+    color: var(--blueButton);
+    text-align: right;
+}
+
+.flexEnd{
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 }

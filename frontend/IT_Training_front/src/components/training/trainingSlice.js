@@ -58,6 +58,23 @@ export const fetchUserHasRegisteredToSession = createAsyncThunk("training/fetchU
         }
 })
 
+export const fetchSessionsByUser = createAsyncThunk("training/fetchSessionsByUser",
+    async({user, token}, {rejectWithValue}) =>{
+        try {
+            const response = await axios.get(`${BASE_URL}user/session/byUser/${user.userId}`,
+                {headers: {
+                    "Authorization": `Bearer ${token}`
+                }}
+            )
+            const data = response.data;
+            return data;
+        } catch (error) {
+            const serializedError = error.response?.data || { message: error.message };
+            return rejectWithValue(serializedError);
+        }
+    }
+)
+
 const trainingSlice = createSlice({
     name:"training",
     initialState: {
@@ -100,8 +117,11 @@ const trainingSlice = createSlice({
         builder.addCase(fetchUserHasRegisteredToSession.rejected, (state, actions) => {
             state.userHasRegistered = actions.payload.data;
             console.log(actions.payload);
-        })
-
+        });
+        builder.addCase(fetchSessionsByUser.fulfilled, (state, actions) => {
+            state.sessions = actions.payload;
+            console.log(actions.payload)
+        });
     }
 })
 export const { changeStatusAddTraining } = trainingSlice.actions;

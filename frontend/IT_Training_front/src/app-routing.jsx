@@ -49,8 +49,9 @@ const router = createBrowserRouter([
                 path: "/mySessions", 
                 element: <ProtectedPath><MySessions/></ProtectedPath> 
             },
-            //changer le chemin
-            {path: "/test", element: <EvaluationForm/> }
+            {
+                path: "/evaluation/form/:idSession", 
+                element: <EvaluationForm/> }
         ]
     }
 ]);

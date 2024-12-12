@@ -3,7 +3,7 @@ import themeSlice from "./components/theme/themeSlice";
 import trainingSlice from "./components/training/trainingSlice";
 import testUserSlice from "./components/testUser/testUserSlice"
 import authenticationSlice from "./components/shared/authentication/authenticationSlice"
-// import evaluationSlice from "./components/evaluation/evaluationSlice";
+import evaluationSlice from "./components/evaluation/evaluationSlice";
 
 export default configureStore({
     reducer: {
@@ -11,6 +11,6 @@ export default configureStore({
         training: trainingSlice,
         testUser: testUserSlice,
         authentication: authenticationSlice,
-        // evaluation: evaluationSlice
+        evaluation: evaluationSlice
     }
 })

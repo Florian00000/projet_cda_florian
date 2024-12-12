@@ -25,7 +25,7 @@ const StarsForm = ({rating, onRatingChange}) => {
                             className="spanStar"
                             style={{
                                 color:
-                                    currentRating <= (hover || rating) ? "#ffc107" : "var(--greyCard)"
+                                    currentRating <= (hover || rating) ? "#ffc107" : "grey"
                             }}
                             onMouseEnter={() => setHover(currentRating)}
                             onMouseLeave={() => setHover(null)}

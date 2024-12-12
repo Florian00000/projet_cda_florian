@@ -6,6 +6,7 @@ import { fetchSessionById } from '../training/trainingSlice';
 import Button from '../shared/Button';
 import { emptyEvaluationReturn, fetchAddEvaluation } from './evaluationSlice';
 import Modal from '../shared/modal/Modal';
+import classes from "./evaluation.module.css"
 
 const EvaluationForm = () => {
     const { idSession } = useParams();
@@ -89,27 +90,27 @@ const EvaluationForm = () => {
                 <h2>Evaluation de la session ({session?.startDate} au {session?.endDate})</h2>
                 <hr />
             </div>
-            <form>
+            <form className={classes.evaluationForm} >
                 <div>
-                    <h3>Evaluation du centre</h3>
+                    <h2 className={classes.blueText}>Evaluation du centre</h2>
                     <hr />
                 </div>
-                <div>
-                    <div>
+                <div className={classes.dflexEvaluation}>
+                    <div className={classes.flexStar} style={{marginLeft:"auto"}}>
                         <p>qualité de l'accueil:</p>
                         <StarsForm rating={qualityReception} onRatingChange={setQualityReception} />
                     </div>
                     <hr />
-                    <div>
-                        <p>qualité de l'environnement: <br /> (salles, machines, repas...)</p>
+                    <div className={classes.flexStar}>
+                        <p>qualité de l'environnement: (salles, machines, repas...)</p>
                         <StarsForm rating={qualityEnvironment} onRatingChange={setQualityEnvironment} />
                     </div>
                 </div>
-                <div>
-                    <h3>Evaluation du formateur</h3>
+                <div className={classes.blueText}>
+                    <h2>Evaluation du formateur</h2>
                     <hr />
                 </div>
-                <div>
+                <div className={classes.dflexEvaluation}>
                     <div>
                         <p>pédagogie:</p>
                         <StarsForm rating={pedagogy} onRatingChange={setPedagogy} />

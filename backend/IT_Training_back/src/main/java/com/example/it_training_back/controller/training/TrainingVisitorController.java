@@ -37,4 +37,9 @@ public class TrainingVisitorController {
     public ResponseEntity<List<SessionDtoGet>> getSessionsByTraining(@PathVariable int trainingId) {
         return ResponseEntity.ok(trainingService.getSessionsByTrainingID(trainingId));
     }
+
+    @GetMapping("/session/{sessionId}")
+    public ResponseEntity<SessionDtoGet> getSessionById(@PathVariable long sessionId) {
+        return ResponseEntity.ok(trainingService.getSessionById(sessionId));
+    }
 }

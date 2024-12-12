@@ -75,6 +75,19 @@ export const fetchSessionsByUser = createAsyncThunk("training/fetchSessionsByUse
     }
 )
 
+export const fetchSessionById = createAsyncThunk("training/fetchSessionById", 
+    async(sessionId, {rejectWithValue}) => {
+        try {
+            const response = await axios.get(`${BASE_URL}visitor/session/${sessionId}`)
+            const data = response.data;
+            return data;
+        } catch (error) {
+            const serializedError = error.response?.data || { message: error.message };
+            return rejectWithValue(serializedError);
+        }
+    }
+)
+
 const trainingSlice = createSlice({
     name:"training",
     initialState: {
@@ -122,6 +135,11 @@ const trainingSlice = createSlice({
             state.sessions = actions.payload;
             console.log(actions.payload)
         });
+        builder.addCase(fetchSessionById.fulfilled, (state, actions) => {
+            state.sessions = []
+            state.sessions.push(actions.payload);
+             console.log(state.sessions);            
+        })
     }
 })
 export const { changeStatusAddTraining } = trainingSlice.actions;

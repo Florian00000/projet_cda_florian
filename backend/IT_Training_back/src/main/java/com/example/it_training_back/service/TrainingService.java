@@ -172,6 +172,12 @@ public class TrainingService {
         return sessions.stream().map(SessionDtoGet::new).toList();
     }
 
+    public SessionDtoGet getSessionById(long sessionId) {
+        Session session = sessionRepository.findById(sessionId).orElseThrow(
+                () -> new NotFoundException("Session with id " + sessionId + " not found"));
+        return new SessionDtoGet(session);
+    }
+
     private void verifyDaysOfSession(List<CourseDtoPostSession> daysOfSession){
         List<String> listOfDays = daysOfSession.stream()
                 .map(CourseDtoPostSession::getDayOfWeek).toList();

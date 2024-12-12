@@ -51,7 +51,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/evaluation/form/:idSession", 
-                element: <EvaluationForm/> }
+                element: <ProtectedPath><EvaluationForm/></ProtectedPath>  }
         ]
     }
 ]);

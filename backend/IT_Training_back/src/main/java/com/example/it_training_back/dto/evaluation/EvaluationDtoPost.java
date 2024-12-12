@@ -10,6 +10,7 @@ public class EvaluationDtoPost {
     private int qualityEnvironment;
     private int pedagogy;
     private int domainExpertise;
+    private int availability;
     private int qualityResponses;
     private int technicalAnimations;
 

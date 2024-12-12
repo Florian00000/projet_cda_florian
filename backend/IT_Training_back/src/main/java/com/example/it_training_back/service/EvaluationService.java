@@ -47,13 +47,15 @@ public class EvaluationService {
 
         if (evaluationDtoPost.getQualityReception() > 5 || evaluationDtoPost.getQualityEnvironment() > 5 ||
         evaluationDtoPost.getPedagogy() > 5 || evaluationDtoPost.getDomainExpertise() > 5 ||
-        evaluationDtoPost.getQualityResponses() > 5 || evaluationDtoPost.getTechnicalAnimations() > 5) {
+                evaluationDtoPost.getAvailability() > 5 || evaluationDtoPost.getQualityResponses() > 5 ||
+                evaluationDtoPost.getTechnicalAnimations() > 5) {
             throw new IllegalArgumentException("the score cannot be higher than 5");
         }
 
         if (evaluationDtoPost.getQualityReception() < 1 || evaluationDtoPost.getQualityEnvironment() < 1 ||
                 evaluationDtoPost.getPedagogy() < 1 || evaluationDtoPost.getDomainExpertise() < 1 ||
-                evaluationDtoPost.getQualityResponses() < 1 || evaluationDtoPost.getTechnicalAnimations() < 1) {
+                evaluationDtoPost.getAvailability() < 1 || evaluationDtoPost.getQualityResponses() < 1 ||
+                evaluationDtoPost.getTechnicalAnimations() < 1) {
             throw new IllegalArgumentException("the score cannot be less than 1");
         }
 
@@ -62,6 +64,7 @@ public class EvaluationService {
                 .qualityEnvironment(evaluationDtoPost.getQualityEnvironment())
                 .pedagogy(evaluationDtoPost.getPedagogy())
                 .domainExpertise(evaluationDtoPost.getDomainExpertise())
+                .availability(evaluationDtoPost.getAvailability())
                 .qualityResponses(evaluationDtoPost.getQualityResponses())
                 .technicalAnimations(evaluationDtoPost.getTechnicalAnimations())
                 .recommended(evaluationDtoPost.isRecommended())

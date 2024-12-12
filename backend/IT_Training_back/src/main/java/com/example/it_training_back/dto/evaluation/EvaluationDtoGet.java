@@ -14,6 +14,7 @@ public class EvaluationDtoGet {
     private int qualityEnvironment;
     private int pedagogy;
     private int domainExpertise;
+    private int availability;
     private int qualityResponses;
     private int technicalAnimations;
 
@@ -32,6 +33,7 @@ public class EvaluationDtoGet {
         this.qualityEnvironment = evaluation.getQualityEnvironment();
         this.pedagogy = evaluation.getPedagogy();
         this.domainExpertise = evaluation.getDomainExpertise();
+        this.availability = evaluation.getAvailability();
         this.qualityResponses = evaluation.getQualityResponses();
         this.technicalAnimations = evaluation.getTechnicalAnimations();
         this.recommended = evaluation.isRecommended();

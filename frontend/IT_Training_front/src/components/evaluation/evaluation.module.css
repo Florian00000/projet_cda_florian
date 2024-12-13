@@ -16,7 +16,6 @@
 .dflexEvaluation{
     display: flex;
     min-height: 12%;
-    justify-content: space-between;
 }
 
 .flexStar{
@@ -25,4 +24,24 @@
     align-items: center;
 }
 
-/* faire avec du grid */
+
+.dflex{
+    display: flex;
+    justify-content: space-between;
+}
+
+.trainingProjects{
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+
+    & textarea {
+        resize: none;
+    }
+}
+
+.divButtonSubmit{
+    padding-top: 10px;
+    margin-left: auto;
+}

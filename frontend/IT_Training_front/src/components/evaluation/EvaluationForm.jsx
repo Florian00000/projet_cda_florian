@@ -96,12 +96,12 @@ const EvaluationForm = () => {
                     <hr />
                 </div>
                 <div className={classes.dflexEvaluation}>
-                    <div className={classes.flexStar} style={{marginLeft:"auto"}}>
+                    <div className={classes.flexStar} style={{width:"50%"}}>
                         <p>qualité de l'accueil:</p>
                         <StarsForm rating={qualityReception} onRatingChange={setQualityReception} />
                     </div>
                     <hr />
-                    <div className={classes.flexStar}>
+                    <div className={classes.flexStar} style={{width:"50%"}}>
                         <p>qualité de l'environnement: (salles, machines, repas...)</p>
                         <StarsForm rating={qualityEnvironment} onRatingChange={setQualityEnvironment} />
                     </div>
@@ -111,50 +111,54 @@ const EvaluationForm = () => {
                     <hr />
                 </div>
                 <div className={classes.dflexEvaluation}>
-                    <div>
+                    <div className={classes.flexStar} style={{width:"25%"}} >
                         <p>pédagogie:</p>
                         <StarsForm rating={pedagogy} onRatingChange={setPedagogy} />
                     </div>
                     <hr />
-                    <div>
+                    <div className={classes.flexStar} style={{width:"25%"}} >
                         <p>maitrise  du domaine:</p>
                         <StarsForm rating={domainExpertise} onRatingChange={setDomainExpertise} />
                     </div>
                     <hr />
-                    <div>
+                    <div className={classes.flexStar} style={{width:"25%"}} >
                         <p>disponibilité:</p>
                         <StarsForm rating={availability} onRatingChange={setAvailability} />
                     </div>
                     <hr />
-                    <div>
+                    <div className={classes.flexStar} style={{width:"25%"}} >
                         <p>Réponses aux questions:</p>
                         <StarsForm rating={qualityResponses} onRatingChange={setQualityResponses} />
                     </div>
                 </div>
-                <div>
+                <div className={classes.dflex}>
                     <div>
-                        <p>techniques d'animations:</p>
-                        <StarsForm rating={technicalAnimations} onRatingChange={setTechnicalAnimations} />
-                    </div>
-                    <div>
-                        <p>Recommandez vous la formation?</p>
                         <div>
-                            <input type="radio" name="recommanded" id="isrecommanded" value={true} onChange={() => setRecommended(true)} checked={recommended === true} required />
-                            <label htmlFor="isrecommanded">oui</label>
+                            <p>techniques d'animations:</p>
+                            <StarsForm rating={technicalAnimations} onRatingChange={setTechnicalAnimations} />
                         </div>
                         <div>
-                            <input type="radio" name="recommanded" id="notrecommanded" value={false} onChange={() => setRecommended(false)} checked={recommended === false} required />
-                            <label htmlFor="notrecommanded">non</label>
+                            <p>Recommandez vous la formation?</p>
+                            <div>
+                                <input type="radio" name="recommanded" id="isrecommanded" value={true} onChange={() => setRecommended(true)} checked={recommended === true} required />
+                                <label htmlFor="isrecommanded">oui</label>
+                            </div>
+                            <div>
+                                <input type="radio" name="recommanded" id="notrecommanded" value={false} onChange={() => setRecommended(false)} checked={recommended === false} required />
+                                <label htmlFor="notrecommanded">non</label>
+                            </div>
+
                         </div>
-
                     </div>
-                    <div >
-                        <label htmlFor="description">Avez vous d'autres porjets de formations? </label>
-                        <textarea id="description" rows={10} cols={30} ref={trainingProjectsRef}></textarea>
+                   
+                    <div className={classes.trainingProjects} >
+                        <label htmlFor="trainingProjects">Avez vous d'autres projets de formations? </label>
+                        <textarea id="trainingProjects" rows={10} cols={30} ref={trainingProjectsRef}></textarea>
+                        <div className={classes.divButtonSubmit}>
+                            <Button children={"Envoyer"} type={"submit"} size={"medium"} onClick={handleSubmit} />
+                        </div>
                     </div>
-
-                </div>
-                <Button children={"Envoyer"} type={"submit"} size={"medium"} onClick={handleSubmit} />
+                </div>             
 
             </form>
 

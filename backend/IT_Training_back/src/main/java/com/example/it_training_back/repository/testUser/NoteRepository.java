@@ -12,5 +12,5 @@ import java.util.Optional;
 @Repository
 public interface NoteRepository extends CrudRepository<Note, Long> {
     List<Note> findAllByUser(User user);
-    Optional<Note> findNoteByUserAndTestUser(User user, TestUser testUser);
+    Optional<Note> findByUserAndTestUser(User user, TestUser testUser);
 }

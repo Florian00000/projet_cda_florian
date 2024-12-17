@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { fetchAddNote } from './testUserSlice';
@@ -10,7 +10,8 @@ const ResultTest = () => {
     const dispatch = useDispatch();
     const { testPassed, finalScore, testUser, training } = location.state;
     const { token, user } = useSelector((state) => state.authentication);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const [credentials, setCredentials] = useState(null);
 
     useEffect(() => {    
             
@@ -20,18 +21,15 @@ const ResultTest = () => {
                 success: testPassed,
                 testUserId: testUser.id,
                 userId: user.userId
-            }
-            const credentials = {
-                note: note,
-                token: token
-            }
+            };
+            setCredentials({ note, token });            
             
-            dispatch(fetchAddNote(credentials))
         }
 
-    }, [token, testUser, testPassed, finalScore, dispatch])
+    }, [token, testUser, testPassed, finalScore, dispatch, user.userId])
 
     const redirectToTraining = () => {
+        dispatch(fetchAddNote(credentials))
         navigate(`/training/${training.id}`)
     }
 
@@ -44,7 +42,7 @@ const ResultTest = () => {
                 ) : (
                     <p>Dommage, vous n'avez pas atteint le score requis. Votre score final est de {finalScore}.</p>
                 )}
-                <Button onClick={redirectToTraining} children={"OK"}></Button>
+                <Button onClick={redirectToTraining} children={"OK"} disabled={credentials === null}></Button>
             </section>
 
         </main>

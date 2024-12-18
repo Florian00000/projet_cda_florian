@@ -17,6 +17,14 @@ const MySessions = () => {
         dispatch(fetchSessionsByUser(credentials))
     },[dispatch, user, token]);
 
+    if (!sessions.length) {
+        return (
+            <main>
+                <p>Vous n'êtes inscrits à aucune session.</p>
+            </main>
+        )
+    }
+
     return (
         <main>
             <div>

@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Button from '../shared/Button';
 import classes from "./Training.module.css";
 import { fetchAddUserToSession, fetchUserHasRegisteredToSession } from './trainingSlice';
+import { getPlanningOfWeek, parseDate } from '../../utils/methodsDate';
 
 const SessionModal = ({ session }) => {
     const { token, user } = useSelector((state) => state.authentication)
@@ -23,24 +24,6 @@ const SessionModal = ({ session }) => {
             dispatch(fetchUserHasRegisteredToSession(credentials))
         }                
     }, [user, token, session, dispatch])
-
-    const parseDate = (dateString) => {
-        const [day, month, year] = dateString.split('/');
-        return new Date(`${year}-${month}-${day}`)
-    }
-
-    const getPlanningOfWeek = (courses) => {
-        const planning = new Set();
-        return courses.filter(course => {
-            const dayName = new Intl.DateTimeFormat('fr-FR', { weekday: 'long' }).format(parseDate(course.date))
-
-            if (!planning.has(dayName)) {
-                planning.add(dayName)
-                return true;
-            }
-            return false
-        });
-    }
 
     const redirectToTest = () => {
         navigate(`/training/testUser/${training.testUser.id}`)

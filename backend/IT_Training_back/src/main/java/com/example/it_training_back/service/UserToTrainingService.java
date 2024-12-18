@@ -1,6 +1,7 @@
 package com.example.it_training_back.service;
 
 import com.example.it_training_back.dto.BaseResponseDto;
+import com.example.it_training_back.dto.session.SessionDtoGet;
 import com.example.it_training_back.dto.testUser.note.NoteDtoGet;
 import com.example.it_training_back.dto.testUser.note.NoteDtoPost;
 import com.example.it_training_back.entity.Session;
@@ -18,7 +19,6 @@ import com.example.it_training_back.repository.testUser.TestUserRepository;
 import com.example.it_training_back.repository.user.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -53,14 +53,12 @@ public class UserToTrainingService {
         TestUser testUser = testUserRepository.findById(noteDtoPost.getTestUserId())
                 .orElseThrow(() -> new NotFoundException("id_test_user not found"));
 
-        List<Note> notes = noteRepository.findAllByUser(user);
-        if (!notes.isEmpty()) {
-            for (Note note : notes) {
-                if (note.getTestUser().equals(testUser)) {
-                    throw new BadCredentialsException("the user already has a note");
-                }
-            }
+        Optional<Note> noteInBdd = noteRepository.findByUserAndTestUser(user, testUser);
+        if (noteInBdd.isPresent()) {
+            throw new IllegalArgumentException("the user already has a note");
         }
+
+
         Note note = Note.builder()
                 .result(noteDtoPost.getResult())
                 .success(noteDtoPost.isSuccess())
@@ -76,7 +74,7 @@ public class UserToTrainingService {
                 .orElseThrow(() -> new NotFoundException("id_user not found"));
         TestUser testUser = testUserRepository.findById(testUserId)
                 .orElseThrow(() -> new NotFoundException("id_test_user not found"));
-        Optional<Note> note = noteRepository.findNoteByUserAndTestUser(user, testUser);
+        Optional<Note> note = noteRepository.findByUserAndTestUser(user, testUser);
         Map<String, Object> data = new HashMap<>();
        if (note.isPresent()) {
            data.put("completed", true);
@@ -98,7 +96,7 @@ public class UserToTrainingService {
 
         if (session.getTraining().getTestUser() != null){
             TestUser testUser =  session.getTraining().getTestUser();
-            Optional<Note> note = noteRepository.findNoteByUserAndTestUser(user, testUser);
+            Optional<Note> note = noteRepository.findByUserAndTestUser(user, testUser);
             if (note.isPresent()) {
                 if (!note.get().isSuccess())throw new IllegalArgumentException("the user did not pass the test");
             }else{
@@ -135,6 +133,13 @@ public class UserToTrainingService {
         if (session.isPresent()) {
             return true;
         }else return false;
+    }
+
+
+    public List<SessionDtoGet> getAllSessionByUserID(long userID) {
+        User user = userRepository.findById(userID).orElseThrow(() -> new NotFoundException("user not found"));
+        List<Session> sessions = sessionRepository.findAllByUsers(List.of(user));
+        return sessions.stream().map(SessionDtoGet::new).toList();
     }
 
 }

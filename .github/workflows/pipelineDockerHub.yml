@@ -139,7 +139,7 @@ jobs:
           docker-compose -f docker-compose-hub.yml down   
 
   latest:
-    name: Build and Push Docker Image
+    name: Build and Push Docker Image with tag latest
     needs: deploy
     runs-on: ubuntu-latest
 

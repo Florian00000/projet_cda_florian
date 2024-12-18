@@ -11,5 +11,6 @@ import java.util.Optional;
 @Repository
 public interface SessionRepository extends CrudRepository<Session, Long> {
     List<Session> findAllByTrainingId(int trainingId);
+    List<Session> findAllByUsers(List<User> users);
     Optional<Session> findByIdAndUsers(long id, List<User> users);
 }

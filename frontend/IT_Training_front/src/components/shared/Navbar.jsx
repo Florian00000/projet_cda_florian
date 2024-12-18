@@ -8,6 +8,7 @@ import { logout } from './authentication/authenticationSlice';
 
 const Navbar = () => {
     const [isDropdownVisible, setDropdownVisible] = useState(false);
+    const [isDropdownVisibleMySpace, setDropdownVisibleMySpace] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -16,6 +17,10 @@ const Navbar = () => {
     const toggleDopdown = () => {
         setDropdownVisible(!isDropdownVisible)
     };
+
+    const toggleDopdownMySpace = () => {
+        setDropdownVisibleMySpace(!isDropdownVisibleMySpace)
+    }
 
     return (
         <nav className={classes.nav}>
@@ -36,6 +41,23 @@ const Navbar = () => {
                     </div>
                 )}
             </div>
+
+            {token &&                 
+                <div className={classes.menu} onMouseEnter={toggleDopdownMySpace} onMouseLeave={toggleDopdownMySpace}>
+                    <span className={classes.menuTitle} >Mon Espace Personnel</span>
+                    <span>
+                        <FontAwesomeIcon icon={faSortDown} />  
+                    </span>
+                        
+                                    
+                    {isDropdownVisibleMySpace && (
+                        <div className={classes.dropdown} >
+                            <Link to={"/mySessions"} className={classes.dropdownItem} style={{width: "22dvh"}} >Mes Sessions</Link>                     
+                        </div>
+                    )}
+                </div>
+            }
+
          
             {token ? 
             <div className={classes.divLoginButton}>

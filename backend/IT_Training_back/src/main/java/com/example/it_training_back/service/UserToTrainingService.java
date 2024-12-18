@@ -1,6 +1,7 @@
 package com.example.it_training_back.service;
 
 import com.example.it_training_back.dto.BaseResponseDto;
+import com.example.it_training_back.dto.session.SessionDtoGet;
 import com.example.it_training_back.dto.testUser.note.NoteDtoGet;
 import com.example.it_training_back.dto.testUser.note.NoteDtoPost;
 import com.example.it_training_back.entity.Session;
@@ -132,6 +133,13 @@ public class UserToTrainingService {
         if (session.isPresent()) {
             return true;
         }else return false;
+    }
+
+
+    public List<SessionDtoGet> getAllSessionByUserID(long userID) {
+        User user = userRepository.findById(userID).orElseThrow(() -> new NotFoundException("user not found"));
+        List<Session> sessions = sessionRepository.findAllByUsers(List.of(user));
+        return sessions.stream().map(SessionDtoGet::new).toList();
     }
 
 }

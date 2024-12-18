@@ -1,6 +1,8 @@
 volumes:
   docker_mysqldata:
   uploaded_images:
+  mongo_data:
+  mongo_config:
 networks:
   id_training:
 
@@ -38,11 +40,33 @@ services:
       PMA_HOST: docker_mysql
     networks:
       - id_training
+
+  mongo:
+    image: mongo
+    container_name: mongo_container
+    restart: always
+    ports:
+      - "27018:27017"  
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=mongoadmin
+      - MONGO_INITDB_ROOT_PASSWORD=mongoadmin
+    volumes:
+      - mongo_data:/data/db
+      - mongo_config:/data/configdb
+    networks:
+      - id_training
+    healthcheck:
+      #test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      test: ["CMD", "mongosh", "-u", "mongoadmin", "-p", "mongoadmin", "--authenticationDatabase", "admin", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      retries: 3
   
   back_it_training:
     container_name: back_it_training_container
     depends_on:
       mysql:
+        condition: service_healthy
+      mongo:
         condition: service_healthy
     build:
       context: ./backend/IT_Training_back
@@ -53,6 +77,9 @@ services:
       SPRING_DATASOURCE_PASSWORD: root
       SPRING_WEB_RESOURCES_STATIC-LOCATION: /app/public/images/,classpath:/public/
       JWT_SECRET: ${JWT_SECRET}
+      SPRING_DATA_MONGODB_URI: mongodb://mongoadmin:mongoadmin@mongo_container:27017/?authSource=admin
+      #SPRING_DATA_MONGODB_URI: mongodb://mongo_container:27017/
+      #SPRING_DATA_MONGODB_DATABASE: projet_cda_it_training
     volumes:
       - uploaded_images:/app/public/images
     ports:

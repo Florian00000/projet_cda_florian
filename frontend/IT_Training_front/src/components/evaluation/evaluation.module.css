@@ -1,0 +1,48 @@
+.blueText{
+    color: var(--blueButton);
+}
+
+.evaluationForm{
+    background-color: var(--greyCard);
+    padding: 10px 35px;
+    border-radius: 5px;
+    margin-top: 20px;
+    
+    & hr {
+       color: var(--blueButton);
+    }
+}
+
+.dflexEvaluation{
+    display: flex;
+    min-height: 12%;
+}
+
+.flexStar{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.dflex{
+    display: flex;
+    justify-content: space-between;
+}
+
+.trainingProjects{
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+
+    & textarea {
+        resize: none;
+        padding: 10px;
+    }
+}
+
+.divButtonSubmit{
+    padding-top: 10px;
+    margin-left: auto;
+}

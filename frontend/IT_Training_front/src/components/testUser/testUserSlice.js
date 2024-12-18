@@ -36,7 +36,8 @@ export const fetchAddNote = createAsyncThunk("testUser/fetchAddNote", async ({no
         const data = await reponse.data;
         return data;
     } catch (error) {
-        return rejectWithValue(error.response)
+        const serializedError = error.response?.data || { message: error.message };
+        return rejectWithValue(serializedError)
     }
 
 })
@@ -69,8 +70,7 @@ const testUserSlice = createSlice({
             console.log(action.payload);
         });
         builder.addCase(fetchAddNote.rejected, (state, actions) => {
-            console.log(actions.payload.data);    
-            console.log("status: " +actions.payload.status);        
+            console.log(actions.payload);                   
         })
 
     }

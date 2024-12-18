@@ -90,7 +90,7 @@ const TrainingDetail = () => {
               </div>
               {training.price && training.price != 0 ? (<p>prix: {training.price} €</p>) : ((<p>prix: gratuit</p>))}
 
-              <div className={classes.spaceAround}>
+              <div className={classes.spaceBetween}>
                 <Link to={"#"}>Entreprise? je personnalise ma formation</Link>
 
                 {renderTestButton()}

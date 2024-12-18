@@ -141,7 +141,8 @@ public class UserToTrainingService {
 
     public List<SessionDtoGet> getAllSessionByUserID(long userID) {
         User user = userRepository.findById(userID).orElseThrow(() -> new NotFoundException("user not found"));
-        List<Session> sessions = sessionRepository.findAllByUsers(List.of(user));
+        //List<Session> sessions = sessionRepository.findAllByUsers(List.of(user));
+        List<Session> sessions = sessionRepository.findAllByUsersOrderByStartDateAsc(List.of(user));
         return sessions.stream().map(SessionDtoGet::new).toList();
     }
 

@@ -3,6 +3,7 @@ package com.example.it_training_back.service;
 import com.example.it_training_back.dto.evaluation.EvaluationDtoGet;
 import com.example.it_training_back.dto.evaluation.EvaluationDtoPost;
 import com.example.it_training_back.entity.Evaluation;
+import com.example.it_training_back.entity.Session;
 import com.example.it_training_back.entity.user.User;
 import com.example.it_training_back.exception.NotFoundException;
 import com.example.it_training_back.repository.EvaluationRepository;
@@ -10,6 +11,7 @@ import com.example.it_training_back.repository.SessionRepository;
 import com.example.it_training_back.repository.user.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -33,7 +35,7 @@ public class EvaluationService {
         User user = userRepository.findById(evaluationDtoPost.getIdUser()).orElseThrow(
                 () -> new NotFoundException("User not found")
         );
-        sessionRepository.findById(evaluationDtoPost.getIdSession()).orElseThrow(
+        Session session = sessionRepository.findById(evaluationDtoPost.getIdSession()).orElseThrow(
                 () -> new NotFoundException("Session not found")
         );
 
@@ -43,6 +45,10 @@ public class EvaluationService {
 
         if (alreadyRated(evaluationDtoPost.getIdUser(), evaluationDtoPost.getIdSession())){
             throw new IllegalArgumentException("This user has already evaluated this session");
+        }
+
+        if (LocalDate.now().isBefore(session.getStartDate())){
+            throw new IllegalArgumentException("It is not yet possible to evaluate this session.");
         }
 
         if (evaluationDtoPost.getQualityReception() > 5 || evaluationDtoPost.getQualityEnvironment() > 5 ||

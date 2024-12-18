@@ -79,7 +79,7 @@ services:
       JWT_SECRET: ${JWT_SECRET}
       SPRING_DATA_MONGODB_URI: mongodb://mongoadmin:mongoadmin@mongo_container:27017/?authSource=admin
       #SPRING_DATA_MONGODB_URI: mongodb://mongo_container:27017/
-      SPRING_DATA_MONGODB_DATABASE: projet_cda_it_training
+      #SPRING_DATA_MONGODB_DATABASE: projet_cda_it_training
     volumes:
       - uploaded_images:/app/public/images
     ports:

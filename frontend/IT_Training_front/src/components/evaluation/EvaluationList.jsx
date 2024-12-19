@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllEvaluationsReadByAdmin, fetchAllEvaluationsNotReadByAdmin } from "./evaluationSlice"
 import EvaluationRow from './EvaluationRow';
+import classes from "./evaluation.module.css"
 
 const EvaluationList = () => {
     const dispatch = useDispatch();
@@ -16,10 +17,17 @@ const EvaluationList = () => {
 
     return (
         <main>
-            <table>
+            <div>
+                <h3>Liste des nouvelles évaluations</h3>
+                <hr />
+            </div>
+            <table className={classes.tableEvaluation}>
                 <thead>
                     <tr>
-                        <th>liste des nouvelles évaluations</th>
+                        <th></th>
+                        <th>date</th>
+                        <th>centre</th>
+                        <th>formateur</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -29,10 +37,18 @@ const EvaluationList = () => {
                 </tbody>
             </table>
 
-            <table>
-                <thead>
+            <div>
+                <h3>Liste des anciennes évaluations</h3>
+                <hr />
+            </div>
+
+            <table className={classes.tableEvaluation}>
+            <thead>
                     <tr>
-                        <th>liste des anciennes évaluations</th>
+                        <th></th>
+                        <th>date</th>
+                        <th>centre</th>
+                        <th>formateur</th>
                     </tr>
                 </thead>
                 <tbody>

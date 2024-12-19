@@ -46,3 +46,16 @@
     padding-top: 10px;
     margin-left: auto;
 }
+
+.tableEvaluation{
+    background-color: var(--greyCard);
+    text-align: center;
+    margin-top: 20px;
+    border-radius: 5px;
+    border-collapse: collapse;
+}
+
+.trBorder{
+    border-top: var(--backgroundColor) solid 1px;
+    cursor: pointer;
+}

@@ -22,6 +22,16 @@ public class EvaluationAdminController {
         return ResponseEntity.ok(evaluationService.getAllEvaluations());
     }
 
+    @GetMapping("/readByAdmin=true")
+    public ResponseEntity<List<EvaluationDtoGet>> getAllEvaluationsReadByAdmin() {
+        return ResponseEntity.ok(evaluationService.getAllEvaluationsByReadByAdmin(true));
+    }
+
+    @GetMapping("/readByAdmin=false")
+    public ResponseEntity<List<EvaluationDtoGet>> getAllEvaluationsNotReadByAdmin() {
+        return ResponseEntity.ok(evaluationService.getAllEvaluationsByReadByAdmin(false));
+    }
+
     @PatchMapping("/{idEvaluation}/readByAdmin")
     public ResponseEntity<EvaluationDtoGet> readByAdmin(@PathVariable String idEvaluation) {
         return ResponseEntity.ok(evaluationService.readEvaluation(idEvaluation));

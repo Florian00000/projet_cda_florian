@@ -11,6 +11,7 @@ import ProtectedPathAdmin from "./components/shared/authentication/ProtectedPath
 import ProtectedPath from "./components/shared/authentication/ProtectedPath";
 import EvaluationForm from "./components/evaluation/EvaluationForm";
 import MySessions from "./components/training/MySessions";
+import EvaluationList from "./components/evaluation/EvaluationList";
 
 const router = createBrowserRouter([
     {
@@ -51,7 +52,12 @@ const router = createBrowserRouter([
             },
             {
                 path: "/evaluation/form/:idSession", 
-                element: <ProtectedPath><EvaluationForm/></ProtectedPath>  }
+                element: <ProtectedPath><EvaluationForm/></ProtectedPath>
+            },
+            {
+                path: "/evaluation/list",
+                element: <ProtectedPathAdmin><EvaluationList/></ProtectedPathAdmin>
+            }
         ]
     }
 ]);

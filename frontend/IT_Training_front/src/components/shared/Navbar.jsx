@@ -12,7 +12,7 @@ const Navbar = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const {token, user} = useSelector((state) => state.authentication);
+    const { token, user } = useSelector((state) => state.authentication);
 
     const toggleDopdown = () => {
         setDropdownVisible(!isDropdownVisible)
@@ -24,51 +24,56 @@ const Navbar = () => {
 
     return (
         <nav className={classes.nav}>
-            <Link to={"/"} className={classes.textIt}><span><b>IT-Training</b></span></Link>   
+            <Link to={"/"} className={classes.textIt}><span><b>IT-Training</b></span></Link>
             <div className={classes.menu} onMouseEnter={toggleDopdown} onMouseLeave={toggleDopdown}>
                 <span className={classes.menuTitle} >Formations</span>
                 <span>
-                    <FontAwesomeIcon icon={faSortDown} />  
+                    <FontAwesomeIcon icon={faSortDown} />
                 </span>
-                    
-                                
+
+
                 {isDropdownVisible && (
                     <div className={classes.dropdown} >
                         <Link to={"/"} className={classes.dropdownItem} >Domaines proposés</Link>
-                        {user && user?.roles.split(",").includes("ROLE_ADMIN") && 
-                        (<Link to={"/training/admin/addTraining"} className={classes.dropdownItem} >Ajouter Formation</Link>)}
-                        
+                        {user && user?.roles.split(",").includes("ROLE_ADMIN") &&
+                            (<>
+                                <Link to={"/training/admin/addTraining"} className={classes.dropdownItem} >Ajouter Formation</Link>
+                                <Link to={"/evaluation/list"} className={classes.dropdownItem} >Évaluations</Link>
+                            </>
+                            )}
+
+
                     </div>
                 )}
             </div>
 
-            {token &&                 
+            {token &&
                 <div className={classes.menu} onMouseEnter={toggleDopdownMySpace} onMouseLeave={toggleDopdownMySpace}>
                     <span className={classes.menuTitle} >Mon Espace Personnel</span>
                     <span>
-                        <FontAwesomeIcon icon={faSortDown} />  
+                        <FontAwesomeIcon icon={faSortDown} />
                     </span>
-                        
-                                    
+
+
                     {isDropdownVisibleMySpace && (
                         <div className={classes.dropdown} >
-                            <Link to={"/mySessions"} className={classes.dropdownItem} style={{width: "22dvh"}} >Mes Sessions</Link>                     
+                            <Link to={"/mySessions"} className={classes.dropdownItem} style={{ width: "22dvh" }} >Mes Sessions</Link>
                         </div>
                     )}
                 </div>
             }
 
-         
-            {token ? 
-            <div className={classes.divLoginButton}>
-                <p className={classes.username}> {user.sub.split("@")[0]} </p>
-                <button className={classes.loginButton} onClick={() => dispatch(logout())}>Se déconnecter</button>
-            </div>
-            
-            :<button className={classes.loginButton} onClick={() => navigate("/authentication")}>Se connecter</button> }
 
-                
-                  
+            {token ?
+                <div className={classes.divLoginButton}>
+                    <p className={classes.username}> {user.sub.split("@")[0]} </p>
+                    <button className={classes.loginButton} onClick={() => dispatch(logout())}>Se déconnecter</button>
+                </div>
+
+                : <button className={classes.loginButton} onClick={() => navigate("/authentication")}>Se connecter</button>}
+
+
+
         </nav>
     );
 }

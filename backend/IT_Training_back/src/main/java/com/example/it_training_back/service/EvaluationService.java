@@ -105,6 +105,11 @@ public class EvaluationService {
         return evaluations.stream().map(EvaluationDtoGet::new).toList();
     }
 
+    public List<EvaluationDtoGet> getAllEvaluationsByReadByAdmin(boolean readByAdmin){
+        List<Evaluation> evaluations = evaluationRepository.findAllByReadByAdmin(readByAdmin);
+        return evaluations.stream().map(EvaluationDtoGet::new).toList();
+    }
+
     public EvaluationDtoGet readEvaluation(String id) {
         Evaluation evaluation = evaluationRepository.findById(id).orElseThrow(
                 () -> new NotFoundException("evaluation not found")

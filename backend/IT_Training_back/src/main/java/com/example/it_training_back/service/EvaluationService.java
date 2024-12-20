@@ -1,5 +1,7 @@
 package com.example.it_training_back.service;
 
+import com.example.it_training_back.dto.BaseResponseDto;
+import com.example.it_training_back.dto.ListString;
 import com.example.it_training_back.dto.evaluation.EvaluationDtoGet;
 import com.example.it_training_back.dto.evaluation.EvaluationDtoPost;
 import com.example.it_training_back.entity.Evaluation;
@@ -117,5 +119,12 @@ public class EvaluationService {
         evaluation.setReadByAdmin(true);
         evaluationRepository.save(evaluation);
         return new EvaluationDtoGet(evaluation);
+    }
+
+    public BaseResponseDto readListEvaluations(ListString listString){
+        int result = evaluationRepository.updateListReadByAdmin(listString.getStrings());
+        if (result == listString.getStrings().size()){
+            return new BaseResponseDto("changes made", result);
+        }else return new BaseResponseDto("Changes made to " + result + " ratings", result);
     }
 }

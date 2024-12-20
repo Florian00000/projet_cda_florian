@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllEvaluationsReadByAdmin, fetchAllEvaluationsNotReadByAdmin } from "./evaluationSlice"
 import EvaluationRow from './EvaluationRow';
@@ -10,10 +10,26 @@ const EvaluationList = () => {
     const { evluationsRead, evluationsNotRead } = useSelector((state) => state.evaluation);
     const { token } = useSelector((state) => state.authentication);
 
+    const [selectedIds, setSelectedIds] = useState([]);
+
+    const onCheckboxChange = (id, isSelected) => {
+        if (isSelected) {
+            setSelectedIds((prev) => [...prev, id]);
+        }else{
+            setSelectedIds((prev) => prev.filter((selectedIds) => selectedIds !== id));
+        }
+    }
+
     useEffect(() => {
         dispatch(fetchAllEvaluationsReadByAdmin(token))
         dispatch(fetchAllEvaluationsNotReadByAdmin(token))
     }, [dispatch, token])
+
+    //partie pour vofir le tableau d id
+    useEffect(() => {        
+        console.log(selectedIds);
+        
+    }, [selectedIds])
 
     return (
         <main>
@@ -32,7 +48,7 @@ const EvaluationList = () => {
                 </thead>
                 <tbody>
                     {evluationsNotRead.map((evluation, index) => (
-                        <EvaluationRow key={index} evaluation={evluation} isRead={false} />
+                        <EvaluationRow key={index} evaluation={evluation} isRead={false} onCheckboxChange={onCheckboxChange} />
                     ))}
                 </tbody>
             </table>

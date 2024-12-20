@@ -5,11 +5,12 @@ import ModalButtonless from '../shared/modal/ModalButtonless';
 import EvaluationModal from './EvaluationModal';
 
 
-const EvaluationRow = ({ evaluation, isRead }) => {
+const EvaluationRow = ({ evaluation, isRead, onCheckboxChange }) => {
 
     const [avgRateCenter, setAvgRateCenter] = useState(0);
     const [avgRateTrainer, setAvgRateTrainer] = useState(0);
     const [opdenModal, setOpenModal] = useState(false);
+    const [isChecked, setIsChecked] = useState(false);
 
     useEffect(() => {
         const scoreCenter = [
@@ -29,6 +30,12 @@ const EvaluationRow = ({ evaluation, isRead }) => {
         setAvgRateTrainer(totalTrainer / scoreTrainer.length)  
     }, [evaluation])
 
+    const handleCheckboxChange = (event) => {
+        const checked = event.target.checked;
+        setIsChecked(checked);
+        onCheckboxChange(evaluation.id, checked)
+    }
+
     return (
         <>
             {opdenModal && 
@@ -38,7 +45,7 @@ const EvaluationRow = ({ evaluation, isRead }) => {
             }           
 
             <tr className={classes.trBorder} >
-                <td ><input type="checkbox" disabled={isRead} /></td>
+                <td ><input type="checkbox" disabled={isRead} checked={isChecked} onChange={handleCheckboxChange} /></td>
                 <td onClick={() => setOpenModal(true)} >{formatDateToFrench(evaluation?.valuationDate)}</td>
                 <td onClick={() => setOpenModal(true)}>{avgRateCenter.toFixed(2)} </td>
                 <td onClick={() => setOpenModal(true)}>{avgRateTrainer.toFixed(2)} </td>

@@ -76,7 +76,7 @@ const EvaluationList = () => {
                 </thead>
                 <tbody>
                     {evluationsNotRead.map((evluation, index) => (
-                        <EvaluationRow key={index} evaluation={evluation} isRead={false} onCheckboxChange={onCheckboxChange} />
+                        <EvaluationRow key={index} evaluation={evluation} isRead={false} onCheckboxChange={onCheckboxChange} selectedIds={selectedIds} />
                     ))}
                 </tbody>
             </table>

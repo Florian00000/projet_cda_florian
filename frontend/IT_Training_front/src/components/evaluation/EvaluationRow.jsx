@@ -5,12 +5,11 @@ import ModalButtonless from '../shared/modal/ModalButtonless';
 import EvaluationModal from './EvaluationModal';
 
 
-const EvaluationRow = ({ evaluation, isRead, onCheckboxChange }) => {
+const EvaluationRow = ({ evaluation, isRead, onCheckboxChange, selectedIds }) => {
 
     const [avgRateCenter, setAvgRateCenter] = useState(0);
     const [avgRateTrainer, setAvgRateTrainer] = useState(0);
     const [opdenModal, setOpenModal] = useState(false);
-    const [isChecked, setIsChecked] = useState(false);
 
     const alert = (evaluation.qualityReception || evaluation.qualityEnvironment || evaluation.pedagogy || evaluation.domainExpertise
         || evaluation.availability || evaluation.qualityResponses || evaluation.technicalAnimations) < 3 
@@ -35,7 +34,6 @@ const EvaluationRow = ({ evaluation, isRead, onCheckboxChange }) => {
 
     const handleCheckboxChange = (event) => {
         const checked = event.target.checked;
-        setIsChecked(checked);
         onCheckboxChange(evaluation.id, checked)
     }
 
@@ -48,7 +46,7 @@ const EvaluationRow = ({ evaluation, isRead, onCheckboxChange }) => {
             }           
 
             <tr className={ alert ? classes.trBorderAlert : classes.trBorder} >
-                <td ><input type="checkbox" disabled={isRead} checked={isChecked} onChange={handleCheckboxChange} /></td>
+                <td ><input type="checkbox" disabled={isRead} checked={selectedIds && selectedIds.includes(evaluation.id)} onChange={handleCheckboxChange} /></td>
                 <td onClick={() => setOpenModal(true)} >{formatDateToFrench(evaluation?.valuationDate)}</td>
                 <td onClick={() => setOpenModal(true)}>{avgRateCenter.toFixed(2)} </td>
                 <td onClick={() => setOpenModal(true)}>{avgRateTrainer.toFixed(2)} </td>

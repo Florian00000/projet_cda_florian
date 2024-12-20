@@ -11,7 +11,6 @@ const EvaluationRow = ({ evaluation, isRead, onCheckboxChange }) => {
     const [avgRateTrainer, setAvgRateTrainer] = useState(0);
     const [opdenModal, setOpenModal] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
-    //const [alert, setAlert] = useState(false);
 
     const alert = (evaluation.qualityReception || evaluation.qualityEnvironment || evaluation.pedagogy || evaluation.domainExpertise
         || evaluation.availability || evaluation.qualityResponses || evaluation.technicalAnimations) < 3 

@@ -11,6 +11,10 @@ const EvaluationRow = ({ evaluation, isRead, onCheckboxChange }) => {
     const [avgRateTrainer, setAvgRateTrainer] = useState(0);
     const [opdenModal, setOpenModal] = useState(false);
     const [isChecked, setIsChecked] = useState(false);
+    //const [alert, setAlert] = useState(false);
+
+    const alert = (evaluation.qualityReception || evaluation.qualityEnvironment || evaluation.pedagogy || evaluation.domainExpertise
+        || evaluation.availability || evaluation.qualityResponses || evaluation.technicalAnimations) < 3 
 
     useEffect(() => {
         const scoreCenter = [
@@ -44,7 +48,7 @@ const EvaluationRow = ({ evaluation, isRead, onCheckboxChange }) => {
             </ModalButtonless>
             }           
 
-            <tr className={classes.trBorder} >
+            <tr className={ alert ? classes.trBorderAlert : classes.trBorder} >
                 <td ><input type="checkbox" disabled={isRead} checked={isChecked} onChange={handleCheckboxChange} /></td>
                 <td onClick={() => setOpenModal(true)} >{formatDateToFrench(evaluation?.valuationDate)}</td>
                 <td onClick={() => setOpenModal(true)}>{avgRateCenter.toFixed(2)} </td>

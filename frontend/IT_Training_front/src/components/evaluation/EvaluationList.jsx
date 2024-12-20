@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllEvaluationsReadByAdmin, fetchAllEvaluationsNotReadByAdmin } from "./evaluationSlice"
 import EvaluationRow from './EvaluationRow';
 import classes from "./evaluation.module.css"
+import Button from '../shared/Button';
+import { BASE_URL } from '../../utils/constant';
+import axios from 'axios';
 
 const EvaluationList = () => {
     const dispatch = useDispatch();
@@ -15,7 +18,7 @@ const EvaluationList = () => {
     const onCheckboxChange = (id, isSelected) => {
         if (isSelected) {
             setSelectedIds((prev) => [...prev, id]);
-        }else{
+        } else {
             setSelectedIds((prev) => prev.filter((selectedIds) => selectedIds !== id));
         }
     }
@@ -25,15 +28,40 @@ const EvaluationList = () => {
         dispatch(fetchAllEvaluationsNotReadByAdmin(token))
     }, [dispatch, token])
 
-    //partie pour vofir le tableau d id
-    useEffect(() => {        
-        console.log(selectedIds);
-        
-    }, [selectedIds])
+    const readByAdminMultiple = async(list) => {
+        try {
+            const response = await axios.patch(`${BASE_URL}admin/evaluation/list/readByAdmin`,
+                {strings: list},
+                {headers: {
+                    "Authorization": `Bearer ${token}`
+                }}
+            )
+            console.log(response.data)
+        } catch (error) {
+            const serializedError = error.response?.data || { message: error.message };
+            console.log(serializedError);
+        }
+    }
+
+    const handleButtonRead = async () => {
+        if (!selectedIds ||selectedIds.length === 0) {
+            console.log("pas d'éléments selectionnés");
+            return            
+        }
+        await readByAdminMultiple(selectedIds);
+        dispatch(fetchAllEvaluationsReadByAdmin(token))
+        dispatch(fetchAllEvaluationsNotReadByAdmin(token))
+        setSelectedIds([])
+    }
 
     return (
         <main>
-            <div>
+            <div style={{ marginLeft: "auto", marginTop: "20px" }}>
+                <Button children={"marquer comme lu"} onClick={handleButtonRead} disabled={!selectedIds || selectedIds.length == 0} />
+            </div>
+
+
+            <div >
                 <h3>Liste des nouvelles évaluations</h3>
                 <hr />
             </div>
@@ -59,7 +87,7 @@ const EvaluationList = () => {
             </div>
 
             <table className={classes.tableEvaluation}>
-            <thead>
+                <thead>
                     <tr>
                         <th></th>
                         <th>date</th>
@@ -69,7 +97,7 @@ const EvaluationList = () => {
                 </thead>
                 <tbody>
                     {evluationsRead.map((evluation, index) => (
-                        <EvaluationRow key={index} evaluation={evluation} isRead={true}  />
+                        <EvaluationRow key={index} evaluation={evluation} isRead={true} />
                     ))}
                 </tbody>
             </table>

@@ -163,6 +163,10 @@ input[type="number"]:focus{
   border: 1px solid var(--blueButton);
 }
 
+input[type="checkbox"]{
+  cursor: pointer;
+}
+
 textarea{
   background-color: var(--backgroundColor);
   color: var(--darkPurple);

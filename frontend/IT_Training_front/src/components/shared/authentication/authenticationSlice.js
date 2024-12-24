@@ -29,17 +29,29 @@ const authenticationSlice = createSlice({
     initialState: {
         token: localStorage.getItem('token') || null,
         user: JSON.parse(localStorage.getItem('user')) || null,
-        error: null        
+        error: null,
+        alert: false,
+        searchAlert: false        
     },
     reducers: {
         logout: (state, actions) => {
             localStorage.removeItem("token");
             localStorage.removeItem("user");
             state.token = null;
-            state.user = null;           
+            state.user = null;
+            state.alert = false;           
         },
         emptyError: (state, actions) => {
             state.error = null;
+        },
+        triggerAlert: (state, actions) => {
+            state.alert = true
+        },
+        emptyAlert: (state, actions) => {
+            state.alert = false;
+        },
+        searchAlert: (state, actions) => {
+            state.searchAlert = !state.searchAlert;
         }
     },
     extraReducers: (builder) => {
@@ -71,5 +83,5 @@ const authenticationSlice = createSlice({
     }
 })
 
-export const { logout, emptyError } = authenticationSlice.actions;
+export const { logout, emptyError, triggerAlert, emptyAlert, searchAlert } = authenticationSlice.actions;
 export default authenticationSlice.reducer;

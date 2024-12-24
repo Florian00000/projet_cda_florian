@@ -15,3 +15,11 @@ export const getPlanningOfWeek = (courses) => {
         return false
     });
 }
+
+export const formatDateToFrench = (dateString) => {
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat('fr-FR', {
+        dateStyle: 'long',
+        timeStyle: 'short',
+    }).format(date);
+};

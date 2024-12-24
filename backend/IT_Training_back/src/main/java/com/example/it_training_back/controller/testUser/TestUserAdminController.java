@@ -34,4 +34,11 @@ public class TestUserAdminController {
     public ResponseEntity<TrainingDtoGet> addTestToTraining(@PathVariable long idTestUser, @PathVariable int idTraining) {
         return ResponseEntity.ok(testUserService.addTestToTraining(idTestUser, idTraining));
     }
+
+    //============================= other =============================
+
+    @GetMapping("/test-user/{idTestUser}/trainings")
+    public ResponseEntity<List<TrainingDtoGet>> getAllTrainingsOfTestUser(@PathVariable long idTestUser) {
+        return ResponseEntity.ok(testUserService.getAllTrainingsByTestUser(idTestUser));
+    }
 }

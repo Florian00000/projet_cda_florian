@@ -66,7 +66,8 @@ const SessionRectangle = ({ session }) => {
                 
             </div>
             <div className={classes.flexEnd}>
-                <Button children={"Evaluer la session"} size={"medium"} disabled={isRated} onClick={() =>handleEvaluateButton(session?.id)} />
+                <Button children={"Evaluer la session"} size={"medium"} disabled={isRated || (Date.now() < parseDate(session.startDate)) } onClick={() =>handleEvaluateButton(session?.id)} />
+                {(Date.now() < parseDate(session.startDate)) && <p className={classes.blueTextNotConnected}>Vous ne pouvez pas encore évaluer cette session</p>}
                 {isRated && <p className={classes.blueTextNotConnected}>Vous avez déjà évalué cette session</p>}
             </div>
 

@@ -31,8 +31,9 @@ const Navbar = () => {
     }, [user])
 
 
-    useEffect(() => {
-        if ((user?.roles.split(",").includes("ROLE_ADMIN")) && (evluationsNotRead && evluationsNotRead.length > 1)) {
+    useEffect(() => {              
+        if ((user?.roles.split(",").includes("ROLE_ADMIN")) && (evluationsNotRead && evluationsNotRead.length >= 1)) {
+            console.log("là");
             const hasLowScore = evluationsNotRead.some(evaluation => {
                 const scores = [evaluation.qualityReception, evaluation.qualityEnvironment, evaluation.pedagogy, evaluation.domainExpertise, 
                 evaluation.availability, evaluation.qualityResponses, evaluation.technicalAnimations];

@@ -89,7 +89,7 @@ CREATE TABLE `note` (
   KEY `FK83ep238ikljeapa4b31jadem7` (`id_user`),
   CONSTRAINT `FK83ep238ikljeapa4b31jadem7` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`),
   CONSTRAINT `FKm0sbt7mirac14ok2ujqr0xdql` FOREIGN KEY (`id_test_user`) REFERENCES `test_user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,7 +98,7 @@ CREATE TABLE `note` (
 
 LOCK TABLES `note` WRITE;
 /*!40000 ALTER TABLE `note` DISABLE KEYS */;
-INSERT INTO `note` VALUES (11,2,_binary '',14,1),(12,3,_binary '',14,2),(13,3,_binary '',14,5),(31,3,_binary '',14,11);
+INSERT INTO `note` VALUES (11,2,_binary '',14,1),(12,3,_binary '',14,2),(13,3,_binary '',14,5),(31,3,_binary '',14,11),(32,3,_binary '',14,12);
 /*!40000 ALTER TABLE `note` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -119,7 +119,7 @@ CREATE TABLE `presence` (
   KEY `FK3txfixln9gglfukp4vdvvxiv5` (`user_id`),
   CONSTRAINT `FK3txfixln9gglfukp4vdvvxiv5` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   CONSTRAINT `FKiaxnx8ka5t7yon78sufttkp2n` FOREIGN KEY (`course_id`) REFERENCES `course` (`id_course`)
-) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,7 +128,7 @@ CREATE TABLE `presence` (
 
 LOCK TABLES `presence` WRITE;
 /*!40000 ALTER TABLE `presence` DISABLE KEYS */;
-INSERT INTO `presence` VALUES (1,_binary '\0',259,1),(2,_binary '\0',260,1),(3,_binary '\0',261,1),(4,_binary '\0',262,1),(5,_binary '\0',263,1),(6,_binary '\0',264,1),(7,_binary '\0',265,1),(8,_binary '\0',266,1),(9,_binary '\0',259,2),(10,_binary '\0',260,2),(11,_binary '\0',261,2),(12,_binary '\0',262,2),(13,_binary '\0',263,2),(14,_binary '\0',264,2),(15,_binary '\0',265,2),(16,_binary '\0',266,2),(25,_binary '\0',44,1),(26,_binary '\0',45,1),(27,_binary '\0',46,1),(28,_binary '\0',47,1),(29,_binary '\0',48,1),(30,_binary '\0',49,1),(31,_binary '\0',50,1),(32,_binary '\0',51,1),(33,_binary '\0',44,2),(34,_binary '\0',45,2),(35,_binary '\0',46,2),(36,_binary '\0',47,2),(37,_binary '\0',48,2),(38,_binary '\0',49,2),(39,_binary '\0',50,2),(40,_binary '\0',51,2),(41,_binary '\0',44,5),(42,_binary '\0',45,5),(43,_binary '\0',46,5),(44,_binary '\0',47,5),(45,_binary '\0',48,5),(46,_binary '\0',49,5),(47,_binary '\0',50,5),(48,_binary '\0',51,5),(49,_binary '\0',130,5),(50,_binary '\0',131,5),(51,_binary '\0',132,5),(52,_binary '\0',133,5),(53,_binary '\0',134,5),(54,_binary '\0',135,5),(55,_binary '\0',136,5),(56,_binary '\0',137,5),(57,_binary '\0',95,5),(58,_binary '\0',96,5),(59,_binary '\0',97,5),(60,_binary '\0',98,5),(61,_binary '\0',99,5),(62,_binary '\0',100,5),(63,_binary '\0',101,5),(64,_binary '\0',102,5),(65,_binary '\0',267,1),(66,_binary '\0',268,1),(67,_binary '\0',269,1),(68,_binary '\0',270,1),(69,_binary '\0',267,2),(70,_binary '\0',268,2),(71,_binary '\0',269,2),(72,_binary '\0',270,2),(73,_binary '\0',267,5),(74,_binary '\0',268,5),(75,_binary '\0',269,5),(76,_binary '\0',270,5);
+INSERT INTO `presence` VALUES (1,_binary '\0',259,1),(2,_binary '\0',260,1),(3,_binary '\0',261,1),(4,_binary '\0',262,1),(5,_binary '\0',263,1),(6,_binary '\0',264,1),(7,_binary '\0',265,1),(8,_binary '\0',266,1),(9,_binary '\0',259,2),(10,_binary '\0',260,2),(11,_binary '\0',261,2),(12,_binary '\0',262,2),(13,_binary '\0',263,2),(14,_binary '\0',264,2),(15,_binary '\0',265,2),(16,_binary '\0',266,2),(25,_binary '\0',44,1),(26,_binary '\0',45,1),(27,_binary '\0',46,1),(28,_binary '\0',47,1),(29,_binary '\0',48,1),(30,_binary '\0',49,1),(31,_binary '\0',50,1),(32,_binary '\0',51,1),(33,_binary '\0',44,2),(34,_binary '\0',45,2),(35,_binary '\0',46,2),(36,_binary '\0',47,2),(37,_binary '\0',48,2),(38,_binary '\0',49,2),(39,_binary '\0',50,2),(40,_binary '\0',51,2),(41,_binary '\0',44,5),(42,_binary '\0',45,5),(43,_binary '\0',46,5),(44,_binary '\0',47,5),(45,_binary '\0',48,5),(46,_binary '\0',49,5),(47,_binary '\0',50,5),(48,_binary '\0',51,5),(49,_binary '\0',130,5),(50,_binary '\0',131,5),(51,_binary '\0',132,5),(52,_binary '\0',133,5),(53,_binary '\0',134,5),(54,_binary '\0',135,5),(55,_binary '\0',136,5),(56,_binary '\0',137,5),(57,_binary '\0',95,5),(58,_binary '\0',96,5),(59,_binary '\0',97,5),(60,_binary '\0',98,5),(61,_binary '\0',99,5),(62,_binary '\0',100,5),(63,_binary '\0',101,5),(64,_binary '\0',102,5),(65,_binary '\0',267,1),(66,_binary '\0',268,1),(67,_binary '\0',269,1),(68,_binary '\0',270,1),(69,_binary '\0',267,2),(70,_binary '\0',268,2),(71,_binary '\0',269,2),(72,_binary '\0',270,2),(73,_binary '\0',267,5),(74,_binary '\0',268,5),(75,_binary '\0',269,5),(76,_binary '\0',270,5),(77,_binary '\0',267,12),(78,_binary '\0',268,12),(79,_binary '\0',269,12),(80,_binary '\0',270,12);
 /*!40000 ALTER TABLE `presence` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -427,7 +427,7 @@ CREATE TABLE `user` (
   `phone` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UKob8kqyqqgmefl0aco34akdtpe` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -436,7 +436,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'user@user.com','user','user',0,'$2a$10$p.b6gUKfC0x6.FkXMq7y/eKuyq5euaDDGNZHqFsXr6OcS5V4w.8p.',''),(2,'user2@user.com','user','user',0,'$2a$10$no7I4FdDUb553WoZ8gCWueoHCU3UXUV1gTyOFQYZjy6D.cyzm9Mxa',NULL),(3,'admin@admin.com','admin','admin',0,'$2a$10$YVjbIL4SdwotEgwOKlKQPeHqcxzVvWlnvZ9jj79QGCQRNeAEh1WES',NULL),(5,'user3@user.com','user','user',0,'$2a$10$CKNDJG.ChvXET5WNw7HBWeHrk1YhurpD9hbf3RmpUyvNy5LpmC8fa',NULL),(8,'user4@user.com','user','user',0,'$2a$10$iPUKD6B.fKVnquho.kYFJeO2/.OH32543E0s2XQtABID9ZLL4TO6i',NULL),(11,'user5@user.com','user','user',0,'$2a$10$w81E/ARr6f.YRdAJH/XEE.5KiHYovQQKCAddOK5KlxvXPugNOeY/a',NULL);
+INSERT INTO `user` VALUES (1,'user@user.com','user','user',0,'$2a$10$p.b6gUKfC0x6.FkXMq7y/eKuyq5euaDDGNZHqFsXr6OcS5V4w.8p.',''),(2,'user2@user.com','user','user',0,'$2a$10$no7I4FdDUb553WoZ8gCWueoHCU3UXUV1gTyOFQYZjy6D.cyzm9Mxa',NULL),(3,'admin@admin.com','admin','admin',0,'$2a$10$YVjbIL4SdwotEgwOKlKQPeHqcxzVvWlnvZ9jj79QGCQRNeAEh1WES',NULL),(5,'user3@user.com','user','user',0,'$2a$10$CKNDJG.ChvXET5WNw7HBWeHrk1YhurpD9hbf3RmpUyvNy5LpmC8fa',NULL),(8,'user4@user.com','user','user',0,'$2a$10$iPUKD6B.fKVnquho.kYFJeO2/.OH32543E0s2XQtABID9ZLL4TO6i',NULL),(11,'user5@user.com','user','user',0,'$2a$10$w81E/ARr6f.YRdAJH/XEE.5KiHYovQQKCAddOK5KlxvXPugNOeY/a',NULL),(12,'user6@user.com','user','user',0,'$2a$10$ZGYwAryiSgrYpDayDMaseumX/QAgJvbwaMSmYd9njLxymsgXvfKlu',NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -463,7 +463,7 @@ CREATE TABLE `user_role` (
 
 LOCK TABLES `user_role` WRITE;
 /*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
-INSERT INTO `user_role` VALUES (1,1),(2,1),(3,1),(3,3),(5,1),(8,1),(11,1);
+INSERT INTO `user_role` VALUES (1,1),(2,1),(3,1),(3,3),(5,1),(8,1),(11,1),(12,1);
 /*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -490,7 +490,7 @@ CREATE TABLE `user_session` (
 
 LOCK TABLES `user_session` WRITE;
 /*!40000 ALTER TABLE `user_session` DISABLE KEYS */;
-INSERT INTO `user_session` VALUES (61,1),(61,2),(36,1),(36,2),(36,5),(46,5),(42,5),(62,1),(62,2),(62,5);
+INSERT INTO `user_session` VALUES (61,1),(61,2),(36,1),(36,2),(36,5),(46,5),(42,5),(62,1),(62,2),(62,5),(62,12);
 /*!40000 ALTER TABLE `user_session` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -503,4 +503,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-12-24 11:42:40
+-- Dump completed on 2024-12-24 14:50:08

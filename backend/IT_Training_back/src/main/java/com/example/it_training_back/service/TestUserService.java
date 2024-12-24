@@ -117,4 +117,13 @@ public class TestUserService {
         return new PropositionDtoGet(proposition);
     }
 
+    //============================= other =============================
+
+    public List<TrainingDtoGet> getAllTrainingsByTestUser(long testUserId) {
+        TestUser testUser = testUserRepository.findById(testUserId).orElseThrow(
+                () -> new NotFoundException("Test user with "+testUserId+" not found"));
+        List<Training> trainingList = trainingRepository.findAllByTestUser(testUser);
+        return trainingList.stream().map(TrainingDtoGet::new).toList();
+    }
+
 }

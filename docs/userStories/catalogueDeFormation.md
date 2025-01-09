@@ -4,7 +4,7 @@ En tant qu'utilisateur du portail web, je souhaite accéder facilement au catalo
 ## User Stories:
 1. Accéder au catalogue de formation:
     - User Story:  
-    *En tant qu'utilisateur, je veux pouvoir consulter les différents thèmes et sous-thèmes des formations informatiques afin de découvrir les formations disponibles dans des domaines spécifiques.*
+    *En tant qu'utilisateur non connecté, je veux pouvoir consulter les différents thèmes et sous-thèmes des formations informatiques afin de découvrir les formations disponibles dans des domaines spécifiques.*
     - Critères d'acceptation:  
         - Les thèmes principaux (langages de développement, gestions de projets, etc.) sont listés
         - Chaque thème doit permettre de naviguer vers ses sous-thèmes.
@@ -12,7 +12,7 @@ En tant qu'utilisateur du portail web, je souhaite accéder facilement au catalo
 
 2. Accès aux informations d'une formation:
     - User Story:  
-    *En tant qu'utilisateur, je veux pouvoir accéder aux informations détaillées d'une formation pour connaître (date, prix, lieu, description).*
+    *En tant qu'utilisateur non connecté, je veux pouvoir accéder aux informations détaillées d'une formation pour connaître (date, prix, lieu, description).*
     - Critères d'acceptation:  
         - Le titre de la formation et sa description sont visibles.
         - Le prix, les dates et les lieux des prochaines sessions sont clairement affichés.
@@ -21,7 +21,7 @@ En tant qu'utilisateur du portail web, je souhaite accéder facilement au catalo
         - Un lien permet d'accéder à un test pour voir si il a les prérequis pour s'inscrire.
 3. Test des prérequis pour l'utilisateur:
     - User Story:  
-    *En tant qu'utilisateur, je veux pouvoir tester mes prérequis pour une formation donnée afin de m'assurer que j'ai le niveau nécessaire pour suivre cette formation.*
+    *En tant qu'utilisateur connecté, je veux pouvoir tester mes prérequis pour une formation donnée afin de m'assurer que j'ai le niveau nécessaire pour suivre cette formation.*
     - Critères d'acceptation :
         - Un lien permet d'accéder à un test de prérequis en ligne pour une formation.
         - Les résultats du test indiquent si l'utilisateur a le niveau suffisant ou non.
@@ -33,7 +33,7 @@ En tant qu'utilisateur du portail web, je souhaite accéder facilement au catalo
         - Les informations mises en évidence sont visuellement distinctes sur la page du catalogue.
 5. Contact avec le service commerial:  
     - User Story:  
-    *En tant qu'utilisateur, je veux pouvoir contacter directement le service commercial via un lien pour poser des questions ou demander des informations supplémentaires sur une formation.*
+    *En tant qu'utilisateur non connecté, je veux pouvoir contacter directement le service commercial via un lien pour poser des questions ou demander des informations supplémentaires sur une formation.*
     - Crières d'acceptation: 
         - Un lien est disponible sur la page de chaque formation.
         - Le lien ouvre un formulaire de contact ou initie une demande par email.

@@ -91,8 +91,8 @@ public class DataInitializer implements CommandLineRunner {
         //fake Session
         for (int i = 0; i < 5; i++) {
             SessionDtoPost sessionDtoPost = SessionDtoPost.builder()
-                    .startDate("01/0"+ (i+1) + "/2025")
-                    .endDate("01/0"+ (i+2) + "/2025")
+                    .startDate("01/0"+ (i+2) + "/2025")
+                    .endDate("15/0"+ (i+3) + "/2025")
                     .placeLimit(rand.nextInt(3,30))
                     .roomReserved(false).machinesInstalled(false).traineesConfirmation(false)
                     .trainerConfirmation(false).traineesConfirmation(false).evaluationForms(false)

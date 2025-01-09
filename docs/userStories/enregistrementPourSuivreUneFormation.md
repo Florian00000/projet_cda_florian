@@ -11,7 +11,7 @@ En tant qu'utilisateur intéressé par une formation, je souhaite m'inscrire en 
         - Un message de confirmation s'affiche après l'inscription, et un email est envoyé au client.
 
 2. Test de prérequis:
-    - Uer Story:  
+    - User Story:  
     *En tant que client, je dois passer le test des prérequis avant de m'inscrire à une formation pour m'assurer que j'ai le niveau requis.*
     - Critères d'acceptation:
         - Le bouton pour s'inscire à la formation est verouillé tant que le test n'est pas passé.

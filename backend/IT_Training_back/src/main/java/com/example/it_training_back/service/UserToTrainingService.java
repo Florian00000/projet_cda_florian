@@ -89,11 +89,12 @@ public class UserToTrainingService {
 
     @Transactional
     public boolean addUserToSession(long userId, long sessionId) {
-        //Verification liés au test utilisateur
+        //Verifications initiales
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("id_user not found"));
         Session session = sessionRepository.findById(sessionId)
                 .orElseThrow(() -> new NotFoundException("id_session not found"));
 
+        //Partie qui se déclenche si la formation à un test de prérequis
         if (session.getTraining().getTestUser() != null){
             TestUser testUser =  session.getTraining().getTestUser();
             Optional<Note> note = noteRepository.findByUserAndTestUser(user, testUser);

@@ -12,7 +12,7 @@ En tant qu'utilisateur intéressé par une formation, je souhaite m'inscrire en 
 
 2. Test de prérequis:
     - User Story:  
-    *En tant que client coonecté, je dois passer le test des prérequis avant de m'inscrire à une formation pour m'assurer que j'ai le niveau requis.*
+    *En tant que client connecté, je dois passer le test des prérequis avant de m'inscrire à une formation pour m'assurer que j'ai le niveau requis.*
     - Critères d'acceptation:
         - Le bouton pour s'inscire à la formation est verouillé tant que le test n'est pas passé.
         - Le lien pour passer les tests prérequis est mis en avant sur la page de la formation. 

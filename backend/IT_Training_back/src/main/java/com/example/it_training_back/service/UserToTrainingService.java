@@ -17,9 +17,9 @@ import com.example.it_training_back.repository.course.PresenceRepository;
 import com.example.it_training_back.repository.testUser.NoteRepository;
 import com.example.it_training_back.repository.testUser.TestUserRepository;
 import com.example.it_training_back.repository.user.UserRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;

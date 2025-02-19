@@ -4,15 +4,15 @@ En tant qu'utilisateur intéressé par une formation, je souhaite m'inscrire en 
 ## User stories:
 1. Inscription en ligne à une session de formation:
     - User Story:  
-    *En tant que client, je veux pouvoir m'inscrire en ligne à une session de formation en choisissant la date et le lieu de la session pour réserver ma place.*
+    *En tant que client connecté, je veux pouvoir m'inscrire en ligne à une session de formation en choisissant la date et le lieu de la session pour réserver ma place.*
     - Critères d'acceptation:
         - L'utilisateur peut sélectionner une formation, puis choisir la date et le lieu parmi les sessions proposées.
         - Un lien permet de s'inscrire ou s'authentifier, avant de s'inscrire à la formation.
         - Un message de confirmation s'affiche après l'inscription, et un email est envoyé au client.
 
 2. Test de prérequis:
-    - Uer Story:  
-    *En tant que client, je dois passer le test des prérequis avant de m'inscrire à une formation pour m'assurer que j'ai le niveau requis.*
+    - User Story:  
+    *En tant que client connecté, je dois passer le test des prérequis avant de m'inscrire à une formation pour m'assurer que j'ai le niveau requis.*
     - Critères d'acceptation:
         - Le bouton pour s'inscire à la formation est verouillé tant que le test n'est pas passé.
         - Le lien pour passer les tests prérequis est mis en avant sur la page de la formation. 
@@ -20,7 +20,7 @@ En tant qu'utilisateur intéressé par une formation, je souhaite m'inscrire en 
 
 3. Demande de session intra-entreprise:
     - User Story:  
-    *En tant que client, je veux pouvoir demander une session intra-entreprise qui se déroulera dans mes locaux ou dans une salle réservée par IT-Training, afin d'avoir une formation adaptée à mon entreprise.*
+    *En tant que client connecté, je veux pouvoir demander une session intra-entreprise qui se déroulera dans mes locaux ou dans une salle réservée par IT-Training, afin d'avoir une formation adaptée à mon entreprise.*
     - Critères d'acceptation: 
         - Un bouton "Demander une session intra-entreprise" est disponible sur la page d'inscription.
         - Le client peut choisir entre une session dans son entreprise ou dans une salle réservée.
@@ -29,7 +29,7 @@ En tant qu'utilisateur intéressé par une formation, je souhaite m'inscrire en 
 
 4. Demande de formation personnalisée:
     - User Story:
-    *En tant que client, je veux pouvoir demander une formation personnalisée avec un plan adapté à mes besoins pour avoir un programme sur mesure.*
+    *En tant que client non connecté, je veux pouvoir demander une formation personnalisée avec un plan adapté à mes besoins pour avoir un programme sur mesure.*
     - Critères d'acceptation: 
         - Un lien pour une formation personnalisée est disponible, il renvoie au mail du responsable d'enregistrement des formations.
         - Un plan de formation est généré et envoyé au client pour validation avant la mise en place de la formation.

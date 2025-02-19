@@ -8,16 +8,16 @@ networks:
 
 services:
   mysql:
-    image: mysql
+    image: mysql@sha256:b842a59bfaf81ea435b65be7e041c280416df8d295457f64c7c1445484464123
     container_name: docker_mysql
     restart: always
     ports:
       - "3307:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: projet_cda_db      
-      MYSQL_USER: user
-      MYSQL_PASSWORD: user
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - docker_mysqldata:/var/lib/mysql
       - ./sql/data.sql:/docker-entrypoint-initdb.d/data.sql
@@ -42,7 +42,7 @@ services:
       - id_training
 
   mongo:
-    image: mongo
+    image: mongo@sha256:aaad67f2dca93148e5343c03210bcfc89a0107516a4756bfa018acd6579e5b18
     container_name: mongo_container
     restart: always
     ports:
@@ -75,7 +75,7 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://docker_mysql/projet_cda_db
       SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       SPRING_WEB_RESOURCES_STATIC-LOCATION: /app/public/images/,classpath:/public/
       JWT_SECRET: ${JWT_SECRET}
       SPRING_DATA_MONGODB_URI: mongodb://mongoadmin:mongoadmin@mongo_container:27017/?authSource=admin
